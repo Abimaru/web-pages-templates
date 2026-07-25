@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Cpu, Menu, X, Headset } from "lucide-react";
 
 const links = [
-  { href: "#productos", label: "Productos" },
-  { href: "#armar", label: "Arma tu PC" },
-  { href: "#soporte", label: "Soporte técnico" },
-  { href: "#porque", label: "Por qué NEXORA" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "/#productos", label: "Productos" },
+  { href: "/arma-tu-pc", label: "Arma tu PC" },
+  { href: "/#soporte", label: "Soporte técnico" },
+  { href: "/#porque", label: "Por qué NEXORA" },
+  { href: "/#contacto", label: "Contacto" },
 ];
 
 export default function Navbar() {
@@ -31,32 +32,32 @@ export default function Navbar() {
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5">
-        <a href="#top" className="flex items-center gap-2.5">
+        <Link href="/" className="flex items-center gap-2.5">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-electric to-indigo text-space shadow-[0_0_18px_rgba(56,189,248,0.5)]">
             <Cpu size={22} strokeWidth={2.4} />
           </span>
           <span className="font-display text-xl font-bold tracking-tight text-white">
             NEX<span className="text-electric glow-text">ORA</span>
           </span>
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-8 lg:flex">
           {links.map((l) => (
             <li key={l.href}>
-              <a
+              <Link
                 href={l.href}
                 className="font-display text-sm font-medium text-white/70 transition-colors hover:text-electric"
               >
                 {l.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
 
         <div className="hidden lg:block">
-          <a href="#soporte" className="btn-primary !px-4 !py-2 text-sm">
+          <Link href="/#contacto" className="btn-primary !px-4 !py-2 text-sm">
             <Headset size={16} /> Agenda diagnóstico
-          </a>
+          </Link>
         </div>
 
         <button
@@ -73,19 +74,19 @@ export default function Navbar() {
           <ul className="flex flex-col gap-1">
             {links.map((l) => (
               <li key={l.href}>
-                <a
+                <Link
                   href={l.href}
                   onClick={() => setOpen(false)}
                   className="block rounded-lg px-4 py-3 font-display text-sm text-white/80 transition hover:bg-electric/10 hover:text-electric"
                 >
                   {l.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
-          <a href="#soporte" onClick={() => setOpen(false)} className="btn-primary mt-3 w-full justify-center">
+          <Link href="/#contacto" onClick={() => setOpen(false)} className="btn-primary mt-3 w-full justify-center">
             <Headset size={16} /> Agenda diagnóstico
-          </a>
+          </Link>
         </div>
       )}
     </header>

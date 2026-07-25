@@ -5,12 +5,9 @@ import {
   MemoryStick,
   Keyboard,
   HardDrive,
-  Wrench,
   ShieldCheck,
-  Database,
   Network,
   Settings2,
-  Gauge,
   Zap,
   ArrowRight,
   CheckCircle2,
@@ -18,11 +15,12 @@ import {
   Cog,
   MousePointerClick,
   Rocket,
-  Headset,
 } from "lucide-react";
+import Link from "next/link";
 import Navbar from "@/app/Navbar";
 import Reveal from "@/app/Reveal";
 import Terminal from "@/app/Terminal";
+import { services } from "@/app/lib/support";
 
 const products = [
   { icon: Cpu, name: "PC Gamer NEXORA", spec: "RTX · Ryzen · refrigeración líquida", price: "desde $3.900.000", tag: "TOP", color: "#38bdf8" },
@@ -38,15 +36,6 @@ const steps = [
   { icon: Cog, title: "Configuramos a la medida", desc: "Seleccionamos cada componente balanceando rendimiento, futuro y presupuesto." },
   { icon: Settings2, title: "Ensamblamos y probamos", desc: "Cableado limpio, stress test, optimización térmica y benchmarks reales." },
   { icon: Rocket, title: "Listo para volar", desc: "Entrega con sistema optimizado, garantía y soporte de por vida del equipo." },
-];
-
-const support = [
-  { icon: Wrench, title: "Mantenimiento & ensamble", desc: "Limpieza profunda, cambio de pasta térmica, upgrades y armado profesional." },
-  { icon: Database, title: "Recuperación de datos", desc: "Rescatamos información de discos dañados, SSD y memorias con protocolos seguros." },
-  { icon: Network, title: "Redes & servidores", desc: "Cableado estructurado, WiFi empresarial, NAS y configuración de servidores." },
-  { icon: ShieldCheck, title: "Seguridad & backup", desc: "Antivirus, cifrado, respaldo automatizado y auditoría de vulnerabilidades." },
-  { icon: Gauge, title: "Optimización & tuning", desc: "Overclock seguro, undervolt, limpieza de software y máximo rendimiento." },
-  { icon: Headset, title: "Soporte remoto 24/7", desc: "Asistencia inmediata sin salir de casa. Resolvemos conectados a tu equipo." },
 ];
 
 const why = [
@@ -106,9 +95,9 @@ export default function Home() {
               <a href="#productos" className="btn-primary">
                 <Zap size={18} /> Ver productos
               </a>
-              <a href="#armar" className="btn-outline">
+              <Link href="/arma-tu-pc" className="btn-outline">
                 <Cog size={16} /> Arma tu PC
-              </a>
+              </Link>
             </div>
 
             <div className="mt-10 flex flex-wrap gap-6 text-sm text-white/60">
@@ -206,9 +195,9 @@ export default function Home() {
           </div>
 
           <Reveal className="mt-10 text-center">
-            <a href="#contacto" className="btn-primary">
-              <Cog size={18} /> Cotizar mi build
-            </a>
+            <Link href="/arma-tu-pc" className="btn-primary">
+              <Cog size={18} /> Arma tu PC ahora
+            </Link>
           </Reveal>
         </div>
       </section>
@@ -227,15 +216,18 @@ export default function Home() {
         </Reveal>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {support.map((s, i) => (
-            <Reveal key={s.title} delay={i * 70}>
-              <div className="card-tech group h-full p-7">
+          {services.map((s, i) => (
+            <Reveal key={s.slug} delay={i * 70}>
+              <Link href={`/soporte/${s.slug}`} className="card-tech group block h-full p-7">
                 <div className="grid h-14 w-14 place-items-center rounded-2xl border border-indigo/40 bg-indigo/10 transition-transform duration-300 group-hover:-rotate-6">
                   <s.icon size={26} className="text-electric" />
                 </div>
                 <h3 className="mt-5 font-display text-lg font-semibold text-white">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/60">{s.desc}</p>
-              </div>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm text-electric opacity-0 transition group-hover:opacity-100">
+                  Ver detalle <ArrowRight size={14} />
+                </span>
+              </Link>
             </Reveal>
           ))}
         </div>
