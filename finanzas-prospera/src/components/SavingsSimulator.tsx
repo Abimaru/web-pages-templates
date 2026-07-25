@@ -79,14 +79,14 @@ export default function SavingsSimulator() {
             strokeDasharray={1000} strokeDashoffset={1000} style={{ animation: "draw 1.4s ease-out forwards" }} />
           <circle cx={endPt[0]} cy={endPt[1]} r={5} fill="#e4c777" stroke="#fff" strokeWidth={2} />
         </svg>
-        <div className="mt-3 grid grid-cols-2 gap-3 border-t border-white/15 pt-4">
+        <div className="mt-3 grid grid-cols-1 gap-3 border-t border-white/15 pt-4 sm:grid-cols-2 sm:gap-4">
           <div className="min-w-0">
             <p className="text-xs text-white/60">Recibes al final</p>
-            <p className="font-display text-lg font-extrabold leading-tight tabular-nums sm:text-xl">{formatCOP(final)}</p>
+            <p className="font-display text-xl font-extrabold leading-tight tabular-nums">{formatCOP(final)}</p>
           </div>
           <div className="min-w-0">
             <p className="text-xs text-white/60">Ganancia</p>
-            <p className="font-display text-lg font-extrabold leading-tight tabular-nums text-gold-light sm:text-xl">+{formatCOP(interest)}</p>
+            <p className="font-display text-xl font-extrabold leading-tight tabular-nums text-gold-light">+{formatCOP(interest)}</p>
           </div>
         </div>
       </div>
