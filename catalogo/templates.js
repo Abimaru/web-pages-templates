@@ -59,4 +59,18 @@ window.TEMPLATES = [
     localUrl: "http://localhost:5173",
     codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/muebles-atelier-ibarguen",
   },
+  {
+    id: "maru",
+    name: "MARÚ",
+    tagline: "Viste tu mejor versión",
+    desc: "Tienda de moda para mujer, hombre y niños: casual, formal, deportivo y accesorios. Estilo glamour con animaciones sutiles.",
+    emoji: "👗",
+    tags: ["Moda", "Vite + React", "Glamour / Editorial"],
+    accent: "#c07a86",
+    accent2: "#b8935f",
+    theme: "light",
+    demoUrl: "https://abimaru.github.io/web-pages-templates/maru/",
+    localUrl: "http://localhost:5173",
+    codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/ropa-maru",
+  },
 ];

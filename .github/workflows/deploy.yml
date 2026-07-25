@@ -50,14 +50,23 @@ jobs:
           npm install --no-audit --no-fund
           npm run build
 
+      - name: Build MARÚ (ropa)
+        working-directory: ropa-maru
+        env:
+          VITE_BASE: /web-pages-templates/maru/
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
       - name: Ensamblar sitio
         run: |
           mkdir -p _site
           cp -r catalogo/. _site/
-          mkdir -p _site/pixelvault _site/nexora _site/muebles
+          mkdir -p _site/pixelvault _site/nexora _site/muebles _site/maru
           cp -r videojuegos-pixelvault/out/. _site/pixelvault/
           cp -r computacion-nexora/out/. _site/nexora/
           cp -r muebles-atelier-ibarguen/dist/. _site/muebles/
+          cp -r ropa-maru/dist/. _site/maru/
           touch _site/.nojekyll
 
       - name: Subir artefacto
