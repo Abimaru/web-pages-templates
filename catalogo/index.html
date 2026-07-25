@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estudio Abimaru — Catálogo de plantillas web</title>
+  <meta name="description" content="Catálogo de plantillas y sitios web diseñados por Abimaru. Explora las demos y el código de cada plantilla." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07080f;
+      --bg2: #0d0f1c;
+      --panel: #12142440;
+      --border: #ffffff14;
+      --text: #eef0f8;
+      --muted: #9aa0b8;
+      --accent: #8b7bff;
+      --accent2: #22d3ee;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    .display { font-family: "Space Grotesk", system-ui, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Fondo decorativo */
+    .bg-fx {
+      position: fixed; inset: 0; z-index: -1; overflow: hidden;
+      background:
+        radial-gradient(50% 45% at 15% 0%, #4b3bff33, transparent 60%),
+        radial-gradient(45% 40% at 90% 10%, #22d3ee22, transparent 60%),
+        radial-gradient(50% 50% at 60% 100%, #ff2e9722, transparent 60%),
+        var(--bg);
+    }
+    .bg-grid {
+      position: fixed; inset: 0; z-index: -1; opacity: .5;
+      background-image:
+        linear-gradient(#ffffff08 1px, transparent 1px),
+        linear-gradient(90deg, #ffffff08 1px, transparent 1px);
+      background-size: 46px 46px;
+      -webkit-mask-image: radial-gradient(70% 60% at 50% 20%, #000 40%, transparent 100%);
+      mask-image: radial-gradient(70% 60% at 50% 20%, #000 40%, transparent 100%);
+    }
+
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(10px);
+      background: #07080fcc;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .01em; }
+    .brand .mark {
+      width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center;
+      background: linear-gradient(135deg, #8b7bff, #22d3ee); color: #07080f; font-weight: 800;
+      font-family: "Space Grotesk"; box-shadow: 0 0 22px #8b7bff66;
+    }
+    .brand small { display: block; font-size: 11px; font-weight: 400; color: var(--muted); letter-spacing: .18em; text-transform: uppercase; }
+    .ghp { font-size: 14px; color: var(--muted); display: inline-flex; align-items: center; gap: 7px; padding: 8px 16px; border: 1px solid var(--border); border-radius: 999px; transition: .25s; }
+    .ghp:hover { color: var(--text); border-color: #ffffff33; }
+
+    /* Hero */
+    .hero { padding: 92px 0 40px; text-align: center; }
+    .eyebrow { font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: var(--accent2); font-weight: 600; }
+    .hero h1 { font-size: clamp(38px, 6vw, 68px); line-height: 1.02; margin-top: 20px; font-weight: 700; letter-spacing: -.02em; }
+    .hero h1 .grad {
+      background: linear-gradient(100deg, #8b7bff, #22d3ee, #ff8fce);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero p { max-width: 620px; margin: 24px auto 0; color: var(--muted); font-size: 18px; line-height: 1.6; }
+    .stats { display: flex; gap: 40px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
+    .stat b { font-family: "Space Grotesk"; font-size: 30px; font-weight: 700; display: block; }
+    .stat span { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .14em; }
+
+    /* Banner info */
+    .info {
+      max-width: 760px; margin: 8px auto 0; padding: 14px 20px; border-radius: 14px;
+      background: #ffffff0a; border: 1px solid var(--border); color: var(--muted);
+      font-size: 13.5px; display: flex; gap: 12px; align-items: flex-start;
+    }
+    .info b { color: var(--text); font-weight: 600; }
+
+    /* Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px; padding: 56px 0 100px; }
+
+    .card {
+      border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+      background: linear-gradient(180deg, #ffffff09, #ffffff04);
+      transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+      display: flex; flex-direction: column;
+    }
+    .card:hover { transform: translateY(-6px); border-color: #ffffff2e; box-shadow: 0 30px 60px #00000066; }
+
+    /* Mockup / preview */
+    .preview { position: relative; aspect-ratio: 16 / 10.5; overflow: hidden; }
+    .browser { position: absolute; inset: 0; display: flex; flex-direction: column; }
+    .browser .bar { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 14px; }
+    .browser .bar i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+    .browser .url { margin-left: 10px; font-size: 11px; padding: 3px 12px; border-radius: 999px; opacity: .7; font-family: "Space Grotesk"; }
+    .browser .screen { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; padding: 18px; position: relative; overflow: hidden; }
+    .screen .emoji { font-size: 58px; filter: drop-shadow(0 8px 22px #0006); z-index: 2; }
+    .screen .name { font-family: "Space Grotesk"; font-weight: 700; font-size: 22px; letter-spacing: .02em; z-index: 2; }
+    .screen .tag { font-size: 12.5px; opacity: .85; z-index: 2; }
+    .screen .blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: .5; }
+    .screen .b1 { width: 160px; height: 160px; top: -30px; left: -30px; }
+    .screen .b2 { width: 150px; height: 150px; bottom: -40px; right: -20px; }
+
+    /* Body */
+    .body { padding: 22px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+    .body h3 { font-family: "Space Grotesk"; font-size: 20px; font-weight: 600; }
+    .body .tl { font-size: 13px; color: var(--accent2); margin-top: -8px; }
+    .body p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip { font-size: 11px; padding: 4px 10px; border-radius: 999px; background: #ffffff0d; border: 1px solid var(--border); color: var(--muted); }
+    .actions { display: flex; gap: 10px; margin-top: auto; padding-top: 6px; }
+    .btn { flex: 1; text-align: center; padding: 11px 14px; border-radius: 11px; font-weight: 600; font-size: 14px; transition: .25s; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+    .btn-primary { color: #07080f; }
+    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-ghost { border: 1px solid var(--border); color: var(--text); }
+    .btn-ghost:hover { border-color: #ffffff40; background: #ffffff0a; }
+    .live-dot { display:none; align-items:center; gap:6px; font-size:11px; color:#4ade80; }
+    .live-dot.on { display: inline-flex; }
+    .live-dot i { width:7px; height:7px; border-radius:50%; background:#4ade80; box-shadow:0 0 8px #4ade80; }
+
+    footer { border-top: 1px solid var(--border); padding: 34px 0; text-align: center; color: var(--muted); font-size: 13px; }
+    footer .display { color: var(--text); }
+
+    @media (max-width: 640px) {
+      .hero { padding-top: 64px; }
+      .stats { gap: 26px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="bg-fx"></div>
+  <div class="bg-grid"></div>
+
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top">
+        <span class="mark">A</span>
+        <span>Estudio Abimaru<small>Catálogo de plantillas web</small></span>
+      </a>
+      <a class="ghp" href="https://github.com/Abimaru/web-pages-templates" target="_blank" rel="noopener">
+        ⭐ Ver repositorio
+      </a>
+    </div>
+  </header>
+
+  <main id="top" class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Diseño &amp; desarrollo web</p>
+      <h1>Plantillas web que <span class="grad">venden</span></h1>
+      <p>Una colección de sitios listos para adaptar a tu marca. Explora cada demo en vivo o su código. ¿Necesitas uno a la medida? Hablemos.</p>
+      <div class="stats">
+        <div class="stat"><b id="count">3</b><span>plantillas</span></div>
+        <div class="stat"><b>100%</b><span>responsivas</span></div>
+        <div class="stat"><b>∞</b><span>personalizables</span></div>
+      </div>
+      <div class="info">
+        <span>ℹ️</span>
+        <span id="info-text"><b>Demos en local:</b> si aún no están publicadas, cada botón "Ver demo" abre la URL local (p. ej. <code>localhost:3000</code>) — primero corre esa plantilla con <code>npm run dev</code>. Cuando publiquemos el catálogo, los botones abrirán las URLs en vivo automáticamente.</span>
+      </div>
+    </section>
+
+    <section class="grid" id="grid"></section>
+  </main>
+
+  <footer>
+    <p class="display">Estudio Abimaru</p>
+    <p style="margin-top:6px">Catálogo de plantillas web · Hecho por Abimaru · Los datos de cada demo son de demostración.</p>
+  </footer>
+
+  <script src="templates.js"></script>
+  <script>
+    const grid = document.getElementById("grid");
+    const list = window.TEMPLATES || [];
+    document.getElementById("count").textContent = list.length;
+
+    const escapeHtml = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+    grid.innerHTML = list.map((t) => {
+      const demo = t.demoUrl || t.localUrl || "#";
+      const isLive = !!t.demoUrl;
+      const dark = t.theme !== "light";
+      const screenBg = dark
+        ? `linear-gradient(160deg, ${t.accent2}22, #0b0b16 65%)`
+        : `linear-gradient(160deg, ${t.accent}22, #f3ece0 70%)`;
+      const barBg = dark ? "#00000040" : "#00000012";
+      const urlBg = dark ? "#ffffff10" : "#00000010";
+      const screenText = dark ? "#eef0f8" : "#2a231d";
+      return `
+      <article class="card">
+        <div class="preview">
+          <div class="browser" style="background:${screenBg}">
+            <div class="bar" style="background:${barBg}">
+              <i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
+              <span class="url" style="background:${urlBg};color:${screenText}">${escapeHtml((demo).replace(/^https?:\/\//, ""))}</span>
+            </div>
+            <div class="screen" style="color:${screenText}">
+              <span class="blob b1" style="background:${t.accent}"></span>
+              <span class="blob b2" style="background:${t.accent2}"></span>
+              <span class="emoji">${t.emoji}</span>
+              <span class="name">${escapeHtml(t.name)}</span>
+              <span class="tag">${escapeHtml(t.tagline)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="body">
+          <div>
+            <h3>${escapeHtml(t.name)} <span class="live-dot ${isLive ? "on" : ""}"><i></i>en vivo</span></h3>
+            <div class="tl">${escapeHtml(t.tagline)}</div>
+          </div>
+          <p>${escapeHtml(t.desc)}</p>
+          <div class="chips">${t.tags.map((tag) => `<span class="chip">${escapeHtml(tag)}</span>`).join("")}</div>
+          <div class="actions">
+            <a class="btn btn-primary" style="background:linear-gradient(100deg, ${t.accent}, ${t.accent2})" href="${demo}" target="_blank" rel="noopener">Ver demo →</a>
+            <a class="btn btn-ghost" href="${t.codeUrl}" target="_blank" rel="noopener">Código</a>
+          </div>
+        </div>
+      </article>`;
+    }).join("");
+  </script>
+</body>
+</html>
