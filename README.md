@@ -9,6 +9,7 @@ y ejecutable de forma independiente. Nacen como variaciones a partir de la joyer
 | 💻 **NEXORA** | [`computacion-nexora/`](computacion-nexora/) | Computadores + soporte técnico | Next.js 16 + React 19 + Tailwind v4 + TS | 3000 |
 | 🛋️ **Atelier Ibargüen** | [`muebles-atelier-ibarguen/`](muebles-atelier-ibarguen/) | Muebles de autor y fabricación | Vite + React 19 + Tailwind v4 + TS | 5173 |
 | 👗 **MARÚ** | [`ropa-maru/`](ropa-maru/) | Moda: mujer, hombre, niños, deportivo | Vite + React 19 + Tailwind v4 + TS | 5173 |
+| 💊 **VITALIS** | [`farmacia-vitalis/`](farmacia-vitalis/) | Farmacia: medicamentos y salud | Vite + React 19 + Tailwind v4 + TS | 5173 |
 
 ## Cómo ejecutar cada uno
 

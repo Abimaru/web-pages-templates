@@ -73,4 +73,18 @@ window.TEMPLATES = [
     localUrl: "http://localhost:5173",
     codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/ropa-maru",
   },
+  {
+    id: "vitalis",
+    name: "VITALIS",
+    tagline: "Tu salud, a un clic de casa",
+    desc: "Farmacia digital: medicamentos, vitaminas, dermocosmética y cuidado personal con domicilio. Estilo serio, limpio y confiable.",
+    emoji: "💊",
+    tags: ["Farmacia", "Vite + React", "Serio / Médico"],
+    accent: "#0e78d4",
+    accent2: "#10a86e",
+    theme: "light",
+    demoUrl: "https://abimaru.github.io/web-pages-templates/vitalis/",
+    localUrl: "http://localhost:5173",
+    codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/farmacia-vitalis",
+  },
 ];
