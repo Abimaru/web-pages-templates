@@ -13,13 +13,19 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Estudio Abimaru" />
   <meta property="og:title" content="Estudio Abimaru | Páginas web que venden" />
-  <meta property="og:description" content="Catálogos web, landing pages y tiendas online adaptadas a tu negocio. Escoge un modelo, lo personalizamos y lo publicamos." />
+  <meta property="og:description" content="Catálogos web, landing pages, tiendas online y soluciones digitales personalizadas para negocios y emprendimientos." />
   <meta property="og:url" content="https://abimaru.github.io/web-pages-templates/" />
-  <meta property="og:image" content="https://abimaru.github.io/web-pages-templates/favicon.svg" />
+  <meta property="og:image" content="https://abimaru.github.io/web-pages-templates/assets/og-estudio-abimaru.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Estudio Abimaru — Páginas web que venden" />
+  <meta property="og:locale" content="es_CO" />
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Estudio Abimaru | Páginas web que venden" />
-  <meta name="twitter:description" content="Catálogos web, landing pages y tiendas online adaptadas a tu negocio." />
+  <meta name="twitter:description" content="Catálogos web, landing pages, tiendas online y soluciones digitales personalizadas para negocios y emprendimientos." />
+  <meta name="twitter:image" content="https://abimaru.github.io/web-pages-templates/assets/og-estudio-abimaru.png" />
+  <meta name="twitter:image:alt" content="Estudio Abimaru — Páginas web que venden" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -173,7 +179,7 @@
     .plan .badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(100deg, var(--orange), var(--orange-2)); color: #1a0e00; font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 999px; font-family: "Space Grotesk"; white-space: nowrap; }
     .plan h3 { font-family: "Space Grotesk"; font-size: 21px; font-weight: 700; }
     .plan .from { margin-top: 12px; font-family: "Space Grotesk"; }
-    .plan .from b { font-size: 30px; font-weight: 800; }
+    .plan .from b { font-size: 22px; font-weight: 800; line-height: 1.25; display: block; }
     .plan .from small { color: var(--muted); font-size: 12px; display: block; margin-top: 2px; }
     .plan .ptag { color: var(--muted); font-size: 13.5px; margin-top: 10px; line-height: 1.5; }
     .plan ul { list-style: none; margin: 18px 0; display: flex; flex-direction: column; gap: 9px; flex: 1; }
@@ -232,6 +238,8 @@
     form.quote { border: 1px solid var(--line); border-radius: 20px; padding: 26px; background: var(--panel); display: grid; gap: 14px; }
     form.quote .two { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
     @media (max-width: 520px) { form.quote .two { grid-template-columns: 1fr; } }
+    .form-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 520px) { .form-actions { grid-template-columns: 1fr; } }
     label { font-size: 13px; color: #c7ccdb; font-weight: 500; display: block; margin-bottom: 6px; }
     .field { width: 100%; background: #0c0e18; border: 1px solid var(--line-2); border-radius: 10px; padding: 11px 13px; color: var(--text); font-size: 14px; font-family: inherit; }
     .field:focus { outline: none; border-color: var(--orange); }
@@ -469,8 +477,11 @@
             </div>
             <div><label for="f-presu">Presupuesto aproximado (opcional)</label><input class="field" id="f-presu" name="presupuesto" placeholder="Ej: $1.500.000" /></div>
             <div><label for="f-desc">Cuéntame tu necesidad</label><textarea class="field" id="f-desc" name="descripcion" placeholder="¿Qué vende tu negocio? ¿Qué te gustaría lograr con la página?"></textarea></div>
-            <button type="submit" class="btn btn-wa" style="justify-content:center">Enviar por WhatsApp</button>
-            <p style="color:var(--muted);font-size:12px;text-align:center">Al enviar se abrirá WhatsApp con tu mensaje listo. No se almacena información en ningún servidor.</p>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-wa" style="justify-content:center">Enviar por WhatsApp</button>
+              <button type="button" id="sendEmail" class="btn btn-ghost" style="justify-content:center">Enviar por correo</button>
+            </div>
+            <p style="color:var(--muted);font-size:12px;text-align:center">Se abrirá WhatsApp (o tu correo) con tu mensaje listo. No se almacena información en ningún servidor.</p>
           </form>
         </div>
       </div>
@@ -580,7 +591,7 @@
           <div><h3>${esc(m.name)}</h3><div class="tl">${esc(m.tagline)}</div></div>
           <p class="desc">${esc(m.description)}</p>
           <ul class="feats">${m.features.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
-          <p class="price">${esc(m.startingPrice)} <span>· personalizable</span></p>
+          <p class="price">${esc(m.startingPrice)}${/cotizaci/i.test(m.startingPrice) ? "" : ` <span>· personalizable</span>`}</p>
           <div class="cactions">
             <a class="btn btn-ghost btn-sm" href="${m.demoUrl}" target="_blank" rel="noopener noreferrer" data-ev="ver_demo" data-model="${esc(m.name)}">Ver demo ↗</a>
             <a class="btn btn-primary btn-sm" href="${wa(modelMsg(m))}" target="_blank" rel="noopener noreferrer" data-ev="quiero_pagina" data-model="${esc(m.name)}">Quiero una así</a>
@@ -612,7 +623,7 @@
       <div class="plan ${p.featured ? "featured" : ""}">
         ${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ""}
         <h3>${esc(p.name)}</h3>
-        <div class="from"><b>${esc(p.from)}</b><small>Rango: ${esc(p.range)} ${CFG.pricing.currency}</small></div>
+        <div class="from"><b>${esc(p.priceLabel)}</b>${p.rangeLabel ? `<small>${esc(p.rangeLabel)}</small>` : ""}</div>
         <p class="ptag">${esc(p.tagline)}</p>
         <ul>${p.features.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
         ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}
@@ -632,20 +643,38 @@
     document.getElementById("f-modelo").innerHTML = `<option value="">Sin modelo específico</option>` + MODELS.map((m) => `<option>${esc(m.name)}</option>`).join("");
 
     /* ---- Envío del formulario → WhatsApp ---- */
-    document.getElementById("quoteForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const g = (id) => document.getElementById(id).value.trim();
-      if (!g("f-nombre") || !g("f-negocio")) { alert("Por favor completa tu nombre y el nombre del negocio."); return; }
-      const msg =
+    const g = (id) => document.getElementById(id).value.trim();
+    function buildFormMessage() {
+      if (!g("f-nombre") || !g("f-negocio")) {
+        alert("Por favor completa tu nombre y el nombre del negocio.");
+        return null;
+      }
+      return (
         `Hola, soy ${g("f-nombre")} del negocio "${g("f-negocio")}".\n` +
         `Tipo de solución: ${g("f-tipo")}.\n` +
         (g("f-modelo") ? `Modelo de referencia: ${g("f-modelo")}.\n` : "") +
         (g("f-presu") ? `Presupuesto aproximado: ${g("f-presu")}.\n` : "") +
         (g("f-correo") ? `Correo: ${g("f-correo")}.\n` : "") +
         (g("f-wa") ? `WhatsApp: ${g("f-wa")}.\n` : "") +
-        (g("f-desc") ? `\nNecesidad: ${g("f-desc")}` : "");
-      track("envio_formulario", { tipo: g("f-tipo"), modelo: g("f-modelo") });
+        (g("f-desc") ? `\nNecesidad: ${g("f-desc")}` : "")
+      );
+    }
+    // Enviar por WhatsApp
+    document.getElementById("quoteForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const msg = buildFormMessage();
+      if (!msg) return;
+      track("envio_formulario", { via: "whatsapp", tipo: g("f-tipo"), modelo: g("f-modelo") });
       window.open(wa(msg), "_blank", "noopener,noreferrer");
+    });
+    // Enviar por correo (mailto, sin backend)
+    document.getElementById("sendEmail").addEventListener("click", () => {
+      const msg = buildFormMessage();
+      if (!msg) return;
+      const asunto = `Cotización web — ${g("f-negocio") || g("f-nombre")}`;
+      track("envio_formulario", { via: "email", tipo: g("f-tipo"), modelo: g("f-modelo") });
+      window.location.href =
+        `mailto:${CFG.contact.email}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(msg)}`;
     });
 
     /* ---- Menú móvil ---- */

@@ -11,9 +11,15 @@ window.SITE_CONFIG = {
   },
 
   contact: {
-    // Número en formato internacional SIN "+" ni espacios (Colombia = 57 + número)
+    // Número en formato internacional SIN "+" ni espacios (Colombia = 57 + número).
     whatsapp: "573157076691",
     whatsappDisplay: "315 707 6691",
+
+    // Correo de contacto ACTUAL (funciona). PENDIENTE del propietario: se
+    // recomienda migrar a un correo de marca, por ejemplo:
+    //   estudioabimaru@gmail.com · contacto.abimaru@gmail.com
+    //   hola@estudioabimaru.com  · contacto@estudioabimaru.com
+    // No cambiar sin confirmar; actualízalo aquí cuando esté definido.
     email: "Abimaru@gmail.com",
   },
 
@@ -38,8 +44,8 @@ window.SITE_CONFIG = {
       {
         id: "esencial",
         name: "Página Esencial",
-        from: "$800.000",
-        range: "$800.000 – $1.200.000",
+        priceLabel: "Desde $800.000 COP",
+        rangeLabel: "Rango $800.000 – $1.200.000",
         tagline: "Ideal para presentar tu negocio y recibir clientes por WhatsApp.",
         featured: false,
         features: [
@@ -56,8 +62,8 @@ window.SITE_CONFIG = {
       {
         id: "catalogo",
         name: "Catálogo Comercial",
-        from: "$1.500.000",
-        range: "$1.500.000 – $2.500.000",
+        priceLabel: "Desde $1.500.000 COP",
+        rangeLabel: "Rango $1.500.000 – $2.500.000",
         tagline: "Muestra tus productos o servicios y recibe pedidos organizados.",
         featured: true,
         badge: "Más recomendado",
@@ -75,8 +81,8 @@ window.SITE_CONFIG = {
       {
         id: "tienda",
         name: "Tienda Virtual",
-        from: "$3.500.000",
-        range: "desde $3.500.000",
+        priceLabel: "Inversión desde $3.500.000 COP",
+        rangeLabel: "",
         tagline: "Vende en línea con carrito, pagos y gestión de pedidos.",
         featured: false,
         note: "El valor final depende de las funcionalidades, integraciones, cantidad de productos y servicios externos requeridos.",
