@@ -14,20 +14,13 @@ import {
   ShieldCheck,
   Truck,
 } from "lucide-react";
+import Link from "next/link";
 import Navbar from "@/app/Navbar";
 import Reveal from "@/app/Reveal";
-import GameCard, { type Game } from "@/app/GameCard";
+import GameCard from "@/app/GameCard";
+import { games } from "@/app/lib/games";
 
-const games: Game[] = [
-  { title: "Neon Drift X", genre: "Carreras", price: "$189.900", oldPrice: "$229.900", rating: 4.8, tag: "-18%", gradient: "linear-gradient(150deg,#ff2e97,#8b5cf6 55%,#22e3ff)", emoji: "🏎️" },
-  { title: "Guardianes del Vacío", genre: "RPG / Aventura", price: "$249.900", rating: 5, tag: "NUEVO", gradient: "linear-gradient(150deg,#22e3ff,#0b0820 60%,#8b5cf6)", emoji: "🗡️" },
-  { title: "Pixel Kingdom", genre: "Plataformas", price: "$79.900", rating: 4.5, tag: "INDIE", gradient: "linear-gradient(150deg,#b6ff3c,#22e3ff 60%,#120d2e)", emoji: "🍄" },
-  { title: "Órbita Cero", genre: "Shooter", price: "$219.900", rating: 4.7, gradient: "linear-gradient(150deg,#120d2e,#8b5cf6 50%,#ff2e97)", emoji: "🚀" },
-  { title: "Reino de Sombras", genre: "Souls-like", price: "$259.900", rating: 4.9, tag: "TOP", gradient: "linear-gradient(150deg,#8b5cf6,#06040f 55%,#ff2e97)", emoji: "🐉" },
-  { title: "Turbo Fútbol 26", genre: "Deportes", price: "$199.900", oldPrice: "$239.900", rating: 4.3, tag: "-16%", gradient: "linear-gradient(150deg,#b6ff3c,#0b0820 60%,#22e3ff)", emoji: "⚽" },
-  { title: "Cyber Katana", genre: "Acción", price: "$229.900", rating: 4.6, gradient: "linear-gradient(150deg,#ff2e97,#120d2e 60%,#22e3ff)", emoji: "⚔️" },
-  { title: "Granja Estelar", genre: "Simulación", price: "$99.900", rating: 4.4, tag: "COZY", gradient: "linear-gradient(150deg,#ffb020,#8b5cf6 60%,#120d2e)", emoji: "🌾" },
-];
+const featured = games.slice(0, 8);
 
 const platforms = [
   { name: "PlayStation", desc: "PS5 · PS4 · exclusivos", icon: Joystick, color: "#22e3ff" },
@@ -162,17 +155,17 @@ export default function Home() {
         </Reveal>
 
         <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
-          {games.map((g, i) => (
-            <Reveal key={g.title} delay={i * 60}>
+          {featured.map((g, i) => (
+            <Reveal key={g.slug} delay={i * 60}>
               <GameCard game={g} />
             </Reveal>
           ))}
         </div>
 
         <Reveal className="mt-12 text-center">
-          <a href="#" className="btn-ghost">
+          <Link href="/catalogo" className="btn-ghost">
             Ver catálogo completo <ArrowRight size={16} />
-          </a>
+          </Link>
         </Reveal>
       </section>
 

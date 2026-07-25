@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Orbitron, Rajdhani, Press_Start_2P } from "next/font/google";
+import { CartProvider } from "@/app/CartContext";
+import CartDrawer from "@/app/CartDrawer";
 import "./globals.css";
 
 const orbitron = Orbitron({
@@ -39,7 +41,12 @@ export default function RootLayout({
       lang="es"
       className={`${orbitron.variable} ${rajdhani.variable} ${pressStart.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-void">{children}</body>
+      <body className="min-h-full flex flex-col bg-void">
+        <CartProvider>
+          {children}
+          <CartDrawer />
+        </CartProvider>
+      </body>
     </html>
   );
 }
