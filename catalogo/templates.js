@@ -1,118 +1,110 @@
 /*
- * CATÁLOGO DE PLANTILLAS — configuración
- * ---------------------------------------
- * Para AÑADIR una plantilla nueva: copia un bloque { ... } y edítalo.
- * Campos:
- *   id        identificador único (sin espacios)
- *   name      nombre de la plantilla / marca
- *   tagline   frase corta
- *   desc      descripción (1-2 líneas)
- *   emoji     ícono grande del mockup
- *   tags      etiquetas (rubro, stack, estilo)
- *   accent    color principal (hex)  -> usado en el degradado del preview
- *   accent2   color secundario (hex)
- *   theme     "dark" | "light"  -> look del mockup
- *   demoUrl   URL en vivo (déjala "" hasta publicar; entonces el catálogo la usa)
- *   localUrl  URL local cuando corres el proyecto (npm run dev)
- *   codeUrl   enlace al código en GitHub
+ * MODELOS / DEMOSTRACIONES — Estudio Abimaru
+ * Para añadir un modelo: copia un bloque y edítalo.
+ *   name, category, sector, type  → clasificación comercial
+ *   description                    → beneficio para el cliente
+ *   features[]                     → qué incluye / destaca
+ *   startingPrice                  → precio de referencia (texto)
+ *   demoUrl                        → URL de la demo en vivo
+ *   emoji, accent, accent2, theme  → estilo del preview
  */
 window.TEMPLATES = [
   {
     id: "pixelvault",
     name: "PIXELVAULT",
+    category: "Tienda online",
+    sector: "Videojuegos & gaming",
+    type: "Tienda online",
     tagline: "El cofre de tesoros gamer",
-    desc: "Tienda de videojuegos, consolas y servicios gamer. Estilo neón/arcade con animaciones de glitch y tilt 3D.",
+    description: "Tienda para vender videojuegos, consolas y accesorios con catálogo, fichas de producto y carrito. Estilo llamativo para captar público joven.",
+    features: ["Catálogo con filtros", "Fichas de producto", "Carrito de compra", "Diseño gamer con animaciones"],
+    startingPrice: "desde $3.500.000",
     emoji: "🎮",
-    tags: ["Videojuegos", "Next.js", "Gamer / Neón"],
-    accent: "#22e3ff",
-    accent2: "#ff2e97",
-    theme: "dark",
+    accent: "#22e3ff", accent2: "#ff2e97", theme: "dark",
     demoUrl: "https://abimaru.github.io/web-pages-templates/pixelvault/",
-    localUrl: "http://localhost:3000",
-    codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/videojuegos-pixelvault",
   },
   {
     id: "nexora",
     name: "NEXORA",
+    category: "Página corporativa",
+    sector: "Tecnología & servicios técnicos",
+    type: "Corporativa + catálogo",
     tagline: "Tecnología a la vanguardia",
-    desc: "Venta de computadores, componentes y soporte técnico. Estética geek/futurista con terminal animada y núcleo en órbita.",
+    description: "Ideal para empresas de tecnología o soporte técnico: presenta productos, servicios y agenda de diagnósticos con un aire moderno y profesional.",
+    features: ["Catálogo de productos", "Sección de servicios", "Configurador interactivo", "Agenda / contacto"],
+    startingPrice: "desde $1.500.000",
     emoji: "💻",
-    tags: ["Computación", "Next.js", "Tech / Futurista"],
-    accent: "#38bdf8",
-    accent2: "#6366f1",
-    theme: "dark",
+    accent: "#38bdf8", accent2: "#6366f1", theme: "dark",
     demoUrl: "https://abimaru.github.io/web-pages-templates/nexora/",
-    localUrl: "http://localhost:3000",
-    codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/computacion-nexora",
   },
   {
     id: "atelier",
     name: "Atelier Ibargüen",
+    category: "Catálogo web",
+    sector: "Muebles & decoración",
+    type: "Catálogo / Portafolio",
     tagline: "Muebles que cuentan tu historia",
-    desc: "Mueblería de autor y fabricación a la medida. Tono editorial y cálido, con fotografía real y proceso artesanal.",
+    description: "Perfecta para negocios de productos artesanales o a la medida: portafolio elegante con colecciones, proceso y solicitud de cotización.",
+    features: ["Portafolio por colecciones", "Proceso de trabajo", "Galería de proyectos", "Formulario de cotización"],
+    startingPrice: "desde $1.500.000",
     emoji: "🛋️",
-    tags: ["Muebles", "Vite + React", "Editorial / Cálido"],
-    accent: "#bf6a4b",
-    accent2: "#6b4e3d",
-    theme: "light",
+    accent: "#bf6a4b", accent2: "#6b4e3d", theme: "light",
     demoUrl: "https://abimaru.github.io/web-pages-templates/muebles/",
-    localUrl: "http://localhost:5173",
-    codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/muebles-atelier-ibarguen",
   },
   {
     id: "maru",
     name: "MARÚ",
+    category: "Tienda online",
+    sector: "Moda & retail",
+    type: "Tienda online",
     tagline: "Viste tu mejor versión",
-    desc: "Tienda de moda para mujer, hombre y niños: casual, formal, deportivo y accesorios. Estilo glamour con animaciones sutiles.",
+    description: "Tienda de ropa y accesorios con categorías, productos y bolsa de compra. Estética glamorosa para marcas de moda que quieren destacar.",
+    features: ["Categorías por público", "Productos con precios", "Añadir a la bolsa", "Diseño editorial"],
+    startingPrice: "desde $3.500.000",
     emoji: "👗",
-    tags: ["Moda", "Vite + React", "Glamour / Editorial"],
-    accent: "#c07a86",
-    accent2: "#b8935f",
-    theme: "light",
+    accent: "#c07a86", accent2: "#b8935f", theme: "light",
     demoUrl: "https://abimaru.github.io/web-pages-templates/maru/",
-    localUrl: "http://localhost:5173",
-    codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/ropa-maru",
   },
   {
     id: "vitalis",
     name: "VITALIS",
-    tagline: "Tu salud, a un clic de casa",
-    desc: "Farmacia digital: medicamentos, vitaminas, dermocosmética y cuidado personal con domicilio. Estilo serio, limpio y confiable.",
+    category: "Catálogo web",
+    sector: "Salud & farmacia",
+    type: "Catálogo web",
+    tagline: "Tu salud, a un clic",
+    description: "Para farmacias o tiendas de salud: catálogo de productos, servicios y pedidos por WhatsApp con un estilo serio que transmite confianza.",
+    features: ["Categorías de productos", "Fichas con etiquetas", "Servicios y domicilio", "Pedido por WhatsApp"],
+    startingPrice: "desde $1.500.000",
     emoji: "💊",
-    tags: ["Farmacia", "Vite + React", "Serio / Médico"],
-    accent: "#0e78d4",
-    accent2: "#10a86e",
-    theme: "light",
+    accent: "#0e78d4", accent2: "#10a86e", theme: "light",
     demoUrl: "https://abimaru.github.io/web-pages-templates/vitalis/",
-    localUrl: "http://localhost:5173",
-    codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/farmacia-vitalis",
   },
   {
     id: "prospera",
     name: "PRÓSPERA",
+    category: "Landing page",
+    sector: "Finanzas & servicios",
+    type: "Landing + simuladores",
     tagline: "Haz crecer tu dinero",
-    desc: "Fintech de créditos y ahorro: simulador de crédito, Cuenta Progreso con gráficos de rendimiento, score y datos de mercado (TRM, euro, yuan).",
+    description: "Landing de servicios financieros o consultoría con calculadoras interactivas y datos de interés. Convierte visitantes en solicitudes.",
+    features: ["Simuladores interactivos", "Gráficos y datos", "Secciones de confianza", "CTA de contacto"],
+    startingPrice: "desde $800.000",
     emoji: "🏦",
-    tags: ["Finanzas", "Vite + React", "Fintech / Consultoría"],
-    accent: "#0a6b4a",
-    accent2: "#c99a3f",
-    theme: "light",
+    accent: "#0a6b4a", accent2: "#c99a3f", theme: "light",
     demoUrl: "https://abimaru.github.io/web-pages-templates/prospera/",
-    localUrl: "http://localhost:5173",
-    codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/finanzas-prospera",
   },
   {
     id: "nucleo",
     name: "NÚCLEO CRM",
+    category: "Aplicación web",
+    sector: "Software & gestión",
+    type: "Solución personalizada",
     tagline: "Gestiona clientes y negocios",
-    desc: "Panel CRM (front, sin backend): dashboard con gráficos, contactos, pipeline kanban con arrastrar-y-soltar, tareas y reportes.",
+    description: "Ejemplo de aplicación a la medida: panel para gestionar contactos, negocios y tareas. Muestra que también desarrollamos software, no solo webs.",
+    features: ["Panel con métricas", "Gestión de contactos", "Tablero de negocios", "Reportes visuales"],
+    startingPrice: "cotización personalizada",
     emoji: "🗂️",
-    tags: ["CRM · Panel", "Vite + React", "SaaS / Dashboard"],
-    accent: "#4f46e5",
-    accent2: "#8b5cf6",
-    theme: "light",
+    accent: "#4f46e5", accent2: "#8b5cf6", theme: "light",
     demoUrl: "https://abimaru.github.io/web-pages-templates/nucleo/",
-    localUrl: "http://localhost:5173",
-    codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/crm-nucleo",
   },
 ];

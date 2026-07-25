@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abimaru.github.io/web-pages-templates/sitemap.xml

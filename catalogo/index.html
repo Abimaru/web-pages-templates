@@ -3,243 +3,660 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Estudio Abimaru — Catálogo de plantillas web</title>
-  <meta name="description" content="Catálogo de plantillas y sitios web diseñados por Abimaru. Explora las demos y el código de cada plantilla." />
+  <title>Estudio Abimaru | Catálogos web, landing pages y tiendas online</title>
+  <meta name="description" content="Diseño y desarrollo de páginas web para negocios: catálogos, landing pages, tiendas online y soluciones personalizadas. Escoge un modelo, lo adaptamos a tu marca y lo publicamos." />
+  <link rel="canonical" href="https://abimaru.github.io/web-pages-templates/" />
+  <meta name="theme-color" content="#0a0b12" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Estudio Abimaru" />
+  <meta property="og:title" content="Estudio Abimaru | Páginas web que venden" />
+  <meta property="og:description" content="Catálogos web, landing pages y tiendas online adaptadas a tu negocio. Escoge un modelo, lo personalizamos y lo publicamos." />
+  <meta property="og:url" content="https://abimaru.github.io/web-pages-templates/" />
+  <meta property="og:image" content="https://abimaru.github.io/web-pages-templates/favicon.svg" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Estudio Abimaru | Páginas web que venden" />
+  <meta name="twitter:description" content="Catálogos web, landing pages y tiendas online adaptadas a tu negocio." />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Datos estructurados -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Estudio Abimaru",
+    "description": "Diseño y desarrollo de páginas web para negocios: catálogos, landing pages, tiendas online y soluciones personalizadas.",
+    "url": "https://abimaru.github.io/web-pages-templates/",
+    "areaServed": "CO",
+    "slogan": "Páginas web que venden",
+    "serviceType": ["Catálogo web", "Landing page", "Tienda online", "Página corporativa", "Solución web personalizada"]
+  }
+  </script>
+
+  <!--
+    ANALÍTICA (no activada): para habilitar Google Analytics, Plausible o Umami,
+    pega el snippet del proveedor aquí y define window.SITE_CONFIG.analytics.
+    La función track() (más abajo) ya envía eventos de: ver_demo, quiero_pagina,
+    whatsapp, seleccion_plan y envio_formulario. Solo conéctala al proveedor.
+    Se recomienda usar parámetros UTM en el flyer (?utm_source=flyer).
+  -->
+
   <style>
     :root {
-      --bg: #07080f;
-      --bg2: #0d0f1c;
-      --panel: #12142440;
-      --border: #ffffff14;
-      --text: #eef0f8;
-      --muted: #9aa0b8;
-      --accent: #8b7bff;
-      --accent2: #22d3ee;
+      --bg: #0a0b12; --bg2: #0f111c; --panel: #161a2b; --panel-2: #1b2036;
+      --line: #ffffff14; --line-2: #ffffff22;
+      --text: #eef1f8; --muted: #9aa2b8;
+      --orange: #ff7a1a; --orange-2: #ff9d4d; --blue: #3b82f6; --cyan: #38bdf8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: "Inter", system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body { font-family: "Inter", system-ui, sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     .display { font-family: "Space Grotesk", system-ui, sans-serif; }
     a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+    :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 22px; }
+    .eyebrow { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; font-weight: 700; color: var(--orange); }
+    section { scroll-margin-top: 80px; }
+    h2.sec { font-family: "Space Grotesk"; font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -.02em; }
+    .sec-sub { color: var(--muted); margin-top: 12px; max-width: 640px; }
+    .center { text-align: center; }
+    .center .sec-sub { margin-left: auto; margin-right: auto; }
+
+    /* Skip link */
+    .skip { position: absolute; left: -999px; top: 0; background: var(--orange); color: #10121d; padding: 10px 16px; border-radius: 8px; z-index: 100; font-weight: 700; }
+    .skip:focus { left: 12px; top: 12px; }
 
     /* Fondo decorativo */
-    .bg-fx {
-      position: fixed; inset: 0; z-index: -1; overflow: hidden;
+    .bg-fx { position: fixed; inset: 0; z-index: -1;
       background:
-        radial-gradient(50% 45% at 15% 0%, #4b3bff33, transparent 60%),
-        radial-gradient(45% 40% at 90% 10%, #22d3ee22, transparent 60%),
-        radial-gradient(50% 50% at 60% 100%, #ff2e9722, transparent 60%),
-        var(--bg);
-    }
-    .bg-grid {
-      position: fixed; inset: 0; z-index: -1; opacity: .5;
-      background-image:
-        linear-gradient(#ffffff08 1px, transparent 1px),
-        linear-gradient(90deg, #ffffff08 1px, transparent 1px);
+        radial-gradient(48% 40% at 12% 0%, #ff7a1a26, transparent 60%),
+        radial-gradient(42% 38% at 92% 8%, #3b82f622, transparent 60%),
+        var(--bg); }
+    .bg-grid { position: fixed; inset: 0; z-index: -1; opacity: .5;
+      background-image: linear-gradient(#ffffff08 1px, transparent 1px), linear-gradient(90deg, #ffffff08 1px, transparent 1px);
       background-size: 46px 46px;
-      -webkit-mask-image: radial-gradient(70% 60% at 50% 20%, #000 40%, transparent 100%);
-      mask-image: radial-gradient(70% 60% at 50% 20%, #000 40%, transparent 100%);
-    }
+      -webkit-mask-image: radial-gradient(70% 55% at 50% 12%, #000 40%, transparent 100%);
+      mask-image: radial-gradient(70% 55% at 50% 12%, #000 40%, transparent 100%); }
 
-    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    /* Botones */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-family: "Space Grotesk"; font-weight: 600; font-size: 15px; cursor: pointer; border: 0; transition: transform .2s, box-shadow .3s, filter .2s, background .2s; }
+    .btn-primary { background: linear-gradient(100deg, var(--orange), var(--orange-2)); color: #1a0e00; box-shadow: 0 10px 26px #ff7a1a3d; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px #ff7a1a55; }
+    .btn-wa { background: #25d366; color: #06310f; box-shadow: 0 10px 26px #25d3663d; }
+    .btn-wa:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    .btn-ghost { background: #ffffff0d; color: var(--text); border: 1px solid var(--line-2); }
+    .btn-ghost:hover { border-color: #ffffff3a; background: #ffffff14; }
+    .btn-sm { padding: 9px 14px; font-size: 13.5px; border-radius: 10px; }
 
     /* Header */
-    header {
-      position: sticky; top: 0; z-index: 20;
-      backdrop-filter: blur(10px);
-      background: #07080fcc;
-      border-bottom: 1px solid var(--border);
-    }
-    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .01em; }
-    .brand .mark {
-      width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center;
-      background: linear-gradient(135deg, #8b7bff, #22d3ee); color: #07080f; font-weight: 800;
-      font-family: "Space Grotesk"; box-shadow: 0 0 22px #8b7bff66;
-    }
-    .brand small { display: block; font-size: 11px; font-weight: 400; color: var(--muted); letter-spacing: .18em; text-transform: uppercase; }
-    .ghp { font-size: 14px; color: var(--muted); display: inline-flex; align-items: center; gap: 7px; padding: 8px 16px; border: 1px solid var(--border); border-radius: 999px; transition: .25s; }
-    .ghp:hover { color: var(--text); border-color: #ffffff33; }
+    header { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background: #0a0b12cc; border-bottom: 1px solid var(--line); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 11px; }
+    .brand .mark { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: linear-gradient(135deg, var(--orange), var(--blue)); color: #10121d; font-family: "Space Grotesk"; font-weight: 800; box-shadow: 0 0 20px #ff7a1a55; }
+    .brand b { font-family: "Space Grotesk"; font-size: 17px; font-weight: 700; letter-spacing: -.01em; }
+    .brand small { display: block; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+    .nav-links { display: none; gap: 26px; }
+    .nav-links a { font-size: 14.5px; color: #c7ccdb; font-weight: 500; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { display: none; gap: 10px; }
+    .burger { background: none; border: 1px solid var(--line-2); border-radius: 10px; width: 42px; height: 42px; display: grid; place-items: center; color: var(--text); cursor: pointer; }
+    .mobile-menu { display: none; padding: 10px 22px 20px; border-top: 1px solid var(--line); }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a { display: block; padding: 12px 4px; border-bottom: 1px solid var(--line); color: #c7ccdb; font-weight: 500; }
+    @media (min-width: 940px) { .nav-links, .nav-cta { display: flex; align-items: center; } .burger { display: none; } }
 
     /* Hero */
-    .hero { padding: 92px 0 40px; text-align: center; }
-    .eyebrow { font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: var(--accent2); font-weight: 600; }
-    .hero h1 { font-size: clamp(38px, 6vw, 68px); line-height: 1.02; margin-top: 20px; font-weight: 700; letter-spacing: -.02em; }
-    .hero h1 .grad {
-      background: linear-gradient(100deg, #8b7bff, #22d3ee, #ff8fce);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    .hero p { max-width: 620px; margin: 24px auto 0; color: var(--muted); font-size: 18px; line-height: 1.6; }
-    .stats { display: flex; gap: 40px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
-    .stat b { font-family: "Space Grotesk"; font-size: 30px; font-weight: 700; display: block; }
-    .stat span { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .14em; }
+    .hero { padding: 74px 0 40px; }
+    .hero h1 { font-family: "Space Grotesk"; font-size: clamp(38px, 6.5vw, 68px); line-height: 1.02; font-weight: 700; letter-spacing: -.025em; }
+    .hero h1 .grad { background: linear-gradient(100deg, var(--orange), var(--orange-2) 40%, var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero p.lead { color: #c7ccdb; font-size: 18px; line-height: 1.6; max-width: 620px; margin-top: 20px; }
+    .hero .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .indicators { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    .ind { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; color: #c7ccdb; background: #ffffff08; }
+    .ind b { color: var(--text); }
 
-    /* Banner info */
-    .info {
-      max-width: 760px; margin: 8px auto 0; padding: 14px 20px; border-radius: 14px;
-      background: #ffffff0a; border: 1px solid var(--border); color: var(--muted);
-      font-size: 13.5px; display: flex; gap: 12px; align-items: flex-start;
-    }
-    .info b { color: var(--text); font-weight: 600; }
-
-    /* Grid */
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px; padding: 56px 0 100px; }
-
-    .card {
-      border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
-      background: linear-gradient(180deg, #ffffff09, #ffffff04);
-      transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
-      display: flex; flex-direction: column;
-    }
-    .card:hover { transform: translateY(-6px); border-color: #ffffff2e; box-shadow: 0 30px 60px #00000066; }
-
-    /* Preview: ventana de navegador + iframe en vivo */
+    /* Grid modelos */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+    .card { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: linear-gradient(180deg, #ffffff09, #ffffff04); display: flex; flex-direction: column; transition: transform .3s, border-color .3s, box-shadow .3s; }
+    .card:hover { transform: translateY(-5px); border-color: var(--line-2); box-shadow: 0 26px 54px #00000066; }
     .preview { position: relative; }
     .browser { display: flex; flex-direction: column; }
-    .browser .bar { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 14px; }
-    .browser .bar i { width: 10px; height: 10px; border-radius: 50%; display: block; flex: none; }
-    .browser .url { margin-left: 10px; font-size: 11px; padding: 3px 12px; border-radius: 999px; opacity: .75; font-family: "Space Grotesk"; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .frame-wrap { position: relative; width: 100%; aspect-ratio: 16 / 10; overflow: hidden; }
-    .frame-wrap iframe { position: absolute; top: 0; left: 0; width: 285%; height: 285%; transform: scale(.3508); transform-origin: top left; border: 0; pointer-events: none; z-index: 1; background: #0b0b16; }
-    .mockup { position: absolute; inset: 0; z-index: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; padding: 18px; overflow: hidden; }
-    .mockup .emoji { font-size: 58px; filter: drop-shadow(0 8px 22px #0006); z-index: 2; }
-    .mockup .name { font-family: "Space Grotesk"; font-weight: 700; font-size: 22px; letter-spacing: .02em; z-index: 2; }
-    .mockup .tag { font-size: 12.5px; opacity: .85; z-index: 2; }
-    .mockup .blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: .5; }
-    .mockup .b1 { width: 160px; height: 160px; top: -30px; left: -30px; }
-    .mockup .b2 { width: 150px; height: 150px; bottom: -40px; right: -20px; }
-    .preview-link { position: absolute; inset: 0; z-index: 3; }
-    .preview-link .hint { position: absolute; bottom: 10px; right: 10px; font-size: 11px; font-weight: 600; padding: 5px 11px; border-radius: 999px; background: #000000aa; color: #fff; backdrop-filter: blur(4px); opacity: 0; transform: translateY(4px); transition: .25s; }
-    .card:hover .preview-link .hint { opacity: 1; transform: translateY(0); }
+    .bar { height: 32px; display: flex; align-items: center; gap: 6px; padding: 0 12px; background: #00000030; }
+    .bar i { width: 9px; height: 9px; border-radius: 50%; }
+    .bar .u { margin-left: 8px; font-size: 10.5px; color: #ffffff88; font-family: "Space Grotesk"; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .frame { position: relative; width: 100%; aspect-ratio: 16/10; overflow: hidden; }
+    .frame iframe { position: absolute; inset: 0; width: 285%; height: 285%; transform: scale(.3508); transform-origin: top left; border: 0; z-index: 1; background: #0b0b16; }
+    .mockup { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 16px; }
+    .mockup .em { font-size: 52px; filter: drop-shadow(0 6px 18px #0007); }
+    .mockup .nm { font-family: "Space Grotesk"; font-weight: 700; font-size: 20px; }
+    .mockup .tg { font-size: 12px; opacity: .85; }
+    .mockup .b1, .mockup .b2 { position: absolute; border-radius: 50%; filter: blur(40px); opacity: .5; }
+    .mockup .b1 { width: 150px; height: 150px; top: -30px; left: -30px; }
+    .mockup .b2 { width: 140px; height: 140px; bottom: -34px; right: -20px; }
+    .cbody { padding: 18px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { font-size: 11px; padding: 3px 9px; border-radius: 999px; background: #ffffff0d; border: 1px solid var(--line); color: var(--muted); }
+    .tag.type { background: #ff7a1a1f; border-color: #ff7a1a44; color: var(--orange-2); }
+    .cbody h3 { font-family: "Space Grotesk"; font-size: 20px; font-weight: 700; }
+    .cbody .tl { font-size: 13px; color: var(--cyan); margin-top: 6px; }
+    .cbody .desc { font-size: 13.5px; color: #b7bece; line-height: 1.55; }
+    .feats { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .feats li { font-size: 13px; color: #c7ccdb; display: flex; gap: 8px; }
+    .feats li::before { content: "✓"; color: var(--orange); font-weight: 700; }
+    .price { font-family: "Space Grotesk"; font-weight: 700; font-size: 14px; color: var(--text); }
+    .price span { color: var(--muted); font-weight: 400; font-size: 12px; }
+    .cactions { display: flex; gap: 9px; margin-top: auto; padding-top: 4px; }
+    .cactions .btn { flex: 1; justify-content: center; }
 
-    /* Body */
-    .body { padding: 22px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
-    .body h3 { font-family: "Space Grotesk"; font-size: 20px; font-weight: 600; line-height: 1.3; }
-    .body .tl { font-size: 13px; color: var(--accent2); margin-top: 7px; }
-    .body p { font-size: 14px; color: var(--muted); line-height: 1.55; }
-    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
-    .chip { font-size: 11px; padding: 4px 10px; border-radius: 999px; background: #ffffff0d; border: 1px solid var(--border); color: var(--muted); }
-    .actions { display: flex; gap: 10px; margin-top: auto; padding-top: 6px; }
-    .btn { flex: 1; text-align: center; padding: 11px 14px; border-radius: 11px; font-weight: 600; font-size: 14px; transition: .25s; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
-    .btn-primary { color: #07080f; }
-    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
-    .btn-ghost { border: 1px solid var(--border); color: var(--text); }
-    .btn-ghost:hover { border-color: #ffffff40; background: #ffffff0a; }
-    .live-dot { display:none; align-items:center; gap:6px; font-size:11px; color:#4ade80; }
-    .live-dot.on { display: inline-flex; }
-    .live-dot i { width:7px; height:7px; border-radius:50%; background:#4ade80; box-shadow:0 0 8px #4ade80; }
+    /* Secciones generales */
+    .block { padding: 64px 0; }
+    .block.alt { background: linear-gradient(180deg, #ffffff05, transparent); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .cards3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 40px; }
+    .feature { border: 1px solid var(--line); border-radius: 16px; padding: 26px; background: #ffffff06; transition: border-color .3s, transform .3s; }
+    .feature:hover { border-color: var(--line-2); transform: translateY(-3px); }
+    .feature .ic { font-size: 30px; }
+    .feature h3 { font-family: "Space Grotesk"; font-size: 19px; font-weight: 600; margin-top: 14px; }
+    .feature p { color: var(--muted); font-size: 14px; line-height: 1.55; margin-top: 8px; }
 
-    footer { border-top: 1px solid var(--border); padding: 34px 0; text-align: center; color: var(--muted); font-size: 13px; }
-    footer .display { color: var(--text); }
+    /* Planes */
+    .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; margin-top: 42px; align-items: start; }
+    .plan { border: 1px solid var(--line); border-radius: 20px; padding: 28px; background: var(--panel); position: relative; display: flex; flex-direction: column; }
+    .plan.featured { border-color: var(--orange); background: linear-gradient(180deg, #ff7a1a12, var(--panel)); box-shadow: 0 20px 50px #ff7a1a22; }
+    .plan .badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(100deg, var(--orange), var(--orange-2)); color: #1a0e00; font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 999px; font-family: "Space Grotesk"; white-space: nowrap; }
+    .plan h3 { font-family: "Space Grotesk"; font-size: 21px; font-weight: 700; }
+    .plan .from { margin-top: 12px; font-family: "Space Grotesk"; }
+    .plan .from b { font-size: 30px; font-weight: 800; }
+    .plan .from small { color: var(--muted); font-size: 12px; display: block; margin-top: 2px; }
+    .plan .ptag { color: var(--muted); font-size: 13.5px; margin-top: 10px; line-height: 1.5; }
+    .plan ul { list-style: none; margin: 18px 0; display: flex; flex-direction: column; gap: 9px; flex: 1; }
+    .plan ul li { font-size: 13.5px; color: #c7ccdb; display: flex; gap: 9px; }
+    .plan ul li::before { content: "✓"; color: var(--orange); font-weight: 700; }
+    .plan .note { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 14px; }
+    .costs { margin-top: 34px; border: 1px dashed var(--line-2); border-radius: 16px; padding: 22px; background: #ffffff05; }
+    .costs h4 { font-family: "Space Grotesk"; font-size: 16px; }
+    .costs .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .costs .chip { font-size: 12.5px; padding: 5px 11px; border-radius: 999px; background: #ffffff0d; border: 1px solid var(--line); color: #c7ccdb; }
 
-    @media (max-width: 640px) {
-      .hero { padding-top: 64px; }
-      .stats { gap: 26px; }
-    }
-    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+    /* Personalización */
+    .perso { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+    .perso .p { padding: 10px 16px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff06; font-size: 14px; color: #c7ccdb; transition: all .2s; }
+    .perso .p:hover { border-color: var(--orange); color: var(--text); }
+
+    /* Proceso */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 42px; }
+    .step { border: 1px solid var(--line); border-radius: 16px; padding: 24px; background: #ffffff06; position: relative; }
+    .step .n { font-family: "Space Grotesk"; font-size: 40px; font-weight: 800; background: linear-gradient(100deg, var(--orange), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .step h3 { font-family: "Space Grotesk"; font-size: 17px; font-weight: 600; margin-top: 6px; }
+    .step p { color: var(--muted); font-size: 13.5px; line-height: 1.55; margin-top: 8px; }
+
+    /* Por qué / listas verificables */
+    .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 40px; }
+    .why .w { display: flex; gap: 12px; align-items: flex-start; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: #ffffff06; }
+    .why .w .ic { font-size: 22px; }
+    .why .w b { font-family: "Space Grotesk"; font-size: 15px; }
+    .why .w p { color: var(--muted); font-size: 13px; margin-top: 3px; }
+
+    /* Sobre */
+    .about { display: grid; gap: 30px; margin-top: 36px; grid-template-columns: 1fr; }
+    @media (min-width: 820px) { .about { grid-template-columns: 1.4fr 1fr; align-items: center; } }
+    .about .card-about { border: 1px solid var(--line); border-radius: 20px; padding: 30px; background: var(--panel); }
+    .about p { color: #c7ccdb; line-height: 1.7; }
+    .about .visual { border-radius: 20px; padding: 30px; background: linear-gradient(135deg, #ff7a1a1a, #3b82f61a); border: 1px solid var(--line); text-align: center; }
+    .about .visual .big { font-size: 64px; }
+    .about .visual .sig { font-family: "Space Grotesk"; font-weight: 700; margin-top: 10px; }
+
+    /* FAQ */
+    .faq { margin-top: 36px; display: flex; flex-direction: column; gap: 12px; max-width: 820px; }
+    details { border: 1px solid var(--line); border-radius: 14px; background: #ffffff06; overflow: hidden; }
+    details[open] { border-color: var(--line-2); }
+    summary { padding: 18px 20px; cursor: pointer; font-family: "Space Grotesk"; font-weight: 600; font-size: 15.5px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--orange); font-size: 22px; font-weight: 400; transition: transform .2s; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { padding: 0 20px 18px; color: #b7bece; line-height: 1.6; font-size: 14.5px; }
+
+    /* Contacto / formulario */
+    .contact-grid { display: grid; gap: 26px; margin-top: 36px; grid-template-columns: 1fr; }
+    @media (min-width: 860px) { .contact-grid { grid-template-columns: 1fr 1.1fr; } }
+    .contact-info .btn { margin-top: 8px; }
+    .contact-info ul { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .contact-info ul li { display: flex; gap: 12px; align-items: center; color: #c7ccdb; }
+    form.quote { border: 1px solid var(--line); border-radius: 20px; padding: 26px; background: var(--panel); display: grid; gap: 14px; }
+    form.quote .two { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 520px) { form.quote .two { grid-template-columns: 1fr; } }
+    label { font-size: 13px; color: #c7ccdb; font-weight: 500; display: block; margin-bottom: 6px; }
+    .field { width: 100%; background: #0c0e18; border: 1px solid var(--line-2); border-radius: 10px; padding: 11px 13px; color: var(--text); font-size: 14px; font-family: inherit; }
+    .field:focus { outline: none; border-color: var(--orange); }
+    textarea.field { resize: vertical; min-height: 84px; }
+
+    /* CTA final */
+    .final { text-align: center; border: 1px solid var(--orange); border-radius: 26px; padding: 50px 24px; background: linear-gradient(135deg, #ff7a1a1a, #3b82f61a); }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--line); padding: 40px 0 30px; margin-top: 20px; }
+    .foot { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: flex-start; }
+    .foot .links { display: flex; flex-wrap: wrap; gap: 22px; }
+    .foot a { color: var(--muted); font-size: 14px; }
+    .foot a:hover { color: var(--text); }
+    .foot .legal { color: #6b7185; font-size: 12.5px; margin-top: 22px; line-height: 1.6; }
+
+    /* WhatsApp flotante */
+    .wa-float { position: fixed; right: 20px; bottom: 20px; z-index: 60; width: 58px; height: 58px; border-radius: 50%; background: #25d366; display: grid; place-items: center; box-shadow: 0 10px 30px #25d36655; transition: transform .2s; }
+    .wa-float:hover { transform: scale(1.08); }
+    .wa-float svg { width: 30px; height: 30px; }
+
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
   </style>
 </head>
 <body>
+  <a href="#modelos" class="skip">Saltar al contenido</a>
   <div class="bg-fx"></div>
   <div class="bg-grid"></div>
 
+  <!-- ===================== HEADER ===================== -->
   <header>
     <div class="wrap nav">
-      <a class="brand" href="#top">
+      <a href="#top" class="brand" aria-label="Estudio Abimaru — inicio">
         <span class="mark">A</span>
-        <span>Estudio Abimaru<small>Catálogo de plantillas web</small></span>
+        <span><b>Estudio Abimaru</b><small>Diseño &amp; desarrollo web</small></span>
       </a>
-      <a class="ghp" href="https://github.com/Abimaru/web-pages-templates" target="_blank" rel="noopener">
-        ⭐ Ver repositorio
-      </a>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#modelos">Modelos</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#planes">Planes</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#contacto" class="btn btn-ghost btn-sm">Cotizar mi página</a>
+        <a id="navWa" class="btn btn-wa btn-sm" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">☰</button>
     </div>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Navegación móvil">
+      <a href="#modelos">Modelos</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#planes">Planes</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacto">Contacto</a>
+      <a id="mWa" target="_blank" rel="noopener noreferrer" style="color:#25d366;font-weight:700">Hablar por WhatsApp</a>
+    </nav>
   </header>
 
-  <main id="top" class="wrap">
-    <section class="hero">
-      <p class="eyebrow">Diseño &amp; desarrollo web</p>
-      <h1>Plantillas web que <span class="grad">venden</span></h1>
-      <p>Una colección de sitios listos para adaptar a tu marca. Explora cada demo en vivo o su código. ¿Necesitas uno a la medida? Hablemos.</p>
-      <div class="stats">
-        <div class="stat"><b id="count">3</b><span>plantillas</span></div>
-        <div class="stat"><b>100%</b><span>responsivas</span></div>
-        <div class="stat"><b>∞</b><span>personalizables</span></div>
+  <main id="top">
+    <!-- ===================== HERO ===================== -->
+    <section class="hero wrap">
+      <p class="eyebrow">Diseño y desarrollo web para negocios</p>
+      <h1>Páginas web que <span class="grad">venden</span></h1>
+      <p class="lead">Catálogos web, landing pages y tiendas online diseñadas para mostrar, promocionar y vender los productos o servicios de tu negocio. Escoges un modelo, lo adaptamos a tu marca, lo publicamos y te acompañamos.</p>
+      <div class="cta-row">
+        <a href="#modelos" class="btn btn-primary">Ver modelos</a>
+        <a href="#contacto" class="btn btn-ghost">Solicitar cotización</a>
       </div>
-      <div class="info">
-        <span>✨</span>
-        <span id="info-text"><b>Previews en vivo:</b> cada tarjeta muestra el sitio real funcionando. Haz clic en la vista previa o en <b>"Ver demo"</b> para abrirlo en grande, o en <b>"Código"</b> para ver cómo está hecho. ¿Quieres una web así para tu marca? Hablemos.</span>
+      <div class="indicators">
+        <span class="ind"><b id="count">7</b>&nbsp;modelos disponibles</span>
+        <span class="ind">📱 Diseño responsivo</span>
+        <span class="ind">🎨 Personalización de marca</span>
+        <span class="ind">🚀 Publicación incluida (según plan)</span>
       </div>
     </section>
 
-    <section class="grid" id="grid"></section>
+    <!-- ===================== MODELOS ===================== -->
+    <section id="modelos" class="block">
+      <div class="wrap">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px">
+          <div>
+            <p class="eyebrow">Modelos disponibles</p>
+            <h2 class="sec">Escoge el estilo más cercano a tu negocio</h2>
+            <p class="sec-sub">Cada modelo es un punto de partida real y funcional. Lo personalizamos con tu marca, contenido y necesidades. Explora la demo en vivo.</p>
+          </div>
+        </div>
+        <div class="grid" id="grid" style="margin-top:40px"></div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICIOS ===================== -->
+    <section id="servicios" class="block alt">
+      <div class="wrap center">
+        <p class="eyebrow">Servicios</p>
+        <h2 class="sec">Soluciones para cada tipo de negocio</h2>
+        <p class="sec-sub">Desde una presencia sencilla hasta una tienda completa o una aplicación a la medida.</p>
+        <div class="cards3" style="text-align:left">
+          <div class="feature"><div class="ic">🗂️</div><h3>Catálogos web</h3><p>Muestra productos o servicios organizados por categorías y recibe solicitudes directamente por WhatsApp.</p></div>
+          <div class="feature"><div class="ic">🚀</div><h3>Landing pages</h3><p>Promociona un producto, servicio, campaña, evento o emprendimiento con una página enfocada en convertir.</p></div>
+          <div class="feature"><div class="ic">🛒</div><h3>Tiendas online</h3><p>Para negocios que necesitan carrito, pagos, pedidos y administración de productos.</p></div>
+          <div class="feature"><div class="ic">🏢</div><h3>Páginas corporativas</h3><p>Presenta la experiencia, servicios y canales de contacto de tu empresa o perfil profesional.</p></div>
+          <div class="feature"><div class="ic">⚙️</div><h3>Soluciones personalizadas</h3><p>Aplicaciones, formularios, automatizaciones, integraciones o funcionalidades específicas para tu operación.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PLANES ===================== -->
+    <section id="planes" class="block">
+      <div class="wrap center">
+        <p class="eyebrow">Planes</p>
+        <h2 class="sec">Inversión clara, a tu medida</h2>
+        <p class="sec-sub" id="pricingNote"></p>
+        <div class="plans" id="plans" style="text-align:left"></div>
+        <div class="costs" style="text-align:left">
+          <h4>Costos que pueden cobrarse por separado</h4>
+          <p style="color:var(--muted);font-size:13.5px;margin-top:6px">Estos servicios externos no están incluidos por defecto y se especifican en cada cotización:</p>
+          <div class="chips" id="costChips"></div>
+          <p style="color:#c7ccdb;font-size:13.5px;margin-top:14px">🔧 <b>Mantenimiento y soporte opcional</b> — <span id="maint"></span>, según alcance y frecuencia de cambios.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PERSONALIZACIÓN ===================== -->
+    <section id="personalizar" class="block alt">
+      <div class="wrap">
+        <p class="eyebrow">Personalización</p>
+        <h2 class="sec">Los modelos son el punto de partida</h2>
+        <p class="sec-sub">Cada página se adapta a la identidad, contenido y necesidades reales de tu negocio. Esto es lo que podemos ajustar:</p>
+        <div class="perso" id="perso"></div>
+      </div>
+    </section>
+
+    <!-- ===================== PROCESO ===================== -->
+    <section id="proceso" class="block">
+      <div class="wrap center">
+        <p class="eyebrow">Proceso de trabajo</p>
+        <h2 class="sec">De la idea a tu página en 5 pasos</h2>
+        <div class="steps" style="text-align:left">
+          <div class="step"><div class="n">1</div><h3>Seleccionas un modelo</h3><p>Revisas las demostraciones y eliges el estilo más cercano a tu negocio.</p></div>
+          <div class="step"><div class="n">2</div><h3>Definimos el alcance</h3><p>Revisamos contenido, secciones, productos, integraciones y necesidades especiales.</p></div>
+          <div class="step"><div class="n">3</div><h3>Personalizamos</h3><p>Aplicamos identidad visual, información, imágenes y funcionalidades.</p></div>
+          <div class="step"><div class="n">4</div><h3>Revisas y aprobamos</h3><p>Presentamos una versión funcional y hacemos los ajustes acordados.</p></div>
+          <div class="step"><div class="n">5</div><h3>Publicamos</h3><p>Configuramos dominio, hosting y publicación final según el plan contratado.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== POR QUÉ ===================== -->
+    <section class="block alt">
+      <div class="wrap">
+        <p class="eyebrow">Confianza y respaldo</p>
+        <h2 class="sec">¿Por qué trabajar con Estudio Abimaru?</h2>
+        <div class="why">
+          <div class="w"><span class="ic">💻</span><div><b>Desarrollo profesional</b><p>Código organizado y buenas prácticas.</p></div></div>
+          <div class="w"><span class="ic">📱</span><div><b>Diseño responsivo</b><p>Se ve y funciona bien en celular y computador.</p></div></div>
+          <div class="w"><span class="ic">🎨</span><div><b>Soluciones personalizables</b><p>Todo se adapta a tu marca y negocio.</p></div></div>
+          <div class="w"><span class="ic">🤝</span><div><b>Acompañamiento</b><p>Te guío durante todo el proyecto.</p></div></div>
+          <div class="w"><span class="ic">🚀</span><div><b>Entrega y publicación</b><p>Dejo tu página en línea y funcionando.</p></div></div>
+          <div class="w"><span class="ic">🛠️</span><div><b>Soporte posterior opcional</b><p>Mantenimiento y mejoras cuando lo necesites.</p></div></div>
+          <div class="w"><span class="ic">🧩</span><div><b>Experiencia en software</b><p>Desarrollo de aplicaciones y soluciones digitales.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SOBRE ===================== -->
+    <section id="sobre" class="block">
+      <div class="wrap">
+        <p class="eyebrow">Sobre Estudio Abimaru</p>
+        <div class="about">
+          <div class="card-about">
+            <h2 class="sec" style="font-size:26px">Diseño y desarrollo con visión práctica</h2>
+            <p style="margin-top:16px">Estudio Abimaru nace para ayudar a negocios, emprendimientos y profesionales a construir una presencia digital moderna y funcional. Cada solución combina diseño, desarrollo de software y una visión práctica orientada a las necesidades reales del negocio.</p>
+          </div>
+          <div class="visual">
+            <div class="big">🧑‍💻</div>
+            <div class="sig">Estudio Abimaru</div>
+            <p style="color:var(--muted);font-size:13px;margin-top:6px">Desarrollo web · Aplicaciones · E-commerce · Soluciones digitales</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <section id="faq" class="block alt">
+      <div class="wrap">
+        <p class="eyebrow">Preguntas frecuentes</p>
+        <h2 class="sec">Todo lo que necesitas saber</h2>
+        <div class="faq">
+          <details><summary>¿Los modelos se entregan exactamente como aparecen?</summary><p>No. Cada modelo sirve como punto de partida y se personaliza con la marca, contenido, productos y necesidades de tu negocio.</p></details>
+          <details><summary>¿Puedo usar mi propio dominio?</summary><p>Sí. Se puede configurar un dominio existente o te acompaño durante la compra y conexión de uno nuevo.</p></details>
+          <details><summary>¿El dominio y el hosting están incluidos?</summary><p>Depende del plan. Los costos de servicios externos (dominio, hosting, pasarela de pagos, etc.) se especifican en la cotización.</p></details>
+          <details><summary>¿Puedo solicitar funcionalidades adicionales?</summary><p>Sí. Las integraciones o funcionalidades especiales se cotizan según su complejidad.</p></details>
+          <details><summary>¿La página funciona en celulares?</summary><p>Sí. Todos los desarrollos se entregan con diseño responsivo.</p></details>
+          <details><summary>¿Puedo actualizar los productos?</summary><p>Depende de la solución contratada: puede ser un catálogo estático, un sistema administrable o una tienda completa.</p></details>
+          <details><summary>¿Cuánto tarda el desarrollo?</summary><p>El tiempo depende del alcance, contenido y funcionalidades. Se define durante la cotización.</p></details>
+          <details><summary>¿Qué necesito entregar?</summary><p>Logo, información del negocio, textos, imágenes, productos, precios, datos de contacto y referencias visuales, cuando estén disponibles.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACTO ===================== -->
+    <section id="contacto" class="block">
+      <div class="wrap">
+        <p class="eyebrow">Contacto</p>
+        <h2 class="sec">Cuéntame qué necesita tu negocio</h2>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <p style="color:#c7ccdb;line-height:1.6">La forma más rápida es por WhatsApp. También puedes llenar el formulario y se generará automáticamente tu mensaje con los datos.</p>
+            <a id="infoWa" class="btn btn-wa" target="_blank" rel="noopener noreferrer" style="margin-top:18px">Hablar por WhatsApp</a>
+            <ul>
+              <li>💬 <span id="waText"></span></li>
+              <li>✉️ <a id="emailLink"></a></li>
+              <li>📍 Cali, Colombia</li>
+            </ul>
+          </div>
+          <form class="quote" id="quoteForm" novalidate>
+            <div class="two">
+              <div><label for="f-nombre">Nombre</label><input class="field" id="f-nombre" name="nombre" autocomplete="name" required /></div>
+              <div><label for="f-negocio">Nombre del negocio</label><input class="field" id="f-negocio" name="negocio" required /></div>
+            </div>
+            <div class="two">
+              <div><label for="f-correo">Correo</label><input class="field" id="f-correo" name="correo" type="email" autocomplete="email" /></div>
+              <div><label for="f-wa">WhatsApp</label><input class="field" id="f-wa" name="whatsapp" inputmode="tel" autocomplete="tel" /></div>
+            </div>
+            <div class="two">
+              <div><label for="f-tipo">Tipo de solución</label>
+                <select class="field" id="f-tipo" name="tipo">
+                  <option>Catálogo web</option><option>Landing page</option><option>Tienda online</option><option>Página corporativa</option><option>Solución personalizada</option>
+                </select>
+              </div>
+              <div><label for="f-modelo">Modelo de referencia</label><select class="field" id="f-modelo" name="modelo"></select></div>
+            </div>
+            <div><label for="f-presu">Presupuesto aproximado (opcional)</label><input class="field" id="f-presu" name="presupuesto" placeholder="Ej: $1.500.000" /></div>
+            <div><label for="f-desc">Cuéntame tu necesidad</label><textarea class="field" id="f-desc" name="descripcion" placeholder="¿Qué vende tu negocio? ¿Qué te gustaría lograr con la página?"></textarea></div>
+            <button type="submit" class="btn btn-wa" style="justify-content:center">Enviar por WhatsApp</button>
+            <p style="color:var(--muted);font-size:12px;text-align:center">Al enviar se abrirá WhatsApp con tu mensaje listo. No se almacena información en ningún servidor.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CTA FINAL ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="final">
+          <p class="eyebrow">Da el paso</p>
+          <h2 class="sec">Lleva tu negocio a internet</h2>
+          <p class="sec-sub" style="margin:12px auto 0">Escoge uno de los modelos, cuéntame qué necesita tu negocio y construimos una página personalizada.</p>
+          <div class="cta-row" style="justify-content:center;margin-top:26px">
+            <a href="#contacto" class="btn btn-primary">Cotizar mi página</a>
+            <a id="finalWa" class="btn btn-wa" target="_blank" rel="noopener noreferrer">Hablar por WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
+  <!-- ===================== FOOTER ===================== -->
   <footer>
-    <p class="display">Estudio Abimaru</p>
-    <p style="margin-top:6px">Catálogo de plantillas web · Hecho por Abimaru · Los datos de cada demo son de demostración.</p>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <a href="#top" class="brand"><span class="mark">A</span><span><b>Estudio Abimaru</b><small>Páginas web que venden</small></span></a>
+          <p style="color:var(--muted);font-size:13.5px;margin-top:14px;max-width:280px">Diseño, desarrollo, publicación y acompañamiento de páginas web para negocios.</p>
+        </div>
+        <div class="links" id="footLinks">
+          <a href="#modelos">Modelos</a>
+          <a href="#servicios">Servicios</a>
+          <a href="#planes">Planes</a>
+          <a href="#faq">FAQ</a>
+          <a id="footWa" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a id="footEmail">Correo</a>
+        </div>
+      </div>
+      <p class="legal">
+        © <span id="year"></span> Estudio Abimaru. Todos los derechos reservados.<br />
+        Las demostraciones usan datos ficticios y son solo de muestra. La política de privacidad y los términos del servicio se definen al implementar formularios o analítica.
+      </p>
+    </div>
   </footer>
 
+  <a id="waFloat" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Hablar por WhatsApp">
+    <svg viewBox="0 0 32 32" fill="#06310f" aria-hidden="true"><path d="M16 3C9 3 3.5 8.5 3.5 15.5c0 2.3.6 4.4 1.7 6.3L3 29l7.4-2.1c1.8 1 3.9 1.5 6 1.5 7 0 12.5-5.5 12.5-12.5S23 3 16 3zm0 22.6c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.4 1.2 1.2-4.3-.3-.4c-1-1.6-1.6-3.5-1.6-5.5C5.4 9.6 10.1 5 16 5s10.6 4.6 10.6 10.5S21.9 25.6 16 25.6zm5.9-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2s-.8 1-1 1.2c-.2.2-.4.2-.7.1-1.9-.9-3.1-1.7-4.4-3.8-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6s-.7-1.7-1-2.3c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.5 3.9 6.1 5.4 2.3 1 3.2 1 4.3.9.7-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg>
+  </a>
+
+  <script src="config.js"></script>
   <script src="templates.js"></script>
   <script>
-    const grid = document.getElementById("grid");
-    const list = window.TEMPLATES || [];
-    document.getElementById("count").textContent = list.length;
+    const CFG = window.SITE_CONFIG;
+    const MODELS = window.TEMPLATES || [];
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const wa = (msg) => `https://wa.me/${CFG.contact.whatsapp}?text=${encodeURIComponent(msg)}`;
 
-    const escapeHtml = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    // Analítica (stub): conéctalo a tu proveedor en window.SITE_CONFIG.analytics
+    function track(event, data) {
+      try { window.dataLayer && window.dataLayer.push({ event, ...data }); } catch (e) {}
+    }
 
-    grid.innerHTML = list.map((t) => {
-      const demo = t.demoUrl || t.localUrl || "#";
-      const isLive = !!t.demoUrl;
-      const dark = t.theme !== "light";
-      const screenBg = dark
-        ? `linear-gradient(160deg, ${t.accent2}22, #0b0b16 65%)`
-        : `linear-gradient(160deg, ${t.accent}22, #f3ece0 70%)`;
-      const barBg = dark ? "#00000040" : "#00000012";
-      const urlBg = dark ? "#ffffff10" : "#00000010";
-      const screenText = dark ? "#eef0f8" : "#2a231d";
+    /* ---- Datos globales de contacto ---- */
+    const generalMsg = `Hola, vi el catálogo de Estudio Abimaru. Me gustaría recibir información y una cotización para mi negocio.`;
+    ["navWa", "mWa", "infoWa", "finalWa", "footWa", "waFloat"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) { el.href = wa(generalMsg); el.addEventListener("click", () => track("whatsapp", { from: id })); }
+    });
+    document.getElementById("waText").textContent = "WhatsApp " + CFG.contact.whatsappDisplay;
+    const emailA = document.getElementById("emailLink");
+    emailA.textContent = CFG.contact.email; emailA.href = "mailto:" + CFG.contact.email;
+    const footEmail = document.getElementById("footEmail");
+    footEmail.textContent = "Correo"; footEmail.href = "mailto:" + CFG.contact.email;
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("count").textContent = MODELS.length;
+
+    // Enlace secundario opcional al repo (oculto por configuración)
+    if (CFG.showRepoLink && CFG.repositoryUrl) {
+      const a = document.createElement("a");
+      a.href = CFG.repositoryUrl; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = "GitHub";
+      document.getElementById("footLinks").appendChild(a);
+    }
+
+    /* ---- Modelos ---- */
+    const modelMsg = (m) => `Hola, estoy interesado en el modelo ${m.name} (${m.type}) para mi negocio. Quisiera conocer el precio y las opciones de personalización.`;
+    document.getElementById("grid").innerHTML = MODELS.map((m) => {
+      const dark = m.theme !== "light";
+      const bg = dark ? `linear-gradient(160deg, ${m.accent2}22, #0b0b16 65%)` : `linear-gradient(160deg, ${m.accent}22, #f3ece0 70%)`;
+      const txt = dark ? "#eef1f8" : "#2a231d";
+      const host = m.demoUrl.replace(/^https?:\/\//, "");
       return `
       <article class="card">
         <div class="preview">
           <div class="browser">
-            <div class="bar" style="background:${barBg}">
-              <i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
-              <span class="url" style="background:${urlBg};color:${screenText}">${escapeHtml((demo).replace(/^https?:\/\//, ""))}</span>
-            </div>
-            <div class="frame-wrap" style="background:${screenBg}">
-              <div class="mockup" style="color:${screenText}">
-                <span class="blob b1" style="background:${t.accent}"></span>
-                <span class="blob b2" style="background:${t.accent2}"></span>
-                <span class="emoji">${t.emoji}</span>
-                <span class="name">${escapeHtml(t.name)}</span>
-                <span class="tag">${escapeHtml(t.tagline)}</span>
+            <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="u" style="color:${txt}">${esc(host)}</span></div>
+            <div class="frame" style="background:${bg}">
+              <div class="mockup" style="color:${txt}">
+                <span class="b1" style="background:${m.accent}"></span><span class="b2" style="background:${m.accent2}"></span>
+                <span class="em">${m.emoji}</span><span class="nm">${esc(m.name)}</span><span class="tg">${esc(m.tagline)}</span>
               </div>
-              ${isLive ? `<iframe src="${t.demoUrl}" loading="lazy" scrolling="no" tabindex="-1" title="Vista previa de ${escapeHtml(t.name)}" sandbox="allow-scripts allow-same-origin"></iframe>` : ``}
-              <a class="preview-link" href="${demo}" target="_blank" rel="noopener" aria-label="Abrir ${escapeHtml(t.name)}"><span class="hint">Abrir sitio ↗</span></a>
+              <iframe data-src="${m.demoUrl}" loading="lazy" scrolling="no" tabindex="-1" title="Vista previa de ${esc(m.name)}" sandbox="allow-scripts allow-same-origin"></iframe>
             </div>
           </div>
         </div>
-        <div class="body">
-          <div>
-            <h3>${escapeHtml(t.name)} <span class="live-dot ${isLive ? "on" : ""}"><i></i>en vivo</span></h3>
-            <div class="tl">${escapeHtml(t.tagline)}</div>
-          </div>
-          <p>${escapeHtml(t.desc)}</p>
-          <div class="chips">${t.tags.map((tag) => `<span class="chip">${escapeHtml(tag)}</span>`).join("")}</div>
-          <div class="actions">
-            <a class="btn btn-primary" style="background:linear-gradient(100deg, ${t.accent}, ${t.accent2})" href="${demo}" target="_blank" rel="noopener">Ver demo →</a>
+        <div class="cbody">
+          <div class="tags"><span class="tag">${esc(m.sector)}</span><span class="tag type">${esc(m.type)}</span></div>
+          <div><h3>${esc(m.name)}</h3><div class="tl">${esc(m.tagline)}</div></div>
+          <p class="desc">${esc(m.description)}</p>
+          <ul class="feats">${m.features.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
+          <p class="price">${esc(m.startingPrice)} <span>· personalizable</span></p>
+          <div class="cactions">
+            <a class="btn btn-ghost btn-sm" href="${m.demoUrl}" target="_blank" rel="noopener noreferrer" data-ev="ver_demo" data-model="${esc(m.name)}">Ver demo ↗</a>
+            <a class="btn btn-primary btn-sm" href="${wa(modelMsg(m))}" target="_blank" rel="noopener noreferrer" data-ev="quiero_pagina" data-model="${esc(m.name)}">Quiero una así</a>
           </div>
         </div>
       </article>`;
     }).join("");
+
+    // Eventos de conversión en tarjetas
+    document.querySelectorAll("[data-ev]").forEach((el) =>
+      el.addEventListener("click", () => track(el.dataset.ev, { model: el.dataset.model })));
+
+    // Lazy-load de iframes: solo cargan cuando la tarjeta se acerca al viewport
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const f = e.target.querySelector("iframe[data-src]");
+          if (f) { f.src = f.dataset.src; f.removeAttribute("data-src"); }
+          obs.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: "300px" });
+    document.querySelectorAll(".preview").forEach((p) => io.observe(p));
+
+    /* ---- Planes ---- */
+    document.getElementById("pricingNote").textContent = CFG.pricing.note;
+    document.getElementById("maint").textContent = CFG.pricing.maintenanceFrom;
+    document.getElementById("plans").innerHTML = CFG.pricing.plans.map((p) => `
+      <div class="plan ${p.featured ? "featured" : ""}">
+        ${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ""}
+        <h3>${esc(p.name)}</h3>
+        <div class="from"><b>${esc(p.from)}</b><small>Rango: ${esc(p.range)} ${CFG.pricing.currency}</small></div>
+        <p class="ptag">${esc(p.tagline)}</p>
+        <ul>${p.features.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
+        ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}
+        <a class="btn ${p.featured ? "btn-primary" : "btn-ghost"}" style="justify-content:center" target="_blank" rel="noopener noreferrer"
+           href="${wa(`Hola, estoy interesado en el plan ${p.name} de Estudio Abimaru. Quisiera una cotización.`)}"
+           data-ev="seleccion_plan" data-model="${esc(p.name)}">Quiero este plan</a>
+      </div>`).join("");
+    document.getElementById("costChips").innerHTML = CFG.pricing.externalCosts.map((c) => `<span class="chip">${esc(c)}</span>`).join("");
+    document.querySelectorAll("#plans [data-ev]").forEach((el) =>
+      el.addEventListener("click", () => track(el.dataset.ev, { plan: el.dataset.model })));
+
+    /* ---- Personalización ---- */
+    const perso = ["Logo", "Colores", "Tipografía", "Textos", "Imágenes", "Productos", "Servicios", "Categorías", "Formularios", "Botones", "WhatsApp", "Redes sociales", "Dominio", "Funcionalidades extra"];
+    document.getElementById("perso").innerHTML = perso.map((p) => `<span class="p">${p}</span>`).join("");
+
+    /* ---- Selector de modelo en el formulario ---- */
+    document.getElementById("f-modelo").innerHTML = `<option value="">Sin modelo específico</option>` + MODELS.map((m) => `<option>${esc(m.name)}</option>`).join("");
+
+    /* ---- Envío del formulario → WhatsApp ---- */
+    document.getElementById("quoteForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const g = (id) => document.getElementById(id).value.trim();
+      if (!g("f-nombre") || !g("f-negocio")) { alert("Por favor completa tu nombre y el nombre del negocio."); return; }
+      const msg =
+        `Hola, soy ${g("f-nombre")} del negocio "${g("f-negocio")}".\n` +
+        `Tipo de solución: ${g("f-tipo")}.\n` +
+        (g("f-modelo") ? `Modelo de referencia: ${g("f-modelo")}.\n` : "") +
+        (g("f-presu") ? `Presupuesto aproximado: ${g("f-presu")}.\n` : "") +
+        (g("f-correo") ? `Correo: ${g("f-correo")}.\n` : "") +
+        (g("f-wa") ? `WhatsApp: ${g("f-wa")}.\n` : "") +
+        (g("f-desc") ? `\nNecesidad: ${g("f-desc")}` : "");
+      track("envio_formulario", { tipo: g("f-tipo"), modelo: g("f-modelo") });
+      window.open(wa(msg), "_blank", "noopener,noreferrer");
+    });
+
+    /* ---- Menú móvil ---- */
+    const burger = document.getElementById("burger"), menu = document.getElementById("mobileMenu");
+    burger.addEventListener("click", () => {
+      const open = menu.classList.toggle("open");
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => {
+      menu.classList.remove("open"); burger.setAttribute("aria-expanded", "false");
+    }));
   </script>
 </body>
 </html>
