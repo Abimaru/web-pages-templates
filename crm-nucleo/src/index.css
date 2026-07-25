@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  /* Superficies */
+  --color-canvas: #f5f6fa;
+  --color-surface: #ffffff;
+  --color-line: #e8eaf0;
+  --color-ink: #1a1d29;
+  --color-muted: #6b7185;
+
+  /* Marca */
+  --color-brand: #4f46e5;
+  --color-brand-dark: #4338ca;
+  --color-brand-light: #eef0ff;
+  --color-sidebar: #1c1e35;
+  --color-sidebar-2: #262a4a;
+
+  /* Estados */
+  --color-emerald: #10b981;
+  --color-amber: #f59e0b;
+  --color-rose: #f43f5e;
+  --color-sky: #0ea5e9;
+  --color-violet: #8b5cf6;
+
+  --animate-spin-slow: spin 8s linear infinite;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+.font-display { font-family: var(--font-display); }
+
+/* Scrollbars finos */
+* { scrollbar-width: thin; scrollbar-color: #c9cdda transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #c9cdda; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #aab0c4; }
+::selection { background: rgba(79,70,229,.18); }
+
+/* Card */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 1rem;
+}
+
+/* Botón */
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .6rem 1.1rem; border-radius: .65rem;
+  font-family: var(--font-display); font-weight: 600; font-size: .875rem;
+  transition: all .2s ease;
+}
+.btn-brand { background: var(--color-brand); color: #fff; }
+.btn-brand:hover { background: var(--color-brand-dark); box-shadow: 0 8px 20px rgba(79,70,229,.28); }
+.btn-ghost { background: var(--color-surface); color: var(--color-ink); border: 1px solid var(--color-line); }
+.btn-ghost:hover { border-color: #cfd3e0; background: #fafbfd; }
+
+/* Chip de estado */
+.chip { display: inline-flex; align-items: center; gap: .35rem; padding: .2rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 600; }
+
+/* Entrada */
+.field {
+  width: 100%; border: 1px solid var(--color-line); border-radius: .6rem;
+  background: var(--color-surface); padding: .5rem .8rem; font-size: .875rem; outline: none;
+  transition: border-color .2s ease;
+}
+.field:focus { border-color: var(--color-brand); }
+
+/* Fila con hover */
+.row-hover:hover { background: #fafbfd; }
+
+/* Fade-in de vistas */
+@keyframes viewIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.view-in { animation: viewIn .35s ease-out; }
+
+/* Card kanban en drag */
+.kanban-card { transition: box-shadow .2s ease, transform .2s ease, opacity .2s ease; cursor: grab; }
+.kanban-card:active { cursor: grabbing; }
+.kanban-col.drag-over { background: var(--color-brand-light); border-color: var(--color-brand); }
+
+@media (prefers-reduced-motion: reduce) {
+  .view-in { animation: none; }
+}

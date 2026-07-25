@@ -101,4 +101,18 @@ window.TEMPLATES = [
     localUrl: "http://localhost:5173",
     codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/finanzas-prospera",
   },
+  {
+    id: "nucleo",
+    name: "NÚCLEO CRM",
+    tagline: "Gestiona clientes y negocios",
+    desc: "Panel CRM (front, sin backend): dashboard con gráficos, contactos, pipeline kanban con arrastrar-y-soltar, tareas y reportes.",
+    emoji: "🗂️",
+    tags: ["CRM · Panel", "Vite + React", "SaaS / Dashboard"],
+    accent: "#4f46e5",
+    accent2: "#8b5cf6",
+    theme: "light",
+    demoUrl: "https://abimaru.github.io/web-pages-templates/nucleo/",
+    localUrl: "http://localhost:5173",
+    codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/crm-nucleo",
+  },
 ];

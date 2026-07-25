@@ -123,8 +123,8 @@
 
     /* Body */
     .body { padding: 22px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
-    .body h3 { font-family: "Space Grotesk"; font-size: 20px; font-weight: 600; }
-    .body .tl { font-size: 13px; color: var(--accent2); margin-top: -8px; }
+    .body h3 { font-family: "Space Grotesk"; font-size: 20px; font-weight: 600; line-height: 1.3; }
+    .body .tl { font-size: 13px; color: var(--accent2); margin-top: 7px; }
     .body p { font-size: 14px; color: var(--muted); line-height: 1.55; }
     .chips { display: flex; flex-wrap: wrap; gap: 7px; }
     .chip { font-size: 11px; padding: 4px 10px; border-radius: 999px; background: #ffffff0d; border: 1px solid var(--border); color: var(--muted); }
@@ -236,7 +236,6 @@
           <div class="chips">${t.tags.map((tag) => `<span class="chip">${escapeHtml(tag)}</span>`).join("")}</div>
           <div class="actions">
             <a class="btn btn-primary" style="background:linear-gradient(100deg, ${t.accent}, ${t.accent2})" href="${demo}" target="_blank" rel="noopener">Ver demo →</a>
-            <a class="btn btn-ghost" href="${t.codeUrl}" target="_blank" rel="noopener">Código</a>
           </div>
         </div>
       </article>`;
