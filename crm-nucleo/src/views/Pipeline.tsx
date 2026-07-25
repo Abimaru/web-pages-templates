@@ -10,6 +10,12 @@ const stageColor: Record<Stage, string> = {
   Ganado: "#10b981",
 };
 
+// En dispositivos táctiles el drag-and-drop nativo no funciona y además
+// bloquea el desplazamiento horizontal del tablero; ahí desactivamos draggable.
+const isTouch =
+  typeof window !== "undefined" &&
+  (navigator.maxTouchPoints > 0 || "ontouchstart" in window);
+
 export default function Pipeline() {
   const [deals, setDeals] = useState<Deal[]>(seed);
   const [dragId, setDragId] = useState<number | null>(null);
@@ -50,7 +56,7 @@ export default function Pipeline() {
                 {items.map((d) => (
                   <div
                     key={d.id}
-                    draggable
+                    draggable={!isTouch}
                     onDragStart={() => setDragId(d.id)}
                     onDragEnd={() => { setDragId(null); setOverStage(null); }}
                     className={`kanban-card card p-3.5 shadow-sm hover:shadow-md ${dragId === d.id ? "opacity-50" : ""}`}
@@ -74,7 +80,11 @@ export default function Pipeline() {
           );
         })}
       </div>
-      <p className="mt-2 text-sm text-muted">💡 Arrastra las tarjetas entre columnas para cambiar la etapa del negocio.</p>
+      <p className="mt-2 text-sm text-muted">
+        💡 {isTouch
+          ? "Desliza horizontalmente para ver todas las etapas del negocio."
+          : "Arrastra las tarjetas entre columnas para cambiar la etapa del negocio."}
+      </p>
     </div>
   );
 }

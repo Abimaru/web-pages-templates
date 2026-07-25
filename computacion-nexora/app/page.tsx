@@ -259,7 +259,7 @@ export default function Home() {
 
           {/* Núcleo con órbitas */}
           <Reveal delay={120}>
-            <div className="relative mx-auto flex h-[360px] w-[360px] items-center justify-center">
+            <div className="relative mx-auto flex h-[360px] w-[360px] max-w-full origin-center items-center justify-center scale-[0.78] sm:scale-100">
               <div className="absolute h-72 w-72 rounded-full border border-electric/15" />
               <div className="absolute h-96 w-96 rounded-full border border-indigo/10" />
               <div

@@ -49,9 +49,11 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a href={homeHref("#contacto")} className="btn-solid hidden !py-2.5 !px-6 text-sm lg:inline-flex">
-          Cotizar proyecto
-        </a>
+        <div className="hidden lg:block">
+          <a href={homeHref("#contacto")} className="btn-solid !py-2.5 !px-6 text-sm">
+            Cotizar proyecto
+          </a>
+        </div>
 
         <button
           className="grid h-10 w-10 place-items-center rounded-full border border-espresso/20 text-espresso lg:hidden"
