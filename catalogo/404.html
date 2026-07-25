@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Redirigiendo… · Estudio Abimaru</title>
+  <meta name="robots" content="noindex" />
+  <script>
+    // GitHub Pages sirve este 404.html (raíz) para cualquier ruta no encontrada.
+    // Las apps SPA con enrutamiento en cliente (ej. "muebles") necesitan restaurar
+    // la sub-ruta: la guardamos y redirigimos al index del app.
+    (function () {
+      var REPO_BASE = "/web-pages-templates/";
+      var SPA_APPS = ["muebles"]; // apps con rutas internas de cliente
+      var path = location.pathname;
+      var rest = path.indexOf(REPO_BASE) === 0 ? path.slice(REPO_BASE.length) : "";
+      var parts = rest.split("/").filter(Boolean); // ["muebles","portafolio"]
+      var app = parts[0];
+
+      if (app && SPA_APPS.indexOf(app) !== -1 && parts.length > 1) {
+        var sub = parts.slice(1).join("/"); // "portafolio" o "proyecto/mesa-raiz"
+        try { sessionStorage.setItem("spa-redirect", "/" + sub); } catch (e) {}
+        location.replace(REPO_BASE + app + "/" + location.search + location.hash);
+      } else {
+        // 404 genuino → llevamos al catálogo principal.
+        location.replace(REPO_BASE);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <p style="font-family:system-ui,sans-serif;padding:24px;color:#555">
+    Redirigiendo… Si no ocurre nada, <a href="/web-pages-templates/">volver al inicio</a>.
+  </p>
+</body>
+</html>

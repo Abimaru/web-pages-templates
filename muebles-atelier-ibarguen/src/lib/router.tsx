@@ -4,6 +4,20 @@ import { useEffect, useState, type ReactNode, type MouseEvent } from "react";
 const RAW = import.meta.env.BASE_URL || "/";
 export const BASE = RAW.endsWith("/") ? RAW : RAW + "/";
 
+// Restaura la ruta guardada por el 404.html raíz (carga directa / refresh de
+// una sub-ruta en GitHub Pages). Se ejecuta antes del primer render.
+(function restoreFromRedirect() {
+  try {
+    const r = sessionStorage.getItem("spa-redirect");
+    if (r) {
+      sessionStorage.removeItem("spa-redirect");
+      window.history.replaceState({}, "", BASE + r.replace(/^\/+/, ""));
+    }
+  } catch {
+    /* sessionStorage no disponible */
+  }
+})();
+
 /** Ruta actual sin la base ni barras: "", "portafolio", "proyecto/mesa-raiz". */
 export function currentPath(): string {
   let p = window.location.pathname;
