@@ -102,19 +102,24 @@
     }
     .card:hover { transform: translateY(-6px); border-color: #ffffff2e; box-shadow: 0 30px 60px #00000066; }
 
-    /* Mockup / preview */
-    .preview { position: relative; aspect-ratio: 16 / 10.5; overflow: hidden; }
-    .browser { position: absolute; inset: 0; display: flex; flex-direction: column; }
+    /* Preview: ventana de navegador + iframe en vivo */
+    .preview { position: relative; }
+    .browser { display: flex; flex-direction: column; }
     .browser .bar { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 14px; }
-    .browser .bar i { width: 10px; height: 10px; border-radius: 50%; display: block; }
-    .browser .url { margin-left: 10px; font-size: 11px; padding: 3px 12px; border-radius: 999px; opacity: .7; font-family: "Space Grotesk"; }
-    .browser .screen { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; padding: 18px; position: relative; overflow: hidden; }
-    .screen .emoji { font-size: 58px; filter: drop-shadow(0 8px 22px #0006); z-index: 2; }
-    .screen .name { font-family: "Space Grotesk"; font-weight: 700; font-size: 22px; letter-spacing: .02em; z-index: 2; }
-    .screen .tag { font-size: 12.5px; opacity: .85; z-index: 2; }
-    .screen .blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: .5; }
-    .screen .b1 { width: 160px; height: 160px; top: -30px; left: -30px; }
-    .screen .b2 { width: 150px; height: 150px; bottom: -40px; right: -20px; }
+    .browser .bar i { width: 10px; height: 10px; border-radius: 50%; display: block; flex: none; }
+    .browser .url { margin-left: 10px; font-size: 11px; padding: 3px 12px; border-radius: 999px; opacity: .75; font-family: "Space Grotesk"; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .frame-wrap { position: relative; width: 100%; aspect-ratio: 16 / 10; overflow: hidden; }
+    .frame-wrap iframe { position: absolute; top: 0; left: 0; width: 285%; height: 285%; transform: scale(.3508); transform-origin: top left; border: 0; pointer-events: none; z-index: 1; background: #0b0b16; }
+    .mockup { position: absolute; inset: 0; z-index: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; padding: 18px; overflow: hidden; }
+    .mockup .emoji { font-size: 58px; filter: drop-shadow(0 8px 22px #0006); z-index: 2; }
+    .mockup .name { font-family: "Space Grotesk"; font-weight: 700; font-size: 22px; letter-spacing: .02em; z-index: 2; }
+    .mockup .tag { font-size: 12.5px; opacity: .85; z-index: 2; }
+    .mockup .blob { position: absolute; border-radius: 50%; filter: blur(40px); opacity: .5; }
+    .mockup .b1 { width: 160px; height: 160px; top: -30px; left: -30px; }
+    .mockup .b2 { width: 150px; height: 150px; bottom: -40px; right: -20px; }
+    .preview-link { position: absolute; inset: 0; z-index: 3; }
+    .preview-link .hint { position: absolute; bottom: 10px; right: 10px; font-size: 11px; font-weight: 600; padding: 5px 11px; border-radius: 999px; background: #000000aa; color: #fff; backdrop-filter: blur(4px); opacity: 0; transform: translateY(4px); transition: .25s; }
+    .card:hover .preview-link .hint { opacity: 1; transform: translateY(0); }
 
     /* Body */
     .body { padding: 22px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
@@ -170,8 +175,8 @@
         <div class="stat"><b>∞</b><span>personalizables</span></div>
       </div>
       <div class="info">
-        <span>ℹ️</span>
-        <span id="info-text"><b>Demos en local:</b> si aún no están publicadas, cada botón "Ver demo" abre la URL local (p. ej. <code>localhost:3000</code>) — primero corre esa plantilla con <code>npm run dev</code>. Cuando publiquemos el catálogo, los botones abrirán las URLs en vivo automáticamente.</span>
+        <span>✨</span>
+        <span id="info-text"><b>Previews en vivo:</b> cada tarjeta muestra el sitio real funcionando. Haz clic en la vista previa o en <b>"Ver demo"</b> para abrirlo en grande, o en <b>"Código"</b> para ver cómo está hecho. ¿Quieres una web así para tu marca? Hablemos.</span>
       </div>
     </section>
 
@@ -204,17 +209,21 @@
       return `
       <article class="card">
         <div class="preview">
-          <div class="browser" style="background:${screenBg}">
+          <div class="browser">
             <div class="bar" style="background:${barBg}">
               <i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
               <span class="url" style="background:${urlBg};color:${screenText}">${escapeHtml((demo).replace(/^https?:\/\//, ""))}</span>
             </div>
-            <div class="screen" style="color:${screenText}">
-              <span class="blob b1" style="background:${t.accent}"></span>
-              <span class="blob b2" style="background:${t.accent2}"></span>
-              <span class="emoji">${t.emoji}</span>
-              <span class="name">${escapeHtml(t.name)}</span>
-              <span class="tag">${escapeHtml(t.tagline)}</span>
+            <div class="frame-wrap" style="background:${screenBg}">
+              <div class="mockup" style="color:${screenText}">
+                <span class="blob b1" style="background:${t.accent}"></span>
+                <span class="blob b2" style="background:${t.accent2}"></span>
+                <span class="emoji">${t.emoji}</span>
+                <span class="name">${escapeHtml(t.name)}</span>
+                <span class="tag">${escapeHtml(t.tagline)}</span>
+              </div>
+              ${isLive ? `<iframe src="${t.demoUrl}" loading="lazy" scrolling="no" tabindex="-1" title="Vista previa de ${escapeHtml(t.name)}" sandbox="allow-scripts allow-same-origin"></iframe>` : ``}
+              <a class="preview-link" href="${demo}" target="_blank" rel="noopener" aria-label="Abrir ${escapeHtml(t.name)}"><span class="hint">Abrir sitio ↗</span></a>
             </div>
           </div>
         </div>
