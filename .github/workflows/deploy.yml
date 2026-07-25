@@ -1,0 +1,77 @@
+name: Desplegar catálogo a GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build PIXELVAULT (videojuegos)
+        working-directory: videojuegos-pixelvault
+        env:
+          NEXT_PUBLIC_BASE_PATH: /web-pages-templates/pixelvault
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Build NEXORA (computación)
+        working-directory: computacion-nexora
+        env:
+          NEXT_PUBLIC_BASE_PATH: /web-pages-templates/nexora
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Build Atelier Ibargüen (muebles)
+        working-directory: muebles-atelier-ibarguen
+        env:
+          VITE_BASE: /web-pages-templates/muebles/
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Ensamblar sitio
+        run: |
+          mkdir -p _site
+          cp -r catalogo/. _site/
+          mkdir -p _site/pixelvault _site/nexora _site/muebles
+          cp -r videojuegos-pixelvault/out/. _site/pixelvault/
+          cp -r computacion-nexora/out/. _site/nexora/
+          cp -r muebles-atelier-ibarguen/dist/. _site/muebles/
+          touch _site/.nojekyll
+
+      - name: Subir artefacto
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar en Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
