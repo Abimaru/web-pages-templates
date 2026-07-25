@@ -87,4 +87,18 @@ window.TEMPLATES = [
     localUrl: "http://localhost:5173",
     codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/farmacia-vitalis",
   },
+  {
+    id: "prospera",
+    name: "PRÓSPERA",
+    tagline: "Haz crecer tu dinero",
+    desc: "Fintech de créditos y ahorro: simulador de crédito, Cuenta Progreso con gráficos de rendimiento, score y datos de mercado (TRM, euro, yuan).",
+    emoji: "🏦",
+    tags: ["Finanzas", "Vite + React", "Fintech / Consultoría"],
+    accent: "#0a6b4a",
+    accent2: "#c99a3f",
+    theme: "light",
+    demoUrl: "https://abimaru.github.io/web-pages-templates/prospera/",
+    localUrl: "http://localhost:5173",
+    codeUrl: "https://github.com/Abimaru/web-pages-templates/tree/main/finanzas-prospera",
+  },
 ];
