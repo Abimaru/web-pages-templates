@@ -43,9 +43,9 @@ export const nexoLabConfig: NexoConfig = {
     email: "Abimaru@gmail.com",
     whatsapp: "573157076691",
     whatsappDisplay: "315 707 6691",
-    upwork: "", // PENDIENTE: URL de perfil Upwork
-    linkedin: "", // PENDIENTE: URL de LinkedIn
-    github: "", // PENDIENTE: GitHub profesional a mostrar
+    upwork: "https://www.upwork.com/freelancers/~01c36b2b30835641df",
+    linkedin: "https://www.linkedin.com/in/andresibarguenco/",
+    github: "https://github.com/Abimaru",
     calendly: "", // PENDIENTE: enlace de agenda
   },
 };
