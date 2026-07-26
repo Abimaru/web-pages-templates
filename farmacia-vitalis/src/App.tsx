@@ -26,10 +26,11 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Navbar from "./components/Navbar";
+import DemoBanner from "./components/DemoBanner";
 import Reveal from "./components/Reveal";
 import { images } from "./data/images";
 
-const perks = ["DOMICILIO EN 60 MIN", "MEDICAMENTOS ORIGINALES", "FARMACÉUTICOS CERTIFICADOS", "PAGO SEGURO", "ATENCIÓN 24/7"];
+const perks = ["CATÁLOGO POR CATEGORÍAS", "BUSCADOR DE PRODUCTOS", "FLUJO DE RECETA (DEMO)", "CARRITO SIMULADO", "PROTOTIPO INTERACTIVO"];
 
 const categorias = [
   { name: "Medicamentos", tag: "Con y sin fórmula", img: images.categoria.medicamentos },
@@ -85,6 +86,10 @@ export default function App() {
   return (
     <main id="top" className="bg-white text-ink">
       <Navbar cart={cart} />
+      <DemoBanner
+        disclaimer="No es una farmacia real: no vende medicamentos, no procesa fórmulas y no ofrece asesoría médica o farmacéutica."
+        waMessage="Hola, vi la demo de VITALIS (farmacia digital) de Estudio Abimaru. Quisiera una página así para mi negocio."
+      />
 
       {/* Toast */}
       <div className={`fixed left-1/2 top-24 z-[70] -translate-x-1/2 transition-all duration-300 ${toast ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}>
@@ -102,7 +107,7 @@ export default function App() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 pb-16 lg:grid-cols-2">
           <Reveal>
             <span className="kicker inline-flex items-center gap-2 rounded-full bg-soft-green px-3.5 py-1.5 text-green">
-              <BadgeCheck size={14} /> Farmacia digital certificada
+              <BadgeCheck size={14} /> Demo de farmacia digital
             </span>
             <h1 className="mt-5 font-display text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
               Tu salud, <span className="text-medic">a un clic</span> de casa
@@ -133,15 +138,15 @@ export default function App() {
             <div className="animate-float absolute -left-5 top-10 flex items-center gap-3 rounded-2xl bg-white p-3.5 shadow-lg">
               <span className="grid h-11 w-11 place-items-center rounded-xl bg-soft-green text-green"><HeartPulse size={22} /></span>
               <div>
-                <p className="text-sm font-bold">+250 mil</p>
-                <p className="text-xs text-slate">pedidos entregados</p>
+                <p className="text-sm font-bold">Catálogo</p>
+                <p className="text-xs text-slate">demostrativo</p>
               </div>
             </div>
             <div className="absolute -bottom-4 right-4 flex items-center gap-3 rounded-2xl bg-white p-3.5 shadow-lg" style={{ animation: "float 6s ease-in-out infinite", animationDelay: ".6s" }}>
               <span className="grid h-11 w-11 place-items-center rounded-xl bg-soft-blue text-medic"><Stethoscope size={22} /></span>
               <div>
-                <p className="text-sm font-bold">Farmacéuticos</p>
-                <p className="text-xs text-slate">disponibles 24/7</p>
+                <p className="text-sm font-bold">Sin backend</p>
+                <p className="text-xs text-slate">solo demostración</p>
               </div>
             </div>
           </Reveal>
@@ -268,8 +273,9 @@ export default function App() {
       {/* ===================== TESTIMONIOS ===================== */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <Reveal className="mb-12 text-center">
-          <span className="kicker text-medic">Historias reales</span>
-          <h2 className="mt-3 font-display text-4xl font-bold sm:text-5xl">Salud que acompaña</h2>
+          <span className="kicker text-medic">Casos de uso ilustrativos</span>
+          <h2 className="mt-3 font-display text-4xl font-bold sm:text-5xl">Cómo acompañaría a tus clientes</h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-slate">Ejemplos ilustrativos de experiencia — no son reseñas ni personas reales.</p>
         </Reveal>
         <div className="grid gap-6 md:grid-cols-3">
           {testimonios.map((t, i) => (

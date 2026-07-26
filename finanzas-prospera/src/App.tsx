@@ -19,6 +19,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Navbar from "./components/Navbar";
+import DemoBanner from "./components/DemoBanner";
 import Reveal from "./components/Reveal";
 import Counter from "./components/Counter";
 import MarketTicker from "./components/MarketTicker";
@@ -28,7 +29,7 @@ import SavingsSimulator from "./components/SavingsSimulator";
 import ScoreChecker from "./components/ScoreChecker";
 import { images } from "./data/images";
 
-const perks = ["APROBACIÓN EN 10 MIN", "100% DIGITAL", "SIN CUOTA DE MANEJO", "VIGILADO Y SEGURO", "SIN LETRA PEQUEÑA"];
+const perks = ["SIMULADORES EN VIVO", "EXPERIENCIA 100% DIGITAL", "FLUJO DE SOLICITUD (DEMO)", "PROTOTIPO INTERACTIVO", "VALORES ILUSTRATIVOS"];
 
 type Product = { icon: LucideIcon; name: string; desc: string; highlight: string; gold?: boolean };
 const productos: Product[] = [
@@ -62,6 +63,10 @@ export default function App() {
   return (
     <main id="top" className="bg-white text-ink">
       <Navbar />
+      <DemoBanner
+        disclaimer="No es una entidad financiera: no otorga créditos, no consulta score y las tasas, cifras y aprobaciones son ilustrativas."
+        waMessage="Hola, vi la demo de PRÓSPERA (fintech) de Estudio Abimaru. Quisiera una página así para mi negocio."
+      />
 
       {/* ===================== HERO ===================== */}
       <section className="relative overflow-hidden bg-paper pt-32 lg:pt-40">
@@ -217,13 +222,15 @@ export default function App() {
             </Reveal>
           ))}
         </div>
+        <p className="mt-4 text-center text-xs text-slate/70">Cifras ilustrativas de demostración — no representan clientes, desembolsos ni calificaciones reales.</p>
       </section>
 
       {/* ===================== TESTIMONIOS ===================== */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <Reveal className="mb-12 text-center">
-          <span className="kicker text-forest">Historias que inspiran</span>
-          <h2 className="mt-3 font-display text-4xl font-bold sm:text-5xl">Personas reales, metas cumplidas</h2>
+          <span className="kicker text-forest">Casos de uso ilustrativos</span>
+          <h2 className="mt-3 font-display text-4xl font-bold sm:text-5xl">Cómo ayudaría a tus clientes</h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-slate">Ejemplos ilustrativos de experiencia — no son reseñas ni personas reales.</p>
         </Reveal>
         <div className="grid gap-6 md:grid-cols-3">
           {testimonios.map((t, i) => (

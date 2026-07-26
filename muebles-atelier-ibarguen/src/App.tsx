@@ -3,6 +3,7 @@ import { useRoute } from "./lib/router";
 import Home from "./pages/Home";
 import Portfolio from "./pages/Portfolio";
 import Project from "./pages/Project";
+import DemoBanner from "./components/DemoBanner";
 
 export default function App() {
   const path = useRoute();
@@ -20,11 +21,22 @@ export default function App() {
     }
   }, [path]);
 
+  let page;
   if (path.startsWith("proyecto/")) {
-    return <Project slug={path.slice("proyecto/".length)} />;
+    page = <Project slug={path.slice("proyecto/".length)} />;
+  } else if (path === "portafolio") {
+    page = <Portfolio />;
+  } else {
+    page = <Home />;
   }
-  if (path === "portafolio") {
-    return <Portfolio />;
-  }
-  return <Home />;
+
+  return (
+    <>
+      {page}
+      <DemoBanner
+        disclaimer="Portafolio, proyectos, testimonios y precios son conceptuales e ilustrativos."
+        waMessage="Hola, vi la demo de Atelier Ibargüen (muebles) de Estudio Abimaru. Quisiera una página así para mi negocio."
+      />
+    </>
+  );
 }

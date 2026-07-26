@@ -1,5 +1,6 @@
 import { VehiclesProvider } from "./store/vehiclesStore";
 import Navbar from "./components/Navbar";
+import DemoBanner from "./components/DemoBanner";
 import Footer from "./components/Footer";
 import VehicleDetail from "./components/VehicleDetail";
 import CompareBar from "./components/CompareBar";
@@ -24,6 +25,10 @@ export default function App() {
     <VehiclesProvider>
       <main id="top" className="bg-graphite text-ink">
         <Navbar />
+        <DemoBanner
+          disclaimer="Simulación ilustrativa de movilidad y financiación: no representa aprobación ni oferta financiera real."
+          waMessage="Hola, vi la demo de VíaNova (movilidad y financiación) de Estudio Abimaru. Quisiera una página así para mi negocio."
+        />
         <Hero />
         <IntentSelector />
         <Marketplace />

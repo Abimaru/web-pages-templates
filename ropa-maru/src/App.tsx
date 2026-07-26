@@ -15,6 +15,7 @@ import {
   Check,
 } from "lucide-react";
 import Navbar from "./components/Navbar";
+import DemoBanner from "./components/DemoBanner";
 import Reveal from "./components/Reveal";
 import { images } from "./data/images";
 
@@ -62,6 +63,10 @@ export default function App() {
   return (
     <main id="top" className="bg-porcelain text-ink">
       <Navbar bag={bag} />
+      <DemoBanner
+        disclaimer="Productos, precios, envíos, cuotas y testimonios son ejemplos ilustrativos."
+        waMessage="Hola, vi la demo de MARÚ (tienda de moda) de Estudio Abimaru. Quisiera una tienda online así para mi negocio."
+      />
 
       {/* Toast */}
       <div
@@ -233,8 +238,9 @@ export default function App() {
       <section className="border-y border-ink/10 bg-cream/60 py-20">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal className="mb-12 text-center">
-            <span className="kicker text-rose">Clientes felices</span>
-            <h2 className="mt-3 font-display text-4xl font-medium sm:text-5xl">Amado por miles</h2>
+            <span className="kicker text-rose">Casos de uso ilustrativos</span>
+            <h2 className="mt-3 font-display text-4xl font-medium sm:text-5xl">Pensado para tus clientes</h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm text-ink/55">Ejemplos ilustrativos de experiencia — no son reseñas ni personas reales.</p>
           </Reveal>
           <div className="grid gap-6 md:grid-cols-3">
             {testimonios.map((t, i) => (

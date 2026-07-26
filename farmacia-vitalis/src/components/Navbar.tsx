@@ -25,8 +25,8 @@ export default function Navbar({ cart = 0 }: { cart?: number }) {
       {/* Top bar */}
       <div className="hidden bg-medic-dark text-white sm:block">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-1.5 text-xs">
-          <span className="flex items-center gap-2"><Truck size={13} /> Domicilio en 60 minutos en tu ciudad</span>
-          <span>Farmacéuticos certificados · Atención 24/7</span>
+          <span className="flex items-center gap-2"><Truck size={13} /> Domicilio en 60 minutos (ejemplo)</span>
+          <span>Prototipo de farmacia digital · Estudio Abimaru</span>
         </div>
       </div>
 
