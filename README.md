@@ -12,6 +12,7 @@ y ejecutable de forma independiente. Nacen como variaciones a partir de la joyer
 | 💊 **VITALIS** | [`farmacia-vitalis/`](farmacia-vitalis/) | Farmacia: medicamentos y salud | Vite + React 19 + Tailwind v4 + TS | 5173 |
 | 🏦 **PRÓSPERA** | [`finanzas-prospera/`](finanzas-prospera/) | Fintech: créditos y ahorro | Vite + React 19 + Tailwind v4 + TS | 5173 |
 | 🗂️ **NÚCLEO CRM** | [`crm-nucleo/`](crm-nucleo/) | Panel CRM (front, sin backend) | Vite + React 19 + Tailwind v4 + TS | 5173 |
+| 🚗 **VíaNova** | [`movilidad-vianova/`](movilidad-vianova/) | Movilidad, financiación y seguros | Vite + React 19 + Tailwind v4 + TS | 5173 |
 
 ## Cómo ejecutar cada uno
 

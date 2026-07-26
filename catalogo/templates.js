@@ -107,4 +107,18 @@ window.TEMPLATES = [
     accent: "#4f46e5", accent2: "#8b5cf6", theme: "light",
     demoUrl: "https://abimaru.github.io/web-pages-templates/nucleo/",
   },
+  {
+    id: "vianova",
+    name: "VíaNova",
+    category: "Aplicación web",
+    sector: "Movilidad, automotor & financiación",
+    type: "Marketplace + fintech",
+    tagline: "Tu movilidad, en una sola ruta",
+    description: "Ecosistema digital de movilidad: marketplace de vehículos con filtros, comparador, simulador financiero por escenarios, venta/retoma, compra de cartera y seguros. Muestra apps empresariales complejas.",
+    features: ["Marketplace + filtros + comparador", "Cockpit financiero (3 escenarios)", "Solicitud multipaso", "Venta, cartera y seguros"],
+    startingPrice: "Cotización personalizada",
+    emoji: "🚗",
+    accent: "#e8873a", accent2: "#22d3ee", theme: "dark",
+    demoUrl: "https://abimaru.github.io/web-pages-templates/vianova/",
+  },
 ];
