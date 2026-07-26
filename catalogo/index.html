@@ -261,6 +261,33 @@
     .wa-float:hover { transform: scale(1.08); }
     .wa-float svg { width: 30px; height: 30px; }
 
+    /* NEXO LAB — franja de servicios profesionales (línea distinta a los modelos) */
+    .nexo-band { padding: 40px 0; }
+    .nexo-strip { position: relative; overflow: hidden; border: 1px solid #22d3ee33; border-radius: 24px;
+      padding: clamp(26px, 4vw, 44px);
+      background: radial-gradient(60% 130% at 100% 0%, #8b5cf61f, transparent 58%),
+                  radial-gradient(60% 130% at 0% 100%, #22d3ee14, transparent 58%),
+                  linear-gradient(120deg, #0b1020, #0e1730); }
+    .nexo-strip .nx-grid { position: absolute; inset: 0; z-index: 0; opacity: .5;
+      background-image: linear-gradient(#ffffff0a 1px, transparent 1px), linear-gradient(90deg, #ffffff0a 1px, transparent 1px);
+      background-size: 40px 40px;
+      -webkit-mask-image: radial-gradient(70% 120% at 90% 0%, #000 30%, transparent 80%);
+      mask-image: radial-gradient(70% 120% at 90% 0%, #000 30%, transparent 80%); }
+    .nexo-strip .nx-in { position: relative; z-index: 1; display: grid; gap: 26px; grid-template-columns: 1fr; align-items: center; }
+    @media (min-width: 900px) { .nexo-strip .nx-in { grid-template-columns: 1.55fr 1fr; } }
+    .nexo-strip .nx-label { display: inline-flex; align-items: center; gap: 8px; font-family: "Space Grotesk"; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #22d3ee; border: 1px solid #22d3ee44; background: #22d3ee14; padding: 6px 12px; border-radius: 999px; }
+    .nexo-strip h2 { font-family: "Space Grotesk"; font-size: clamp(24px, 3.6vw, 34px); font-weight: 700; letter-spacing: -.02em; margin-top: 16px; }
+    .nexo-strip h2 .g { background: linear-gradient(100deg, #22d3ee, #3b82f6 50%, #8b5cf6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .nexo-strip p.nx-sub { color: #c3cce0; font-size: 15.5px; line-height: 1.6; margin-top: 12px; max-width: 560px; }
+    .nexo-strip .nx-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .nexo-strip .nx-tags span { font-size: 12.5px; color: #b7c2da; border: 1px solid var(--line-2); background: #ffffff06; padding: 5px 11px; border-radius: 999px; }
+    .nexo-strip .nx-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; padding: 12px 22px; border-radius: 12px; font-family: "Space Grotesk"; font-weight: 600; font-size: 15px; color: #05131f; background: linear-gradient(100deg, #3b82f6, #22d3ee); box-shadow: 0 10px 26px #3b82f63d; transition: transform .2s, filter .2s; }
+    .nexo-strip .nx-cta:hover { transform: translateY(-2px); filter: brightness(1.06); }
+    .nexo-strip .nx-visual { display: flex; align-items: center; justify-content: center; }
+    .nexo-strip .nx-mark { width: 100%; max-width: 260px; }
+    .nav-links a.nx-nav, .mobile-menu a.nx-nav { color: #22d3ee; font-weight: 600; }
+    .foot a.nx-nav { color: #22d3ee; }
+
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
   </style>
 </head>
@@ -283,6 +310,7 @@
         <a href="#proceso">Proceso</a>
         <a href="#faq">FAQ</a>
         <a href="#contacto">Contacto</a>
+        <a href="nexo-lab/" class="nx-nav">NEXO LAB ↗</a>
       </nav>
       <div class="nav-cta">
         <a href="#contacto" class="btn btn-ghost btn-sm">Cotizar mi página</a>
@@ -297,6 +325,7 @@
       <a href="#proceso">Proceso</a>
       <a href="#faq">FAQ</a>
       <a href="#contacto">Contacto</a>
+      <a href="nexo-lab/" class="nx-nav">NEXO LAB ↗</a>
       <a id="mWa" target="_blank" rel="noopener noreferrer" style="color:#25d366;font-weight:700">Hablar por WhatsApp</a>
     </nav>
   </header>
@@ -345,6 +374,47 @@
           <div class="feature"><div class="ic">🛒</div><h3>Tiendas online</h3><p>Para negocios que necesitan carrito, pagos, pedidos y administración de productos.</p></div>
           <div class="feature"><div class="ic">🏢</div><h3>Páginas corporativas</h3><p>Presenta la experiencia, servicios y canales de contacto de tu empresa o perfil profesional.</p></div>
           <div class="feature"><div class="ic">⚙️</div><h3>Soluciones personalizadas</h3><p>Aplicaciones, formularios, automatizaciones, integraciones o funcionalidades específicas para tu operación.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEXO LAB (servicios profesionales) ============ -->
+    <section class="nexo-band" aria-labelledby="nexo-title">
+      <div class="wrap">
+        <div class="nexo-strip">
+          <div class="nx-grid" aria-hidden="true"></div>
+          <div class="nx-in">
+            <div>
+              <span class="nx-label">
+                <svg width="15" height="15" viewBox="0 0 64 64" aria-hidden="true"><path d="M18 46 L18 18 L46 46 L46 18" fill="none" stroke="#22d3ee" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Servicios profesionales
+              </span>
+              <h2 id="nexo-title">¿Tu reto va más allá de una <span class="g">página web</span>?</h2>
+              <p class="nx-sub">Para empresas y equipos de tecnología, <b>NEXO LAB</b> ofrece arquitectura de software, modernización, backend, cloud, diagnóstico técnico y automatización del conocimiento.</p>
+              <div class="nx-tags">
+                <span>Arquitectura</span><span>Backend &amp; Cloud</span><span>Modernización</span><span>Ingeniería inversa</span><span>CI/CD &amp; QA</span><span>IA para agentes</span>
+              </div>
+              <a class="nx-cta" href="nexo-lab/">Explorar NEXO LAB →</a>
+            </div>
+            <div class="nx-visual" aria-hidden="true">
+              <svg class="nx-mark" viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="nxg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#22d3ee"/><stop offset="0.5" stop-color="#3b82f6"/><stop offset="1" stop-color="#8b5cf6"/>
+                  </linearGradient>
+                </defs>
+                <rect x="18" y="70" width="70" height="50" rx="9" fill="#0d1424" stroke="#ffffff26"/>
+                <text x="53" y="99" text-anchor="middle" fill="#94a1bd" font-size="11" font-family="monospace">monolito</text>
+                <g stroke="url(#nxg)" stroke-width="2" fill="none" stroke-dasharray="5 8">
+                  <path d="M88 95 C 125 95, 125 55, 160 55"/><path d="M88 95 C 125 95, 125 95, 160 95"/><path d="M88 95 C 125 95, 125 135, 160 135"/>
+                </g>
+                <rect x="160" y="42" width="58" height="26" rx="7" fill="#0d1424" stroke="#22d3ee"/><text x="189" y="59" text-anchor="middle" fill="#c3cce0" font-size="10" font-family="monospace">api</text>
+                <rect x="160" y="82" width="58" height="26" rx="7" fill="#0d1424" stroke="#3b82f6"/><text x="189" y="99" text-anchor="middle" fill="#c3cce0" font-size="10" font-family="monospace">core</text>
+                <rect x="160" y="122" width="58" height="26" rx="7" fill="#0d1424" stroke="#8b5cf6"/><text x="189" y="139" text-anchor="middle" fill="#c3cce0" font-size="10" font-family="monospace">jobs</text>
+                <circle cx="240" cy="55" r="5" fill="#22d3ee"/><circle cx="240" cy="135" r="5" fill="#8b5cf6"/>
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -516,6 +586,7 @@
           <a href="#servicios">Servicios</a>
           <a href="#planes">Planes</a>
           <a href="#faq">FAQ</a>
+          <a href="nexo-lab/" class="nx-nav">NEXO LAB ↗</a>
           <a id="footWa" target="_blank" rel="noopener noreferrer">WhatsApp</a>
           <a id="footEmail">Correo</a>
         </div>

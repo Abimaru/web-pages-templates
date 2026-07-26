@@ -1,7 +1,26 @@
-# web-pages-templates — Prototipos web por Abimaru
+# web-pages-templates — Estudio Abimaru
 
-Colección de prototipos de páginas web, cada uno autocontenido en su propia carpeta
-y ejecutable de forma independiente. Nacen como variaciones a partir de la joyería base.
+Este repositorio aloja **dos líneas** independientes, publicadas en el mismo GitHub Pages:
+
+```text
+Estudio Abimaru
+├── Soluciones web para negocios     → landing comercial + catálogo de modelos (demos)
+│   └── /  ·  /pixelvault  /nexora  /muebles  /maru  /vitalis  /prospera  /nucleo  /vianova
+└── NEXO LAB by Abimaru              → línea de servicios profesionales (NO es un modelo)
+    └── /nexo-lab/  —  arquitectura, backend, cloud y modernización
+```
+
+- **Estudio Abimaru** (`catalogo/`): landing comercial de páginas, catálogos y tiendas para negocios.
+  Su contador de modelos representa **solo** las demos seleccionables del catálogo (8), y **NEXO LAB
+  no lo incrementa**.
+- **NEXO LAB** (`nexo-lab/`): página de servicios profesionales de arquitectura de software,
+  backend, cloud, modernización, ingeniería inversa, CI/CD, QA e ingeniería de conocimiento para
+  agentes. Enlazada desde la landing (header, footer y una franja diferenciada), con página propia.
+  Ver [`nexo-lab/README.md`](nexo-lab/README.md).
+
+## Prototipos (catálogo de modelos)
+
+Cada modelo es autocontenido en su propia carpeta y ejecutable de forma independiente.
 
 | Prototipo | Carpeta | Rubro | Stack | Puerto dev |
 |---|---|---|---|---|

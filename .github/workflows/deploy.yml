@@ -90,11 +90,19 @@ jobs:
           npm install --no-audit --no-fund
           npm run build
 
+      - name: Build NEXO LAB (servicios profesionales)
+        working-directory: nexo-lab
+        env:
+          VITE_BASE: /web-pages-templates/nexo-lab/
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
       - name: Ensamblar sitio
         run: |
           mkdir -p _site
           cp -r catalogo/. _site/
-          mkdir -p _site/pixelvault _site/nexora _site/muebles _site/maru _site/vitalis _site/prospera _site/nucleo _site/vianova
+          mkdir -p _site/pixelvault _site/nexora _site/muebles _site/maru _site/vitalis _site/prospera _site/nucleo _site/vianova _site/nexo-lab
           cp -r videojuegos-pixelvault/out/. _site/pixelvault/
           cp -r computacion-nexora/out/. _site/nexora/
           cp -r muebles-atelier-ibarguen/dist/. _site/muebles/
@@ -103,6 +111,7 @@ jobs:
           cp -r finanzas-prospera/dist/. _site/prospera/
           cp -r crm-nucleo/dist/. _site/nucleo/
           cp -r movilidad-vianova/dist/. _site/vianova/
+          cp -r nexo-lab/dist/. _site/nexo-lab/
           touch _site/.nojekyll
 
       - name: Subir artefacto
