@@ -66,6 +66,14 @@ npm run smoke        # smoke estático: salidas de build + assets + sitemap
 - **CI (GitHub Actions):** `npm ci` con caché de npm → `check:all` → `build:all` → `smoke`
   → ensamblado → despliegue. El deploy **solo ocurre si todo pasa**.
 
+## Rendimiento y recursos
+
+- **Catálogo:** cada tarjeta muestra una **miniatura estática** (la imagen OG de la demo) y la
+  vista en vivo (iframe) se carga **solo al pulsar "Vista interactiva"** — la carga inicial ya
+  no arrastra los 8 sitios.
+- **Imágenes/fuentes/licencias:** ver [`docs/ASSET_ATTRIBUTIONS.md`](docs/ASSET_ATTRIBUTIONS.md).
+  Las fotos son de Unsplash (centralizadas y sustituibles); los OG/favicons son propios y locales.
+
 ## Identidad de cada prototipo
 
 - **PIXELVAULT** — *"El cofre de tesoros gamer"*. Estética neón/arcade, animaciones de

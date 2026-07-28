@@ -139,7 +139,10 @@
     .bar i { width: 9px; height: 9px; border-radius: 50%; }
     .bar .u { margin-left: 8px; font-size: 10.5px; color: #ffffff88; font-family: "Space Grotesk"; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
     .frame { position: relative; width: 100%; aspect-ratio: 16/10; overflow: hidden; }
-    .frame iframe { position: absolute; inset: 0; width: 285%; height: 285%; transform: scale(.3508); transform-origin: top left; border: 0; z-index: 1; background: #0b0b16; }
+    .frame iframe { position: absolute; inset: 0; width: 285%; height: 285%; transform: scale(.3508); transform-origin: top left; border: 0; z-index: 4; background: #0b0b16; }
+    .thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; }
+    .preview-play { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 3; display: inline-flex; align-items: center; gap: 7px; padding: 8px 15px; border: 1px solid #ffffff33; border-radius: 999px; background: #0a0b12cc; backdrop-filter: blur(6px); color: #fff; font-family: "Space Grotesk"; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: transform .2s, background .2s; }
+    .preview-play:hover { transform: translateX(-50%) translateY(-2px); background: #0a0b12ee; }
     .mockup { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 16px; }
     .mockup .em { font-size: 52px; filter: drop-shadow(0 6px 18px #0007); }
     .mockup .nm { font-family: "Space Grotesk"; font-weight: 700; font-size: 20px; }
@@ -653,7 +656,8 @@
                 <span class="b1" style="background:${m.accent}"></span><span class="b2" style="background:${m.accent2}"></span>
                 <span class="em">${m.emoji}</span><span class="nm">${esc(m.name)}</span><span class="tg">${esc(m.tagline)}</span>
               </div>
-              <iframe data-src="${m.demoUrl}" loading="lazy" scrolling="no" tabindex="-1" title="Vista previa de ${esc(m.name)}" sandbox="allow-scripts allow-same-origin"></iframe>
+              <img class="thumb" src="${m.demoUrl}og.jpg" alt="Vista previa de ${esc(m.name)}" loading="lazy" decoding="async" width="640" height="400" onerror="this.remove()" />
+              <button class="preview-play" data-demo="${m.demoUrl}" data-name="${esc(m.name)}" aria-label="Cargar vista interactiva de ${esc(m.name)}"><span aria-hidden="true">▶</span> Vista interactiva</button>
             </div>
           </div>
         </div>
@@ -675,17 +679,25 @@
     document.querySelectorAll("[data-ev]").forEach((el) =>
       el.addEventListener("click", () => track(el.dataset.ev, { model: el.dataset.model })));
 
-    // Lazy-load de iframes: solo cargan cuando la tarjeta se acerca al viewport
-    const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          const f = e.target.querySelector("iframe[data-src]");
-          if (f) { f.src = f.dataset.src; f.removeAttribute("data-src"); }
-          obs.unobserve(e.target);
-        }
+    // Rendimiento: la vista en vivo (iframe) NO se carga al hacer scroll. Cada tarjeta
+    // muestra una miniatura estática (imagen OG de la demo) y el iframe se inyecta solo
+    // al pulsar "Vista interactiva". Así la carga inicial no arrastra los 8 sitios.
+    document.querySelectorAll(".preview-play").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const frame = btn.closest(".frame");
+        if (!frame || frame.querySelector("iframe")) return;
+        const iframe = document.createElement("iframe");
+        iframe.src = btn.dataset.demo;
+        iframe.loading = "lazy";
+        iframe.scrolling = "no";
+        iframe.tabIndex = -1;
+        iframe.title = "Vista previa de " + btn.dataset.name;
+        iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
+        frame.appendChild(iframe);
+        btn.remove();
+        track("vista_interactiva", { model: btn.dataset.name });
       });
-    }, { rootMargin: "300px" });
-    document.querySelectorAll(".preview").forEach((p) => io.observe(p));
+    });
 
     /* ---- Planes ---- */
     document.getElementById("pricingNote").textContent = CFG.pricing.note;
