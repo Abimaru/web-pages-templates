@@ -74,6 +74,12 @@ npm run smoke        # smoke estático: salidas de build + assets + sitemap
 - **Imágenes/fuentes/licencias:** ver [`docs/ASSET_ATTRIBUTIONS.md`](docs/ASSET_ATTRIBUTIONS.md).
   Las fotos son de Unsplash (centralizadas y sustituibles); los OG/favicons son propios y locales.
 
+## Documentación
+
+En [`docs/`](docs/): [arquitectura](docs/architecture.md), [desarrollo](docs/development.md),
+[diseño](docs/design.md), [ADRs](docs/adr/) (decisiones y su porqué) y
+[reportes de iteración](docs/iterations/).
+
 ## Identidad de cada prototipo
 
 - **PIXELVAULT** — *"El cofre de tesoros gamer"*. Estética neón/arcade, animaciones de
