@@ -38,11 +38,9 @@ export default function FreeCredit() {
     return insurancePlans.find((p) => p.id === id) ?? insurancePlans[1];
   }, [value, condition]);
 
-  const waMsg =
-    `Hola, quiero un crédito de vehículo por ${formatCOP(value)} ` +
-    `(${type} ${condition.toLowerCase()}). Cuota inicial ${formatCOP(down)} (${(downPct * 100).toFixed(0)}%), ` +
-    `plazo ${months} meses. Cuota estimada ${formatCOP(credit.cuota)}/mes. (Simulación VíaNova, ilustrativa.)`;
-  const waHref = `https://wa.me/573157076691?text=${encodeURIComponent(waMsg)}`;
+  // Botón "continuar" NO enlaza a un canal real: VíaNova es un prototipo y no vende
+  // vehículos ni tramita créditos. Al pulsar muestra un aviso demostrativo.
+  const [demoNote, setDemoNote] = useState(false);
 
   return (
     <section id="credito-libre" className="mx-auto max-w-7xl px-5 py-20">
@@ -248,10 +246,32 @@ export default function FreeCredit() {
             <a href="#solicitud" className="btn btn-cobre flex-1 sm:flex-none">
               <Check size={17} /> Solicitar este crédito <ArrowRight size={15} />
             </a>
-            <a href={waHref} target="_blank" rel="noopener noreferrer" className="btn btn-ghost flex-1 sm:flex-none">
-              Continuar por WhatsApp
-            </a>
+            <button
+              type="button"
+              onClick={() => setDemoNote((v) => !v)}
+              aria-expanded={demoNote}
+              className="btn btn-ghost flex-1 sm:flex-none"
+            >
+              Continuar mi solicitud
+            </button>
           </Reveal>
+
+          {demoNote && (
+            <Reveal>
+              <div
+                aria-live="polite"
+                className="flex items-start gap-3 rounded-2xl border border-cyan/25 bg-cyan-soft p-4 text-sm text-ink/80"
+              >
+                <Info size={20} className="mt-0.5 shrink-0 text-cyan" />
+                <p>
+                  <strong className="text-ink">Función demostrativa.</strong> En una implementación
+                  real, aquí conectaríamos tu solicitud con el flujo de originación y un asesor.
+                  VíaNova es un prototipo de Estudio Abimaru: <strong>no vende vehículos ni tramita
+                  créditos</strong>. Próximamente: seguimiento de solicitud y estados en tiempo real.
+                </p>
+              </div>
+            </Reveal>
+          )}
         </div>
       </div>
     </section>
