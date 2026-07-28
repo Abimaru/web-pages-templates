@@ -5,6 +5,7 @@ import Logo from "./Logo";
 const links = [
   { href: "#marketplace", label: "Vehículos" },
   { href: "#cockpit", label: "Simulador" },
+  { href: "#credito-libre", label: "Crédito a tu medida" },
   { href: "#venta", label: "Vender" },
   { href: "#cartera", label: "Compra de cartera" },
   { href: "#seguros", label: "Seguros" },

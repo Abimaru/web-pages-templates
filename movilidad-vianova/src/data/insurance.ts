@@ -9,6 +9,13 @@ export type InsurancePlan = {
   recommendedFor: string;
 };
 
+/** Sugiere un plan (id) según valor y condición del vehículo. Regla ilustrativa y pura. */
+export function suggestPlanId(value: number, condition: "Nuevo" | "Usado"): string {
+  if (condition === "Usado") return value >= 120_000_000 ? "completo" : "esencial";
+  if (value >= 150_000_000) return "premium";
+  return "completo";
+}
+
 export const insurancePlans: InsurancePlan[] = [
   {
     id: "esencial",

@@ -9,6 +9,7 @@ import IntentSelector from "./sections/IntentSelector";
 import Marketplace from "./sections/Marketplace";
 import Comparator from "./sections/Comparator";
 import Cockpit from "./sections/Cockpit";
+import FreeCredit from "./sections/FreeCredit";
 import MobilityProfile from "./sections/MobilityProfile";
 import Application from "./sections/Application";
 import TradeIn from "./sections/TradeIn";
@@ -34,6 +35,7 @@ export default function App() {
         <Marketplace />
         <Comparator />
         <Cockpit />
+        <FreeCredit />
         <MobilityProfile />
         <Application />
         <TradeIn />
