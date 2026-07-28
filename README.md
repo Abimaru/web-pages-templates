@@ -46,6 +46,26 @@ npm run dev
 > `npm run dev -- -p 3001`). El sitio de muebles (Vite) usa el **5173**, así que puede
 > correr en paralelo con cualquiera de los otros.
 
+## Calidad y validación
+
+Cada proyecto expone `lint` (type-check con `tsc --noEmit`), `test` (Vitest) y `build`.
+Desde la **raíz** hay un orquestador con watchdog (avance cada 30 s, timeout y resumen):
+
+```bash
+npm run lint:all     # tsc --noEmit en los 9 proyectos
+npm run test:all     # Vitest en los 9 proyectos
+npm run build:all    # build con la base de GitHub Pages por proyecto
+npm run check:all    # lint:all + test:all
+npm run smoke        # smoke estático: salidas de build + assets + sitemap
+```
+
+- **Pruebas destacadas:** matemática financiera de VíaNova (`amortization`, `scenarios`,
+  `effortLevel`, `carteraCompare`) y de PRÓSPERA (`computeCredit`, `computeSavings`) con
+  casos límite (principal/plazo/tasa cero o negativos, valores no finitos, redondeo). El
+  resto de demos valida integridad de datos (ids únicos, precios ≥ 0, URLs válidas).
+- **CI (GitHub Actions):** `npm ci` con caché de npm → `check:all` → `build:all` → `smoke`
+  → ensamblado → despliegue. El deploy **solo ocurre si todo pasa**.
+
 ## Identidad de cada prototipo
 
 - **PIXELVAULT** — *"El cofre de tesoros gamer"*. Estética neón/arcade, animaciones de

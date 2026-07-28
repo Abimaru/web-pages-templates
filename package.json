@@ -1,0 +1,14 @@
+{
+  "name": "web-pages-templates",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Ecosistema de Estudio Abimaru: landing comercial, 8 demos y NEXO LAB. Orquestador de calidad (lint/test/build/smoke) sobre todos los proyectos.",
+  "type": "module",
+  "scripts": {
+    "lint:all": "node scripts/run-all.mjs lint",
+    "test:all": "node scripts/run-all.mjs test",
+    "build:all": "node scripts/run-all.mjs build",
+    "check:all": "node scripts/run-all.mjs lint && node scripts/run-all.mjs test",
+    "smoke": "node scripts/smoke-static.mjs"
+  }
+}

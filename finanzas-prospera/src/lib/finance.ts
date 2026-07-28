@@ -17,8 +17,11 @@ export const savingsTerms: SavingsTerm[] = [
 ];
 
 export function computeSavings(amount: number, days: number, ea: number) {
-  const final = amount * Math.pow(1 + ea, days / 365);
-  return { final, interest: final - amount };
+  const a = Number.isFinite(amount) && amount > 0 ? amount : 0;
+  const d = Number.isFinite(days) && days > 0 ? days : 0;
+  const rate = Number.isFinite(ea) && ea > -1 ? ea : 0;
+  const final = a * Math.pow(1 + rate, d / 365);
+  return { final, interest: final - a };
 }
 
 // Serie de valor mes a mes (para el gráfico de crecimiento)
@@ -36,7 +39,15 @@ export const CREDIT_MONTHLY_RATE = 0.019; // 1.9% mensual (~25.3% E.A. aprox.)
 export const creditEA = Math.pow(1 + CREDIT_MONTHLY_RATE, 12) - 1;
 
 export function computeCredit(amount: number, months: number, r = CREDIT_MONTHLY_RATE) {
-  const cuota = (amount * r) / (1 - Math.pow(1 + r, -months));
-  const total = cuota * months;
-  return { cuota, total, interest: total - amount };
+  const p = Number.isFinite(amount) && amount > 0 ? amount : 0;
+  const n = Number.isFinite(months) && months > 0 ? Math.floor(months) : 0;
+  if (p <= 0 || n <= 0) return { cuota: 0, total: 0, interest: 0 };
+  // Tasa cero o inválida → cuota lineal (sin intereses).
+  if (!Number.isFinite(r) || r <= 0) {
+    const cuota = p / n;
+    return { cuota, total: p, interest: 0 };
+  }
+  const cuota = (p * r) / (1 - Math.pow(1 + r, -n));
+  const total = cuota * n;
+  return { cuota, total, interest: total - p };
 }

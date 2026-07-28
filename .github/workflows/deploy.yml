@@ -25,78 +25,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+          cache-dependency-path: "**/package-lock.json"
 
-      - name: Build PIXELVAULT (videojuegos)
-        working-directory: videojuegos-pixelvault
-        env:
-          NEXT_PUBLIC_BASE_PATH: /web-pages-templates/pixelvault
+      - name: Instalar dependencias (todas las apps)
         run: |
-          npm install --no-audit --no-fund
-          npm run build
+          for d in videojuegos-pixelvault computacion-nexora muebles-atelier-ibarguen ropa-maru farmacia-vitalis finanzas-prospera crm-nucleo movilidad-vianova nexo-lab; do
+            echo "▶ npm ci — $d"
+            ( cd "$d" && npm ci --no-audit --no-fund )
+          done
 
-      - name: Build NEXORA (computación)
-        working-directory: computacion-nexora
-        env:
-          NEXT_PUBLIC_BASE_PATH: /web-pages-templates/nexora
-        run: |
-          npm install --no-audit --no-fund
-          npm run build
+      - name: Validar (lint + test)
+        run: npm run check:all
 
-      - name: Build Atelier Ibargüen (muebles)
-        working-directory: muebles-atelier-ibarguen
-        env:
-          VITE_BASE: /web-pages-templates/muebles/
-        run: |
-          npm install --no-audit --no-fund
-          npm run build
+      - name: Construir todas las apps
+        # run-all.mjs aplica VITE_BASE / NEXT_PUBLIC_BASE_PATH por proyecto.
+        run: npm run build:all
 
-      - name: Build MARÚ (ropa)
-        working-directory: ropa-maru
-        env:
-          VITE_BASE: /web-pages-templates/maru/
-        run: |
-          npm install --no-audit --no-fund
-          npm run build
-
-      - name: Build VITALIS (farmacia)
-        working-directory: farmacia-vitalis
-        env:
-          VITE_BASE: /web-pages-templates/vitalis/
-        run: |
-          npm install --no-audit --no-fund
-          npm run build
-
-      - name: Build PRÓSPERA (finanzas)
-        working-directory: finanzas-prospera
-        env:
-          VITE_BASE: /web-pages-templates/prospera/
-        run: |
-          npm install --no-audit --no-fund
-          npm run build
-
-      - name: Build NÚCLEO CRM
-        working-directory: crm-nucleo
-        env:
-          VITE_BASE: /web-pages-templates/nucleo/
-        run: |
-          npm install --no-audit --no-fund
-          npm run build
-
-      - name: Build VíaNova (movilidad)
-        working-directory: movilidad-vianova
-        env:
-          VITE_BASE: /web-pages-templates/vianova/
-        run: |
-          npm install --no-audit --no-fund
-          npm run build
-
-      - name: Build NEXO LAB (servicios profesionales)
-        working-directory: nexo-lab
-        env:
-          VITE_BASE: /web-pages-templates/nexo-lab/
-        run: |
-          npm install --no-audit --no-fund
-          npm run build
+      - name: Smoke estático (salidas + sitemap)
+        run: npm run smoke
 
       - name: Ensamblar sitio
         run: |
