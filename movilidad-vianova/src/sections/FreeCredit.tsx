@@ -14,7 +14,7 @@ import type { VehicleType, Condition } from "../data/vehicles";
 import { formatCOP, formatCOPShort } from "../lib/format";
 
 const TYPES: VehicleType[] = ["SUV", "Sedán", "Pickup", "Compacto", "Híbrido", "Eléctrico"];
-const TERMS = [12, 36, 60, 84];
+const TERMS = [12, 24, 36, 48, 60, 72, 84];
 const PRESETS = [60_000_000, 100_000_000, 150_000_000, 200_000_000];
 // Tasa mensual ilustrativa: los usados suelen tener una tasa un poco mayor.
 const rateFor = (condition: Condition) => (condition === "Usado" ? 0.015 : DEFAULT_RATE_MONTHLY);
@@ -26,6 +26,7 @@ export default function FreeCredit() {
   const [downPct, setDownPct] = useState(0.2);
   const [months, setMonths] = useState(60);
   const [income, setIncome] = useState(4_500_000);
+  const [withInsurance, setWithInsurance] = useState(true);
 
   const rate = rateFor(condition);
   const down = Math.round(value * downPct);
@@ -150,18 +151,18 @@ export default function FreeCredit() {
             <div className="mt-1 flex justify-between text-xs text-steel"><span>0%</span><span>60%</span></div>
 
             {/* Plazo */}
-            <span className="mb-1 mt-4 block text-sm font-medium text-muted">Plazo</span>
-            <div className="flex gap-2">
+            <span className="mb-1 mt-4 block text-sm font-medium text-muted">Plazo (meses)</span>
+            <div className="grid grid-cols-4 gap-2">
               {TERMS.map((m) => (
                 <button
                   key={m}
                   onClick={() => setMonths(m)}
                   aria-pressed={months === m}
-                  className={`flex-1 rounded-lg border py-2 text-sm font-semibold transition ${
+                  className={`rounded-lg border py-2 text-sm font-semibold transition ${
                     months === m ? "border-cobre bg-cobre-soft text-cobre-2" : "border-line-2 text-muted hover:text-ink"
                   }`}
                 >
-                  {m}m
+                  {m}
                 </button>
               ))}
             </div>
@@ -214,20 +215,43 @@ export default function FreeCredit() {
             </div>
           </Reveal>
 
-          {/* Seguro sugerido */}
+          {/* Seguro (opcional) */}
           <Reveal>
-            <div className="card flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-start gap-3">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-cyan-soft text-cyan">
-                  <ShieldCheck size={22} />
-                </span>
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-steel">Seguro sugerido</p>
-                  <p className="font-display text-lg font-bold">Plan {plan.name} · desde {formatCOP(plan.monthlyFrom)}/mes</p>
-                  <p className="text-sm text-muted">{plan.recommendedFor}.</p>
+            <div className="card p-6">
+              <label className="flex cursor-pointer items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={withInsurance}
+                  onChange={(e) => setWithInsurance(e.target.checked)}
+                  className="h-4 w-4 accent-[#e8873a]"
+                />
+                <span className="font-display text-sm font-semibold">Incluir seguro sugerido</span>
+                <span className="ml-auto text-xs text-muted">Opcional</span>
+              </label>
+
+              {withInsurance ? (
+                <div className="mt-4 flex flex-col gap-4 border-t border-line pt-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-start gap-3">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-cyan-soft text-cyan">
+                      <ShieldCheck size={22} />
+                    </span>
+                    <div>
+                      <p className="text-xs uppercase tracking-widest text-steel">Seguro sugerido</p>
+                      <p className="font-display text-lg font-bold">Plan {plan.name} · desde {formatCOP(plan.monthlyFrom)}/mes</p>
+                      <p className="text-sm text-muted">{plan.recommendedFor}.</p>
+                      <p className="mt-1 text-sm text-ink/80">
+                        Cuota + seguro ≈{" "}
+                        <span className="font-semibold text-cobre-2">{formatCOP(credit.cuota + plan.monthlyFrom)}/mes</span>
+                      </p>
+                    </div>
+                  </div>
+                  <a href="#seguros" className="btn btn-ghost shrink-0"><ShieldCheck size={16} /> Ver seguros</a>
                 </div>
-              </div>
-              <a href="#seguros" className="btn btn-ghost shrink-0"><ShieldCheck size={16} /> Ver seguros</a>
+              ) : (
+                <p className="mt-3 border-t border-line pt-3 text-sm text-muted">
+                  Sin seguro. Puedes agregar protección cuando quieras; recomendamos revisar los planes.
+                </p>
+              )}
             </div>
           </Reveal>
 

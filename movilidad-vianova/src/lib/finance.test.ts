@@ -125,6 +125,13 @@ describe("carteraCompare", () => {
     const r = carteraCompare({ balance: 20_000_000, currentPayment: 300_000, remainingMonths: 12, newMonths: 84 });
     expect(r.totalDiff).toBeLessThan(0);
   });
+  it("deriva la cuota actual desde la tasa mensual indicada", () => {
+    const r = carteraCompare({ balance: 30_000_000, currentRate: 0.02, remainingMonths: 36 });
+    expect(finite(r.currentPayment)).toBe(true);
+    expect(r.currentPayment).toBeGreaterThan(0);
+    // Con interés (2% mensual), la cuota supera el simple saldo/plazo
+    expect(r.currentPayment).toBeGreaterThan(30_000_000 / 36);
+  });
 });
 
 describe("monthlyToEA", () => {

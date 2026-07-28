@@ -92,12 +92,14 @@ export function effortLevel(cuota: number, income: number): { ratio: number; lev
 /* ---------- Compra de cartera (antes / después) ---------- */
 export type CarteraInput = {
   balance: number; // saldo actual
-  currentPayment: number; // cuota actual
+  currentPayment?: number; // cuota actual (si se conoce)
+  currentRate?: number; // tasa mensual actual (deriva la cuota si se provee)
   remainingMonths: number; // plazo restante
   newRate?: number; // tasa mensual nueva ilustrativa
   newMonths?: number; // plazo nuevo
 };
 export type CarteraResult = {
+  currentPayment: number; // cuota actual (dada o derivada de la tasa)
   newPayment: number;
   monthlyDiff: number; // positivo = ahorro mensual
   currentTotal: number;
@@ -107,13 +109,19 @@ export type CarteraResult = {
 };
 
 export function carteraCompare(input: CarteraInput): CarteraResult {
-  const { balance, currentPayment, remainingMonths } = input;
+  const { balance, remainingMonths } = input;
+  // Si el cliente indica su tasa mensual actual, derivamos la cuota desde ella.
+  const currentPayment =
+    input.currentRate !== undefined
+      ? amortization(balance, remainingMonths, input.currentRate).cuota
+      : input.currentPayment ?? 0;
   const newRate = input.newRate ?? DEFAULT_RATE_MONTHLY * 0.85; // ~15% mejor, ilustrativo
   const newMonths = input.newMonths ?? Math.max(remainingMonths, 12);
   const a = amortization(balance, newMonths, newRate);
   const currentTotal = currentPayment * remainingMonths;
   const newTotal = a.total;
   return {
+    currentPayment,
     newPayment: a.cuota,
     monthlyDiff: currentPayment - a.cuota,
     currentTotal,
