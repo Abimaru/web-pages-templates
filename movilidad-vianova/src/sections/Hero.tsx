@@ -36,7 +36,7 @@ export default function Hero() {
           </div>
 
           <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted">
-            <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-mint" /> Proceso 100% digital</span>
+            <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-mint" /> Experiencia digital simulada</span>
             <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-cobre" /> Nuevos y usados</span>
             <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-electric" /> Simulación en tiempo real</span>
           </div>
@@ -61,7 +61,7 @@ export default function Hero() {
           {/* Sello */}
           <div className="absolute -right-3 top-6 hidden rounded-2xl border border-cyan/30 bg-night/90 px-4 py-3 backdrop-blur md:block">
             <p className="font-display text-lg font-bold text-cyan">VíaNova</p>
-            <p className="text-xs text-muted">Tu movilidad, en una ruta</p>
+            <p className="text-xs text-muted">Tu movilidad, en una sola ruta</p>
           </div>
         </Reveal>
       </div>
