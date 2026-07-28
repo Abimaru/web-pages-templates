@@ -12,9 +12,10 @@ describe("projects (Atelier)", () => {
   it("cada proyecto tiene categoría válida, portada y galería no vacía", () => {
     for (const p of projects) {
       expect(CATEGORIES).toContain(p.category);
-      expect(p.cover).toMatch(/^https?:\/\/\S+$/);
+      // Imágenes locales (post-localización): /img/<id>.jpg
+      expect(p.cover).toMatch(/\/img\/[\w-]+\.jpg$/);
       expect(p.gallery.length).toBeGreaterThan(0);
-      expect(p.gallery.every((g) => /^https?:\/\/\S+$/.test(g))).toBe(true);
+      expect(p.gallery.every((g) => /\/img\/[\w-]+\.jpg$/.test(g))).toBe(true);
       expect(p.name.length).toBeGreaterThan(0);
       expect(p.description.length).toBeGreaterThan(0);
     }

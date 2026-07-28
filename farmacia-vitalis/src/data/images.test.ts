@@ -12,7 +12,8 @@ describe("images (VITALIS)", () => {
   const all = urls(images);
   it("todas las imágenes son URLs https válidas", () => {
     expect(all.length).toBeGreaterThan(0);
-    for (const u of all) expect(u).toMatch(/^https:\/\/\S+$/);
+    // Imágenes locales (post-localización): /img/<id>.jpg
+    for (const u of all) expect(u).toMatch(/\/img\/[\w-]+\.jpg$/);
   });
   it("existen las 4 categorías", () => {
     expect(Object.keys(images.categoria)).toEqual(

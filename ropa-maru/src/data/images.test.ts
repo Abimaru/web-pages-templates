@@ -13,7 +13,8 @@ describe("images (MARÚ)", () => {
   it("todas las imágenes son URLs https válidas", () => {
     expect(all.length).toBeGreaterThan(0);
     for (const u of all) {
-      expect(u).toMatch(/^https:\/\/\S+$/);
+      // Imágenes locales (post-localización): /img/<id>.jpg
+      expect(u).toMatch(/\/img\/[\w-]+\.jpg$/);
     }
   });
   it("no hay URLs vacías ni duplicadas obvias en categorías", () => {
