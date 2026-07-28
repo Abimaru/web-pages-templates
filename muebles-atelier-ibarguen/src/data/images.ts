@@ -1,7 +1,7 @@
 // Imágenes centralizadas (Unsplash). Sustituye cualquiera por fotos propias
 // del taller: basta con reemplazar la URL. Parámetros ?w=&q= controlan tamaño/calidad.
-const u = (id: string, w = 1200, q = 75) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=${q}`;
+// Imágenes locales (descargadas de Unsplash, ver docs/ASSET_ATTRIBUTIONS.md).
+const u = (id: string, ..._rest: number[]) => `${import.meta.env.BASE_URL}img/${id}.jpg`;
 
 export const images = {
   hero: u("1555041469-a586c61ea9bc", 1400),

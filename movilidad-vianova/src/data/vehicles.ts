@@ -1,7 +1,7 @@
 // Datos DEMOSTRATIVOS. Marcas/modelos ficticios; fotos royalty-free (Unsplash).
 // Ningún dato representa una oferta real.
-const u = (id: string, w = 900, q = 72) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=${q}`;
+// Imágenes locales (descargadas de Unsplash, ver docs/ASSET_ATTRIBUTIONS.md).
+const u = (id: string, ..._rest: number[]) => `${import.meta.env.BASE_URL}img/${id}.jpg`;
 
 export type VehicleType = "SUV" | "Sedán" | "Pickup" | "Compacto" | "Híbrido" | "Eléctrico";
 export type Condition = "Nuevo" | "Usado";

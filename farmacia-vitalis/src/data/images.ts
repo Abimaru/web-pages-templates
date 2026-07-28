@@ -1,8 +1,8 @@
 // Imágenes de salud/farmacia (Unsplash). Sustituibles por fotos propias.
 // Las "fichas de producto" NO usan fotos de marcas reales: se dibujan con
 // íconos/colores para evitar mostrar medicamentos de marca (marca registrada).
-const u = (id: string, w = 1000, q = 75) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=${q}`;
+// Imágenes locales (descargadas de Unsplash, ver docs/ASSET_ATTRIBUTIONS.md).
+const u = (id: string, ..._rest: number[]) => `${import.meta.env.BASE_URL}img/${id}.jpg`;
 
 export const images = {
   hero: u("1631549916768-4119b2e5f926", 1200),

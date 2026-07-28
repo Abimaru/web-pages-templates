@@ -46,7 +46,7 @@ export default function Hero() {
         <Reveal delay={150} className="relative">
           <div className="overflow-hidden rounded-[2rem] rounded-tr-[5rem] border border-line">
             <img
-              src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1100&q=75"
+              src={`${import.meta.env.BASE_URL}img/1552519507-da3b142c6e3d.jpg`}
               alt="Vehículo deportivo en carretera"
               className="h-[360px] w-full object-cover sm:h-[440px]"
               loading="eager"

@@ -1,7 +1,8 @@
 // Imágenes de moda (Unsplash). Sustituibles por fotos propias: reemplaza la URL
 // o coloca tus imágenes en public/ y referencia "/mi-foto.jpg".
-const u = (id: string, w = 1000, q = 75) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=${q}`;
+// Imágenes locales (descargadas de Unsplash, ver docs/ASSET_ATTRIBUTIONS.md).
+// BASE_URL respeta el base path de GitHub Pages.
+const u = (id: string, ..._rest: number[]) => `${import.meta.env.BASE_URL}img/${id}.jpg`;
 
 export const images = {
   hero: u("1483985988355-763728e1935b", 1400),
