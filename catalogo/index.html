@@ -309,6 +309,19 @@
     .arch-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
     .arch-chips span { font-size: 12px; padding: 3px 9px; border-radius: 999px; background: #ffffff0d; border: 1px solid var(--line); color: #c7ccdb; }
 
+    /* Nexo Compass (diagnóstico) */
+    .compass-card { border: 1px solid var(--line-2); border-radius: 20px; background: var(--panel); padding: 26px; max-width: 860px; }
+    @media (min-width: 640px) { .compass-card { padding: 30px; } }
+    .compass-steps { display: flex; gap: 6px; margin-bottom: 18px; }
+    .compass-steps i { height: 4px; flex: 1; border-radius: 999px; background: #ffffff14; }
+    .compass-steps i.done { background: linear-gradient(90deg, var(--orange), var(--cyan)); }
+    .compass-q { font-family: "Space Grotesk"; font-size: 20px; font-weight: 700; margin-top: 4px; }
+    .compass-opts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .compass-opt { padding: 10px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: #ffffff06; color: #c7ccdb; cursor: pointer; font-size: 14px; font-family: inherit; transition: border-color .2s, background .2s, color .2s; }
+    .compass-opt:hover { border-color: #ffffff3a; color: var(--text); }
+    .compass-opt.sel { border-color: var(--orange); background: #ff7a1a1f; color: var(--text); }
+    .compass-nav { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 24px; }
+
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
   </style>
 </head>
@@ -358,7 +371,7 @@
       <h1>Páginas web que <span class="grad">venden</span>.<br />Soluciones digitales que <span class="grad">hacen crecer</span>.</h1>
       <p class="lead">Diseñamos páginas, aplicaciones y automatizaciones para mostrar, vender, operar y evolucionar. No entregamos solo pantallas: entendemos tu necesidad, construimos la solución y te acompañamos después del lanzamiento.</p>
       <div class="cta-row">
-        <a href="#contacto" class="btn btn-primary">Diagnosticar mi necesidad</a>
+        <a href="#compass" class="btn btn-primary">Diagnosticar mi necesidad</a>
         <a href="#mas" class="btn btn-ghost">Explorar soluciones</a>
         <a href="#modelos" class="btn btn-ghost">Cotizar una página</a>
       </div>
@@ -418,7 +431,17 @@
           <span class="p">Construir aplicaciones</span>
           <span class="p">Modernizar operaciones</span>
         </div>
-        <div style="margin-top:30px"><a href="#contacto" class="btn btn-primary">Descubrir qué necesito</a></div>
+        <div style="margin-top:30px"><a href="#compass" class="btn btn-primary">Descubrir qué necesito</a></div>
+      </div>
+    </section>
+
+    <!-- ===================== NEXO COMPASS (diagnóstico) ===================== -->
+    <section id="compass" class="block alt">
+      <div class="wrap">
+        <p class="eyebrow">Nexo Compass</p>
+        <h2 class="sec">¿No sabes exactamente qué necesitas? Diagnostiquémoslo</h2>
+        <p class="sec-sub">Responde unas preguntas y te proponemos una ruta, arquetipos relacionados, riesgos iniciales y un siguiente paso. Es orientativo, por reglas — <b>no</b> un diagnóstico profesional ni IA en tiempo real. Tus respuestas no se envían ni se guardan.</p>
+        <div id="compassApp" style="margin-top:28px"></div>
       </div>
     </section>
 
@@ -486,7 +509,7 @@
             <span class="tag">Procesos</span><span class="tag">Aplicaciones</span><span class="tag">Automatización</span><span class="tag">Integraciones</span><span class="tag">Sistemas complejos</span><span class="tag">Arquitectura</span>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px">
-            <a href="#contacto" class="btn btn-primary btn-sm">Solicitar diagnóstico</a>
+            <a href="#compass" class="btn btn-primary btn-sm">Solicitar diagnóstico</a>
             <a href="nexo-lab/" class="btn btn-ghost btn-sm" style="color:#22d3ee">Ver NEXO LAB ↗</a>
           </div>
         </div>
@@ -799,6 +822,7 @@
       document.body.style.overflow = "";
       if (archLastFocus) archLastFocus.focus();
     }
+    window.openArchetype = openArchetype;
     document.querySelectorAll(".arch-open").forEach((b) =>
       b.addEventListener("click", () => openArchetype(b.dataset.arch)));
     document.getElementById("archClose").addEventListener("click", closeArchetype);
@@ -906,5 +930,6 @@
       menu.classList.remove("open"); burger.setAttribute("aria-expanded", "false");
     }));
   </script>
+  <script src="compass.js"></script>
 </body>
 </html>
