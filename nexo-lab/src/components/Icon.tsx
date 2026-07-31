@@ -30,6 +30,8 @@ import {
   Lock,
   Database,
   Zap,
+  GitMerge,
+  Route,
   CircleDot,
   type LucideProps,
 } from "lucide-react";
@@ -64,6 +66,8 @@ const MAP: Record<string, ComponentType<LucideProps>> = {
   Lock,
   Database,
   Zap,
+  GitMerge,
+  Route,
 };
 
 interface IconProps extends LucideProps {

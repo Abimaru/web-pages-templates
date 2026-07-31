@@ -3,12 +3,18 @@ import Footer from "./components/Footer";
 import Hero from "./sections/Hero";
 import ProblemSelector from "./sections/ProblemSelector";
 import Capabilities from "./sections/Capabilities";
+import AiHumanLed from "./sections/AiHumanLed";
 import Packages from "./sections/Packages";
+import DeliveryStandard from "./sections/DeliveryStandard";
 import CaseStudies from "./sections/CaseStudies";
+import ProofRoom from "./sections/ProofRoom";
 import NAF from "./sections/NAF";
 import Lab from "./sections/Lab";
+import Orchestration from "./sections/Orchestration";
+import Security from "./sections/Security";
 import Technologies from "./sections/Technologies";
 import Profile from "./sections/Profile";
+import Coequipo from "./sections/Coequipo";
 import WayOfWorking from "./sections/WayOfWorking";
 import FAQ from "./sections/FAQ";
 import Contact from "./sections/Contact";
@@ -28,12 +34,18 @@ export default function App() {
         <Hero />
         <ProblemSelector />
         <Capabilities />
+        <AiHumanLed />
         <Packages />
+        <DeliveryStandard />
         <CaseStudies />
+        <ProofRoom />
         <NAF />
         <Lab />
+        <Orchestration />
+        <Security />
         <Technologies />
         <Profile />
+        <Coequipo />
         <WayOfWorking />
         <FAQ />
         <Contact />

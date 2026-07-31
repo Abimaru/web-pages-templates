@@ -6,6 +6,7 @@ import { nexoLabConfig } from "../config";
 const LINKS = [
   { href: "#servicios", label: "Servicios" },
   { href: "#casos", label: "Casos" },
+  { href: "#proof-room", label: "Evidencia" },
   { href: "#naf", label: "Metodología" },
   { href: "#laboratorio", label: "Laboratorio" },
   { href: "#perfil", label: "Sobre mí" },

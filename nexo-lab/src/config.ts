@@ -74,3 +74,27 @@ export function activeChannels(): { key: keyof NexoContact; label: string; href:
   if (c.calendly) out.push({ key: "calendly", label: "Agendar", href: c.calendly });
   return out;
 }
+
+/* Nexo Network (§25) — red de profesionales. DESHABILITADA: mientras `enabled` sea false NO se
+ * muestra ningún equipo (no inventar colaboradores). Al habilitarla, poblar `members` con datos
+ * reales confirmados. `capabilities` documenta las áreas futuras. */
+export const nexoNetwork: {
+  enabled: boolean;
+  members: { name: string; role: string }[];
+  capabilities: string[];
+} = {
+  enabled: false,
+  members: [],
+  capabilities: [
+    "UX/UI",
+    "Frontend",
+    "Backend",
+    "Cloud",
+    "Seguridad",
+    "Datos",
+    "QA",
+    "Contenido",
+    "Marketing",
+    "Privacidad/Legal",
+  ],
+};
