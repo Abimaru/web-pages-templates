@@ -1,0 +1,168 @@
+{
+  "generatedAt": "2026-07-31T00:45:11.986Z",
+  "commit": "60433e0",
+  "projects": [
+    {
+      "id": "pixelvault",
+      "name": "PIXELVAULT",
+      "checks": {
+        "build": "passed",
+        "typecheck": "passed",
+        "tests": {
+          "status": "passed",
+          "count": 3
+        },
+        "seo": "verified",
+        "openGraph": "verified",
+        "favicon": "verified",
+        "demoDisclosure": "verified",
+        "accessibility": "pending",
+        "security": "not_assessed"
+      }
+    },
+    {
+      "id": "nexora",
+      "name": "NEXORA",
+      "checks": {
+        "build": "passed",
+        "typecheck": "passed",
+        "tests": {
+          "status": "passed",
+          "count": 2
+        },
+        "seo": "verified",
+        "openGraph": "verified",
+        "favicon": "verified",
+        "demoDisclosure": "verified",
+        "accessibility": "pending",
+        "security": "not_assessed"
+      }
+    },
+    {
+      "id": "atelier",
+      "name": "Atelier Ibargüen",
+      "checks": {
+        "build": "passed",
+        "typecheck": "passed",
+        "tests": {
+          "status": "passed",
+          "count": 3
+        },
+        "seo": "verified",
+        "openGraph": "verified",
+        "favicon": "verified",
+        "demoDisclosure": "verified",
+        "accessibility": "pending",
+        "security": "not_assessed"
+      }
+    },
+    {
+      "id": "maru",
+      "name": "MARÚ",
+      "checks": {
+        "build": "passed",
+        "typecheck": "passed",
+        "tests": {
+          "status": "passed",
+          "count": 2
+        },
+        "seo": "verified",
+        "openGraph": "verified",
+        "favicon": "verified",
+        "demoDisclosure": "verified",
+        "accessibility": "pending",
+        "security": "not_assessed"
+      }
+    },
+    {
+      "id": "vitalis",
+      "name": "VITALIS",
+      "checks": {
+        "build": "passed",
+        "typecheck": "passed",
+        "tests": {
+          "status": "passed",
+          "count": 2
+        },
+        "seo": "verified",
+        "openGraph": "verified",
+        "favicon": "verified",
+        "demoDisclosure": "verified",
+        "accessibility": "pending",
+        "security": "not_assessed"
+      }
+    },
+    {
+      "id": "prospera",
+      "name": "PRÓSPERA",
+      "checks": {
+        "build": "passed",
+        "typecheck": "passed",
+        "tests": {
+          "status": "passed",
+          "count": 15
+        },
+        "seo": "verified",
+        "openGraph": "verified",
+        "favicon": "verified",
+        "demoDisclosure": "verified",
+        "accessibility": "pending",
+        "security": "not_assessed"
+      }
+    },
+    {
+      "id": "nucleo",
+      "name": "NÚCLEO CRM",
+      "checks": {
+        "build": "passed",
+        "typecheck": "passed",
+        "tests": {
+          "status": "passed",
+          "count": 6
+        },
+        "seo": "verified",
+        "openGraph": "verified",
+        "favicon": "verified",
+        "demoDisclosure": "pending",
+        "accessibility": "pending",
+        "security": "not_assessed"
+      }
+    },
+    {
+      "id": "vianova",
+      "name": "VíaNova",
+      "checks": {
+        "build": "passed",
+        "typecheck": "passed",
+        "tests": {
+          "status": "passed",
+          "count": 24
+        },
+        "seo": "verified",
+        "openGraph": "verified",
+        "favicon": "verified",
+        "demoDisclosure": "verified",
+        "accessibility": "pending",
+        "security": "not_assessed"
+      }
+    },
+    {
+      "id": "nexolab",
+      "name": "NEXO LAB",
+      "checks": {
+        "build": "passed",
+        "typecheck": "passed",
+        "tests": {
+          "status": "passed",
+          "count": 4
+        },
+        "seo": "verified",
+        "openGraph": "verified",
+        "favicon": "verified",
+        "demoDisclosure": "not_applicable",
+        "accessibility": "pending",
+        "security": "not_assessed"
+      }
+    }
+  ]
+}

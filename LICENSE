@@ -1,0 +1,25 @@
+Copyright © 2026 Andres Ibarguen — Estudio Abimaru. Todos los derechos reservados.
+All rights reserved.
+
+Este repositorio y su contenido (código fuente, diseños, textos, las marcas
+"Estudio Abimaru" y "NEXO LAB", y las identidades de las demostraciones) son
+propiedad de su autor. Se publican únicamente con fines de PORTAFOLIO y para
+permitir el alojamiento gratuito del sitio en GitHub Pages.
+
+No se concede ninguna licencia de uso, copia, reproducción, modificación,
+distribución, publicación ni creación de obras derivadas, total o parcial, por
+ningún medio, sin autorización previa y por escrito del titular.
+
+Puedes ver el código (es público porque GitHub Pages gratuito lo requiere), pero
+verlo no otorga derecho a reutilizarlo.
+
+Propiedad de terceros (con sus propias licencias, no cubiertas por este aviso):
+- Fotografías de Unsplash — Unsplash License (ver docs/ASSET_ATTRIBUTIONS.md).
+- Dependencias de código abierto declaradas en cada package.json (React, Vite,
+  Next.js, Tailwind, etc.), bajo sus respectivas licencias.
+- Íconos lucide-react — licencia ISC.
+
+Los datos, precios, testimonios, cifras y resultados de las demostraciones son
+ILUSTRATIVOS y no constituyen ofertas, aprobaciones ni operaciones reales.
+
+Para solicitar permisos o hacer consultas: Abimaru@gmail.com

@@ -45,6 +45,15 @@ jobs:
       - name: Smoke estático (salidas + sitemap)
         run: npm run smoke
 
+      - name: Validar arquetipos
+        run: npm run validate:archetypes
+
+      - name: Generar Quality Passport (evidencia real)
+        run: npm run generate:quality-passports
+
+      - name: Validar Quality Passport
+        run: npm run validate:quality-passports
+
       - name: Ensamblar sitio
         run: |
           mkdir -p _site
@@ -60,6 +69,9 @@ jobs:
           cp -r movilidad-vianova/dist/. _site/vianova/
           cp -r nexo-lab/dist/. _site/nexo-lab/
           touch _site/.nojekyll
+
+      - name: Pre-render de la landing (contenido sin JS)
+        run: node scripts/prerender-landing.mjs _site
 
       - name: Subir artefacto
         uses: actions/upload-pages-artifact@v3

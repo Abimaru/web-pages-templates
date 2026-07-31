@@ -80,6 +80,15 @@ En [`docs/`](docs/): [arquitectura](docs/architecture.md), [desarrollo](docs/dev
 [diseño](docs/design.md), [ADRs](docs/adr/) (decisiones y su porqué) y
 [reportes de iteración](docs/iterations/).
 
+## Licencia y seguridad
+
+- **Licencia:** propietaria — © Estudio Abimaru, **todos los derechos reservados**. El código es
+  visible (GitHub Pages gratuito lo requiere) pero **no se concede permiso de reutilización**. Ver
+  [`LICENSE`](LICENSE). Fotografías (Unsplash) y dependencias open source tienen sus propias
+  licencias (ver [`docs/ASSET_ATTRIBUTIONS.md`](docs/ASSET_ATTRIBUTIONS.md)).
+- **Seguridad:** reporta problemas de seguridad/privacidad a Abimaru@gmail.com — ver
+  [`SECURITY.md`](SECURITY.md). Las demos no tienen backend ni almacenan datos reales.
+
 ## Identidad de cada prototipo
 
 - **PIXELVAULT** — *"El cofre de tesoros gamer"*. Estética neón/arcade, animaciones de

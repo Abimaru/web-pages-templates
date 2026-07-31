@@ -699,6 +699,9 @@
     const MODELS = window.TEMPLATES || [];
     const ARCH = window.ARCHETYPES || {};
     const ARCH_CX = window.ARCHETYPE_COMPLEXITY || {};
+    // Nexo Quality Passport: evidencia real generada en CI (data/quality-passports.json).
+    let QP = null;
+    fetch("data/quality-passports.json").then((r) => (r.ok ? r.json() : null)).then((d) => { QP = d; }).catch(() => {});
     const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
     const wa = (msg) => `https://wa.me/${CFG.contact.whatsapp}?text=${encodeURIComponent(msg)}`;
 
@@ -784,6 +787,31 @@
       !items || !items.length ? "" :
       `<div class="arch-block"><h4>${title}</h4><div class="arch-chips">${items.map((i) => `<span>${esc(i)}</span>`).join("")}</div></div>`;
 
+    function passportBlock(id) {
+      if (!QP || !QP.projects) return "";
+      const p = QP.projects.find((x) => x.id === id);
+      if (!p) return "";
+      const LABEL = { passed: "Validado", verified: "Validado", partial: "Parcial", pending: "Pendiente", not_assessed: "No evaluado", not_applicable: "No aplica", failed: "Falla" };
+      const COLOR = { passed: "#34d399", verified: "#34d399", partial: "#f4a24d", pending: "#9aa2b8", not_assessed: "#6b7185", not_applicable: "#6b7185", failed: "#f87171" };
+      const row = (k, v) => {
+        const s = typeof v === "object" ? v.status : v;
+        const extra = typeof v === "object" && v.count != null ? " (" + v.count + ")" : "";
+        return '<div style="display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:5px 0;border-bottom:1px solid var(--line)"><span style="color:#c7ccdb">' + k + '</span><span style="color:' + (COLOR[s] || "#9aa2b8") + ';font-weight:600">' + (LABEL[s] || s) + extra + "</span></div>";
+      };
+      const c = p.checks;
+      return (
+        '<div style="margin-top:22px;border:1px solid var(--line-2);border-radius:14px;padding:18px;background:#ffffff04">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h4 style="font-family:\'Space Grotesk\';font-size:15px;font-weight:700">Evidencia de calidad</h4>' +
+        '<span style="font-size:11px;color:var(--muted)">commit ' + esc(QP.commit) + " · " + new Date(QP.generatedAt).toLocaleDateString("es-CO") + "</span></div>" +
+        '<div style="margin-top:10px">' +
+        row("Build", c.build) + row("Type-check", c.typecheck) + row("Pruebas", c.tests) +
+        row("SEO", c.seo) + row("Open Graph", c.openGraph) + row("Favicon", c.favicon) +
+        row("Aviso de prototipo", c.demoDisclosure) + row("Accesibilidad", c.accessibility) + row("Seguridad", c.security) +
+        "</div>" +
+        '<p style="color:var(--muted);font-size:11.5px;margin-top:10px">Evidencia técnica del repositorio, generada en CI. No es una certificación externa ni garantiza una implementación futura.</p>' +
+        "</div>"
+      );
+    }
     function openArchetype(id) {
       const m = MODELS.find((x) => x.id === id), a = ARCH[id];
       if (!m || !a) return;
@@ -808,7 +836,8 @@
           <a class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" href="${wa(`Hola, quiero evaluar una solución como ${m.name} (${a.label}) para mi negocio.`)}">Evaluar una solución así</a>
           <a class="btn btn-ghost btn-sm" href="${m.demoUrl}" target="_blank" rel="noopener noreferrer">Ver demo ↗</a>
         </div>
-        <p style="color:var(--muted);font-size:12px;margin-top:14px">Integraciones, riesgos y controles son orientativos; se definen en el diagnóstico según tu contexto.</p>`;
+        <p style="color:var(--muted);font-size:12px;margin-top:14px">Integraciones, riesgos y controles son orientativos; se definen en el diagnóstico según tu contexto.</p>
+        ${passportBlock(id)}`;
       archLastFocus = document.activeElement;
       archOverlay.classList.add("open");
       archOverlay.setAttribute("aria-hidden", "false");

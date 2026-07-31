@@ -9,6 +9,9 @@
     "test:all": "node scripts/run-all.mjs test",
     "build:all": "node scripts/run-all.mjs build",
     "check:all": "node scripts/run-all.mjs lint && node scripts/run-all.mjs test",
-    "smoke": "node scripts/smoke-static.mjs"
+    "smoke": "node scripts/smoke-static.mjs",
+    "generate:quality-passports": "node scripts/generate-quality-passports.mjs",
+    "validate:quality-passports": "node scripts/validate-quality-passports.mjs",
+    "validate:archetypes": "node scripts/validate-archetypes.mjs"
   }
 }
