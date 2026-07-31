@@ -9,6 +9,7 @@ import DeliveryStandard from "./sections/DeliveryStandard";
 import CaseStudies from "./sections/CaseStudies";
 import ProofRoom from "./sections/ProofRoom";
 import NAF from "./sections/NAF";
+import DeliverySystem from "./sections/DeliverySystem";
 import Lab from "./sections/Lab";
 import Orchestration from "./sections/Orchestration";
 import Security from "./sections/Security";
@@ -40,6 +41,7 @@ export default function App() {
         <CaseStudies />
         <ProofRoom />
         <NAF />
+        <DeliverySystem />
         <Lab />
         <Orchestration />
         <Security />

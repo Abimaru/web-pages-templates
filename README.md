@@ -77,8 +77,10 @@ npm run smoke        # smoke estático: salidas de build + assets + sitemap
 ## Documentación
 
 En [`docs/`](docs/): [arquitectura](docs/architecture.md), [desarrollo](docs/development.md),
-[diseño](docs/design.md), [ADRs](docs/adr/) (decisiones y su porqué) y
-[reportes de iteración](docs/iterations/).
+[diseño](docs/design.md), [ADRs](docs/adr/) (decisiones y su porqué),
+[reportes de iteración](docs/iterations/) y
+[NEXO DIFFERENTIATION](docs/differentiation/) (propuesta de valor, Delivery System, Compass,
+arquetipos, Quality Passport, Proof Room, handoff).
 
 ## Licencia y seguridad
 

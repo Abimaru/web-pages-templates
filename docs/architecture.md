@@ -62,6 +62,20 @@ subcarpeta. `docs/` **no** se copia (no se publica).
 - **Lógica financiera pura y testeable:** `movilidad-vianova/src/lib/finance.ts`,
   `finanzas-prospera/src/lib/finance.ts` (amortización, escenarios, esfuerzo, ahorro).
 
+## Capa de diferenciación (NEXO DIFFERENTIATION)
+
+Sobre la base anterior se añadió una capa que posiciona el ecosistema como consultoría/orquestación:
+
+- **Landing:** Nexo Compass (diagnóstico por reglas, `compass.js`), arquetipos de solución
+  (`archetypes.js` + modal), y **pre-render** del contenido comercial (`scripts/prerender-landing.mjs`,
+  sobre `_site`) para que sea indexable sin JS.
+- **Evidencia:** Nexo **Quality Passport** generado en CI (`quality-passports.json`) y validado; se
+  muestra en el modal del arquetipo.
+- **NEXO LAB:** Nexo Delivery System (alineado con NAF), AI-assisted/human-led, seguridad por diseño,
+  coequipo y **Proof Room** (artefactos descargables). Nexo Network permanece oculta.
+
+Detalle en [`differentiation/`](differentiation/).
+
 ## Compatibilidad GitHub Pages
 
 - Rutas relativas al base path; `.nojekyll`; `catalogo/404.html` para el ruteo SPA de Atelier

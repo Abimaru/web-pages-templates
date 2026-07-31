@@ -12,6 +12,7 @@ Documentación técnica del ecosistema **Estudio Abimaru + NEXO LAB**.
 | [ASSET_ATTRIBUTIONS.md](ASSET_ATTRIBUTIONS.md) | Origen y licencia de imágenes/fuentes |
 | [adr/](adr/) | Architecture Decision Records (decisiones y su porqué) |
 | [iterations/](iterations/) | Reportes por iteración de trabajo |
+| [differentiation/](differentiation/) | NEXO DIFFERENTIATION: propuesta de valor, Delivery System, Compass, arquetipos, Quality Passport, Proof Room, handoff |
 
 ## Convenciones
 
