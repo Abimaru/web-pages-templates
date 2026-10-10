@@ -16,7 +16,8 @@ Abre http://localhost:3000
 - **Hero** con fondo de rejilla + líneas de datos cayendo y una **terminal animada** que "tipea" un diagnóstico en vivo (componente cliente `Terminal.tsx`).
 - **Marquee** de servicios con máscara de desvanecido.
 - **Productos** (PC gamer, laptops, monitores, componentes, periféricos, almacenamiento).
-- **Arma tu PC en 4 pasos**, **Soporte técnico** (mantenimiento, recuperación de datos, redes, seguridad, tuning, remoto).
+- **Arma tu PC** con configuraciones base de un clic (Oficina, Gamer, Creador, Workstation), estimado en vivo y **cotización por WhatsApp** con la build completa (datos y reglas en `app/lib/build.ts`, con pruebas). En la demo no hay número (`STORE_WHATSAPP` vacío): WhatsApp deja elegir el chat; en una tienda real va su número.
+- **Soporte técnico** (mantenimiento, recuperación de datos, redes, seguridad, tuning, remoto).
 - **Por qué NEXORA** con un núcleo animado de **órbitas** alrededor de una CPU.
 - Testimonios + CTA de contacto. `Reveal on scroll` y respeto a `prefers-reduced-motion`.
 

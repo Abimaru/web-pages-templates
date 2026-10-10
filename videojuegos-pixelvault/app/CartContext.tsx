@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Game } from "@/app/lib/games";
 
-export type CartItem = { game: Game; qty: number };
+export type CartItem = { game: Game; qty: number; platform?: string };
 
 type CartCtx = {
   items: CartItem[];
@@ -14,6 +14,7 @@ type CartCtx = {
   add: (game: Game) => void;
   remove: (slug: string) => void;
   setQty: (slug: string, qty: number) => void;
+  setPlatform: (slug: string, platform: string) => void;
   clear: () => void;
 };
 
@@ -56,13 +57,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
         : prev.map((i) => (i.game.slug === slug ? { ...i, qty } : i))
     );
 
+  const setPlatform = (slug: string, platform: string) =>
+    setItems((prev) => prev.map((i) => (i.game.slug === slug ? { ...i, platform } : i)));
+
   const clear = () => setItems([]);
 
   const count = items.reduce((n, i) => n + i.qty, 0);
   const total = items.reduce((n, i) => n + i.qty * i.game.price, 0);
 
   return (
-    <Ctx.Provider value={{ items, count, total, open, setOpen, add, remove, setQty, clear }}>
+    <Ctx.Provider value={{ items, count, total, open, setOpen, add, remove, setQty, setPlatform, clear }}>
       {children}
     </Ctx.Provider>
   );
