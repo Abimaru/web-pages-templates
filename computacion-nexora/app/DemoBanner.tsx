@@ -4,7 +4,8 @@ import { useState } from "react";
 /* Aviso de prototipo estándar del ecosistema Estudio Abimaru (versión Next, sin deps).
  * Fijo inferior, visible, descartable y accesible. */
 
-const CATALOG_URL = "https://abimaru.github.io/web-pages-templates/";
+// UTM: la analítica del catálogo atribuye las visitas que llegan desde esta demo.
+const CATALOG_URL = "https://abimaru.github.io/web-pages-templates/?utm_source=demo-nexora&utm_medium=banner&utm_campaign=volver-catalogo";
 const WA_BASE = "https://wa.me/573157076691?text=";
 
 export default function DemoBanner({

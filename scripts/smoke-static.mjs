@@ -54,5 +54,17 @@ if (existsSync(sitemap)) {
   }
 } else bad("falta catalogo/sitemap.xml");
 
+// Atribución: el enlace "Volver al catálogo" de cada demo lleva UTM para que la analítica
+// del catálogo sepa qué demo generó la visita (utm_source=demo-<ruta>).
+console.log("\nUTM de los banners de demo");
+for (const d of DEMOS) {
+  if (d.path === "nexo-lab") continue; // línea de servicios, sin banner de demo
+  const candidates = ["app/DemoBanner.tsx", "src/components/DemoBanner.tsx", "src/App.tsx"].map((f) => join(ROOT, d.dir, f));
+  const file = candidates.find((f) => existsSync(f) && readFileSync(f, "utf8").includes("utm_source=demo-"));
+  file && readFileSync(file, "utf8").includes(`utm_source=demo-${d.path}&`)
+    ? ok(`${d.path}: utm_source=demo-${d.path}`)
+    : bad(`${d.path}: el enlace al catálogo no lleva utm_source=demo-${d.path}`);
+}
+
 console.log(`\n${errors.length ? "✗ " + errors.length + " problema(s)" : "✓ smoke OK"}`);
 process.exit(errors.length ? 1 : 0);

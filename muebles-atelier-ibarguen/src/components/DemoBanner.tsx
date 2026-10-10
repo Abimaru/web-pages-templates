@@ -6,7 +6,8 @@ import { Info, X, ArrowUpRight } from "lucide-react";
  * No depende de tokens de tema (usa paleta Tailwind por defecto), por lo que
  * es idéntico en todas las demos. */
 
-const CATALOG_URL = "https://abimaru.github.io/web-pages-templates/";
+// UTM: la analítica del catálogo atribuye las visitas que llegan desde esta demo.
+const CATALOG_URL = "https://abimaru.github.io/web-pages-templates/?utm_source=demo-muebles&utm_medium=banner&utm_campaign=volver-catalogo";
 const WA_BASE = "https://wa.me/573157076691?text=";
 
 interface DemoBannerProps {
