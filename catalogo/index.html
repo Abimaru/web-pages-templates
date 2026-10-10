@@ -46,11 +46,12 @@
   </script>
 
   <!--
-    ANALÍTICA (no activada): para habilitar Google Analytics, Plausible o Umami,
-    pega el snippet del proveedor aquí y define window.SITE_CONFIG.analytics.
-    La función track() (más abajo) ya envía eventos de: ver_demo, quiero_pagina,
-    whatsapp, seleccion_plan y envio_formulario. Solo conéctala al proveedor.
-    Se recomienda usar parámetros UTM en el flyer (?utm_source=flyer).
+    ANALÍTICA (apagada por defecto): sin cookies y sin terceros hasta que la actives en
+    catalogo/config.js → analytics { provider: "plausible" | "umami", id, src }.
+    Eventos que registra (analytics.js): ver_seccion, scroll_50/90, whatsapp, ver_demo,
+    vista_interactiva, ver_arquetipo, seleccion_plan, calculadora_inicio/calculadora_cotizar,
+    compass_inicio/compass_resultado, formulario_inicio, envio_formulario, ir_nexo_lab.
+    Usa UTM en el flyer/QR (?utm_source=flyer) y en tus enlaces para saber de dónde llegan.
   -->
 
   <style>
@@ -749,6 +750,7 @@
   </a>
 
   <script src="config.js"></script>
+  <script src="analytics.js"></script>
   <script src="templates.js"></script>
   <script src="archetypes.js"></script>
   <script src="estimator.js"></script>
@@ -763,10 +765,36 @@
     const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
     const wa = (msg) => `https://wa.me/${CFG.contact.whatsapp}?text=${encodeURIComponent(msg)}`;
 
-    // Analítica (stub): conéctalo a tu proveedor en window.SITE_CONFIG.analytics
-    function track(event, data) {
-      try { window.dataLayer && window.dataLayer.push({ event, ...data }); } catch (e) {}
-    }
+    // Analítica: ver analytics.js (apagada por defecto; se activa en config.js)
+    window.Analytics.init(CFG);
+    function track(event, data) { window.Analytics.track(event, data); }
+
+
+    /* ---- Embudo: secciones vistas, scroll, formulario, NEXO LAB ---- */
+    (function () {
+      const A = window.Analytics;
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+          if (en.isIntersecting) { A.once("sec:" + en.target.id, "ver_seccion", { seccion: en.target.id }); io.unobserve(en.target); }
+        }), { threshold: 0.35 });
+        ["modelos", "servicios", "compass", "calculadora", "planes", "faq", "contacto"].forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el); });
+      }
+      window.addEventListener("scroll", () => {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        if (max <= 0) return;
+        const p = scrollY / max;
+        if (p >= 0.5) A.once("scroll50", "scroll_50");
+        if (p >= 0.9) A.once("scroll90", "scroll_90");
+      }, { passive: true });
+      const form = document.getElementById("quoteForm");
+      if (form) form.addEventListener("focusin", () => A.once("form", "formulario_inicio"));
+      document.querySelectorAll("a.nx-nav").forEach((a) => a.addEventListener("click", () => track("ir_nexo_lab")));
+      // Aviso de privacidad solo si la analítica está activa
+      if (A.state && A.state.active) {
+        const legal = document.querySelector("footer .legal");
+        if (legal) legal.insertAdjacentHTML("beforeend", "<br />Medimos las visitas de forma anónima y agregada, sin cookies ni datos personales.");
+      }
+    })();
 
     /* ---- Datos globales de contacto ---- */
     const generalMsg = `Hola, vi el catálogo de Estudio Abimaru. Me gustaría recibir información y una cotización para mi negocio.`;
@@ -1021,6 +1049,7 @@
       }
       document.getElementById("calcForm").addEventListener("change", (e) => {
         const t = e.target;
+        window.Analytics.once("calc", "calculadora_inicio");
         if (t.name === "c-goal") sel.goal = t.value;
         else if (t.name === "c-size") sel.size = t.value;
         else if (t.name === "c-extra") sel.extras = [...document.querySelectorAll('input[name="c-extra"]:checked')].map((i) => i.value);

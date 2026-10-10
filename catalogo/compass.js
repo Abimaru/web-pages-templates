@@ -140,6 +140,7 @@
 
     mount.querySelectorAll(".compass-opt").forEach(function (b) {
       b.addEventListener("click", function () {
+        if (window.Analytics) window.Analytics.once("compass", "compass_inicio");
         set(q.id, b.dataset.opt, q.multi);
         render();
       });
@@ -188,6 +189,8 @@
 
   function renderResult() {
     var rec = recommend(answers);
+    // Solo la ruta recomendada (no las respuestas): coherente con "tus respuestas no se envían".
+    if (window.Analytics) window.Analytics.track("compass_resultado", { ruta: rec.key });
     var archChips = rec.archetypes.map(function (id) {
       return '<button type="button" class="tag arch" data-arch="' + id + '" style="cursor:pointer">' + esc(modelName(id)) + "</button>";
     }).join("");
@@ -216,7 +219,11 @@
       '<p style="color:var(--muted);font-size:12px;margin-top:14px">Resultado orientativo generado mediante reglas en tu navegador. No sustituye una evaluación profesional del contexto. Tus respuestas no se envían ni se guardan.</p>' +
       "</div>";
 
+    mount.querySelectorAll("a.btn-wa, a.btn-ghost").forEach(function (a) {
+      a.addEventListener("click", function () { if (window.Analytics) window.Analytics.track("compass_whatsapp", { ruta: rec.key }); });
+    });
     document.getElementById("cDownload").addEventListener("click", function () {
+      if (window.Analytics) window.Analytics.track("compass_descarga", { ruta: rec.key });
       download(buildMarkdown(rec), "diagnostico-nexo.md");
     });
     document.getElementById("cRestart").addEventListener("click", function () {

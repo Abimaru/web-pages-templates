@@ -149,6 +149,10 @@ window.SITE_CONFIG = {
   // ("¿Me regalas una frase sobre cómo fue trabajar juntos? Puedo publicarla con tu nombre").
   testimonials: [],
 
-  // Analítica: NO activada. Ver instrucciones en el comentario de index.html.
+  // Analítica SIN cookies, apagada por defecto. Para activarla elige UNO:
+  //   Plausible: { provider: "plausible", id: "tudominio.com" }       (plausible.io o autoalojado con src)
+  //   Umami:     { provider: "umami", id: "<website-id>", src: "https://cloud.umami.is/script.js" }
+  // Con GitHub Pages el "dominio" es abimaru.github.io (o tu dominio propio cuando lo tengas).
+  // No se activa en localhost ni si el visitante envía "No rastrear". Ver catalogo/analytics.js.
   analytics: { provider: "", id: "" },
 };
