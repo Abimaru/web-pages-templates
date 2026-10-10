@@ -9,25 +9,25 @@ const line = (productId: string, size = "M", color = "Negro", qty = 1): BagLine 
 
 describe("bolsa MARÚ", () => {
   it("suma cantidades de la misma combinación y separa tallas/colores distintos", () => {
-    let bag = addLine([], line("blazer-estructurado"));
-    bag = addLine(bag, line("blazer-estructurado"));
+    let bag = addLine([], line("vestido-fluido-rojo"));
+    bag = addLine(bag, line("vestido-fluido-rojo"));
     expect(bag).toHaveLength(1);
     expect(bag[0].qty).toBe(2);
-    bag = addLine(bag, line("blazer-estructurado", "L"));
+    bag = addLine(bag, line("vestido-fluido-rojo", "L"));
     expect(bag).toHaveLength(2);
   });
 
   it("limita la cantidad y normaliza valores inválidos", () => {
-    let bag = addLine([], line("blazer-estructurado", "M", "Negro", 99));
+    let bag = addLine([], line("vestido-fluido-rojo", "M", "Negro", 99));
     expect(bag[0].qty).toBe(MAX_QTY);
-    bag = addLine(bag, line("blazer-estructurado", "M", "Negro", 5));
+    bag = addLine(bag, line("vestido-fluido-rojo", "M", "Negro", 5));
     expect(bag[0].qty).toBe(MAX_QTY);
-    expect(addLine([], line("blazer-estructurado", "M", "Negro", NaN))[0].qty).toBe(1);
-    expect(addLine([], line("blazer-estructurado", "M", "Negro", -3))[0].qty).toBe(1);
+    expect(addLine([], line("vestido-fluido-rojo", "M", "Negro", NaN))[0].qty).toBe(1);
+    expect(addLine([], line("vestido-fluido-rojo", "M", "Negro", -3))[0].qty).toBe(1);
   });
 
   it("setQty cambia, limita y elimina con 0 o valores no finitos", () => {
-    const bag = addLine([], line("sueter-tejido"));
+    const bag = addLine([], line("poncho-tejido"));
     const key = lineKey(bag[0]);
     expect(setQty(bag, key, 4)[0].qty).toBe(4);
     expect(setQty(bag, key, 50)[0].qty).toBe(MAX_QTY);
@@ -38,8 +38,8 @@ describe("bolsa MARÚ", () => {
   it("subtotal, conteo y bolsa vacía", () => {
     expect(subtotal([])).toBe(0);
     expect(countItems([])).toBe(0);
-    const bag = [line("blazer-estructurado", "M", "Negro", 2), line("sueter-tejido")];
-    expect(subtotal(bag)).toBe(189900 * 2 + 119900);
+    const bag = [line("vestido-fluido-rojo", "M", "Negro", 2), line("poncho-tejido")];
+    expect(subtotal(bag)).toBe(219900 * 2 + 119900);
     expect(countItems(bag)).toBe(3);
   });
 
@@ -53,9 +53,9 @@ describe("bolsa MARÚ", () => {
   });
 
   it("el mensaje de WhatsApp incluye prendas, totales y datos del cliente", () => {
-    const bag = [line("sueter-tejido", "L", "Arena", 2)];
+    const bag = [line("poncho-tejido", "Única", "Arena", 2)];
     const msg = buildOrderMessage(bag, { name: " Ana ", city: "Cali" });
-    expect(msg).toContain("2 × Suéter tejido (talla L, Arena)");
+    expect(msg).toContain("2 × Poncho tejido artesanal (talla Única, Arena)");
     expect(msg).toContain("Subtotal: $239.800");
     expect(msg).toContain("Envío: Gratis");
     expect(msg).toContain("Nombre: Ana");
@@ -84,7 +84,8 @@ describe("catálogo MARÚ", () => {
     }
   });
   it("calcula el descuento mostrado", () => {
-    expect(discountPct(getProduct("camisa-lino-premium")!)).toBe(19);
-    expect(discountPct(getProduct("vestido-midi-saten")!)).toBe(0);
+    expect(discountPct(getProduct("camiseta-pima-premium")!)).toBe(19);
+    expect(discountPct(getProduct("vestido-fluido-rojo")!)).toBe(0);
+    expect(discountPct(getProduct("poncho-tejido")!)).toBe(17);
   });
 });

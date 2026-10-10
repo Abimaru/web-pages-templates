@@ -17,14 +17,15 @@ export const images = {
 
   lookbook: u("1441984904996-e0b6ba687e04", 1200),
 
-  productos: [
-    u("1523381210434-271e8be1f52b", 700),
-    u("1434389677669-e08b4cac3105", 700),
-    u("1595777457583-95e059d581b8", 700),
-    u("1489987707025-afc232f7ea0f", 700),
-    u("1503944583220-79d8926ad5e2", 700),
-    u("1490481651871-ab68de25d43d", 700),
-    u("1541534741688-6078c6bfb5c5", 700),
-    u("1507003211169-0a1dd7228f2d", 700),
-  ],
+  // Cada foto corresponde a la prenda que muestra (ver src/data/products.ts).
+  producto: {
+    vestido: u("1595777457583-95e059d581b8", 700), // vestido largo rojo
+    camisa: u("1489987707025-afc232f7ea0f", 700), // camisetas de colores en un rack
+    pantalon: u("1509631179647-0177331693ae", 700), // pantalón de rayas
+    poncho: u("1434389677669-e08b4cac3105", 700), // poncho tejido
+    nina: u("1503944583220-79d8926ad5e2", 700), // niña y niño
+    deportivo: u("1541534741688-6078c6bfb5c5", 700), // top deportivo
+    camiseta: u("1523381210434-271e8be1f52b", 700), // camisetas verdes en percha
+    blusa: u("1490481651871-ab68de25d43d", 700), // blusas en percha
+  },
 };

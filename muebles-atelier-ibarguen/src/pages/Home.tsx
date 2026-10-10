@@ -113,7 +113,7 @@ export default function Home() {
               <img src={images.hero} alt="Ambiente de sala con muebles de autor en madera" className="h-[520px] w-full object-cover" loading="eager" />
             </div>
             <div className="img-zoom absolute -bottom-8 -left-8 hidden h-44 w-44 overflow-hidden rounded-3xl border-4 border-ivory shadow-2xl sm:block">
-              <img src={images.heroSecondary} alt="Detalle de silla en madera" className="h-full w-full object-cover" />
+              <img src={images.heroSecondary} alt="Butaca y mesa de noche en madera" className="h-full w-full object-cover" />
             </div>
             <div className="absolute -right-4 top-8 hidden rounded-2xl bg-ivory/95 px-5 py-4 shadow-xl backdrop-blur md:block">
               <p className="font-display text-2xl font-semibold text-espresso">Roble · Nogal</p>
@@ -186,7 +186,7 @@ export default function Home() {
       <section id="proceso" className="border-y border-espresso/10 bg-linen py-24">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2">
           <Reveal className="img-zoom overflow-hidden rounded-[2rem]">
-            <img src={images.taller} alt="Taller de ebanistería" className="h-[560px] w-full object-cover" loading="lazy" />
+            <img src={images.taller} alt="Banco de madera terminado en el taller" className="h-[560px] w-full object-cover" loading="lazy" />
           </Reveal>
 
           <div>
@@ -256,7 +256,7 @@ export default function Home() {
       <section id="taller" className="relative overflow-hidden bg-espresso py-24 text-ivory">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1.05fr_1fr]">
           <Reveal className="img-zoom overflow-hidden rounded-[2rem] rounded-bl-[6rem]">
-            <img src={images.historia} alt="Ebanista trabajando la madera" className="h-[520px] w-full object-cover" loading="lazy" />
+            <img src={images.historia} alt="Sofá modular en un living luminoso" className="h-[520px] w-full object-cover" loading="lazy" />
           </Reveal>
           <Reveal delay={120}>
             <span className="kicker text-oak">El taller</span>

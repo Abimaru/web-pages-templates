@@ -27,8 +27,8 @@ export const projects: Project[] = [
     place: "Casa en Ciudad Jardín, Cali",
     wood: "Roble macizo",
     summary: "Una mesa para diez que empieza a ser herencia desde el primer almuerzo.",
-    cover: u("1533090161767-e6ffed986c88", 1400),
-    gallery: [u("1567016432779-094069958ea5"), u("1503602642458-232111445657"), u("1540574163026-643ea20ade25")],
+    cover: u("1519710164239-da123dc03ef4", 1400),
+    gallery: [u("1533090161767-e6ffed986c88"), u("1503602642458-232111445657"), u("1449247709967-d4461a6a6103")],
     description: [
       "La familia pedía una sola cosa imposible: una mesa que aguantara generaciones sin sentirse pesada. Partimos de un tablón de roble seco de más de dos metros y respetamos cada nudo, porque en la madera —como en la gente— las marcas son historia, no defecto.",
       "El resultado es una pieza de líneas honestas: patas trapezoidales que sostienen sin estorbar las piernas, y un acabado en aceite natural que se puede reparar con las manos, en casa, cuando la vida deje su huella.",
@@ -50,7 +50,7 @@ export const projects: Project[] = [
     wood: "Nogal",
     summary: "De pared a pared, para que los libros por fin tengan casa propia.",
     cover: u("1524758631624-e2822e304c36", 1400),
-    gallery: [u("1586023492125-27b2c045efd7"), u("1493663284031-b7e3aefcae8e"), u("1550226891-ef816aed4a98")],
+    gallery: [u("1618221195710-dd6b41faaea6"), u("1616486338812-3dadae4b4ace"), u("1586023492125-27b2c045efd7")],
     description: [
       "El reto era un muro de cuatro metros con una ventana descentrada que nadie sabía cómo resolver. En vez de esconderla, la convertimos en el centro: los estantes la enmarcan como un cuadro y dejan pasar la luz de la tarde sobre los lomos de los libros.",
       "Cada módulo se ancló a la estructura para soportar el peso de una vida leyendo, con juntas ocultas para que la madera parezca flotar sobre la pared.",
@@ -71,8 +71,8 @@ export const projects: Project[] = [
     place: "Casa campestre, Jamundí",
     wood: "Roble & lino",
     summary: "Una cama que parece levitar y una cabecera que abraza.",
-    cover: u("1538688525198-9b88f6f53126", 1400),
-    gallery: [u("1616486338812-3dadae4b4ace"), u("1595428774223-ef52624120d2"), u("1616627561839-074385245ff6")],
+    cover: u("1616627561839-074385245ff6", 1400),
+    gallery: [u("1550226891-ef816aed4a98"), u("1533090161767-e6ffed986c88"), u("1503602642458-232111445657")],
     description: [
       "Querían ligereza en una habitación pequeña. Diseñamos una base en voladizo con iluminación cálida escondida bajo el perímetro: de noche, la cama parece flotar sobre el piso.",
       "La cabecera tapizada en lino natural suaviza la madera y convierte el respaldo en el mejor lugar para leer antes de dormir.",
@@ -93,8 +93,8 @@ export const projects: Project[] = [
     place: "Estudio Kavan, Cali",
     wood: "Nogal",
     summary: "Orden a la vista y cables fuera de vista, para pensar mejor.",
-    cover: u("1497366216548-37526070297c", 1400),
-    gallery: [u("1519710164239-da123dc03ef4"), u("1503602642458-232111445657"), u("1540574163026-643ea20ade25")],
+    cover: u("1449247709967-d4461a6a6103", 1400),
+    gallery: [u("1497366216548-37526070297c"), u("1533090161767-e6ffed986c88"), u("1503602642458-232111445657")],
     description: [
       "Un estudio de arquitectura pedía una superficie amplia sin el caos de cables. Integramos una canaleta oculta y un cajón organizador que corre a todo lo ancho, de modo que la mesa siempre se ve limpia.",
       "El nogal en tono profundo aporta la seriedad de una pieza de dirección sin renunciar a la calidez del oficio.",
@@ -115,8 +115,8 @@ export const projects: Project[] = [
     place: "Loft en Granada, Cali",
     wood: "Madera & lino",
     summary: "Módulos que se recomponen según la reunión —o la siesta.",
-    cover: u("1519710164239-da123dc03ef4", 1400),
-    gallery: [u("1555041469-a586c61ea9bc"), u("1567016432779-094069958ea5"), u("1586023492125-27b2c045efd7")],
+    cover: u("1616486338812-3dadae4b4ace", 1400),
+    gallery: [u("1555041469-a586c61ea9bc"), u("1567016432779-094069958ea5"), u("1540574163026-643ea20ade25")],
     description: [
       "Un espacio que a veces es sala de cine y a veces sala de amigos. Diseñamos módulos independientes con base de madera vista que se combinan en L, en isla o en fila, sin herrajes complicados.",
       "La tapicería en lino desenfundable pensada para la vida real: se lava, se cambia, dura.",
@@ -137,8 +137,8 @@ export const projects: Project[] = [
     place: "Casa en Pance, Cali",
     wood: "Roble",
     summary: "Cada cosa en su lugar, iluminada como en tienda.",
-    cover: u("1616486338812-3dadae4b4ace", 1400),
-    gallery: [u("1538688525198-9b88f6f53126"), u("1595428774223-ef52624120d2"), u("1550226891-ef816aed4a98")],
+    cover: u("1595428774223-ef52624120d2", 1400),
+    gallery: [u("1616627561839-074385245ff6"), u("1550226891-ef816aed4a98"), u("1533090161767-e6ffed986c88")],
     description: [
       "Un vestier en U que aprovecha cada centímetro: barras a doble altura, cajones con divisiones a la medida de cada prenda y una isla central con tapa de roble para joyas y accesorios.",
       "La iluminación cálida por sensor convierte el ritual de vestirse en un pequeño lujo diario.",
