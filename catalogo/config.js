@@ -40,6 +40,9 @@ window.SITE_CONFIG = {
     // Precios REFERENCIALES y fácilmente editables. Sujetos al alcance real.
     note: "Precios de referencia en COP. El valor final depende del alcance, contenido e integraciones.",
     maintenanceFrom: "$150.000 / mes",
+    // Plazo de entrega que se muestra en el hero (ej: "entrega en 2 a 3 semanas").
+    // Déjalo "" hasta confirmarlo: solo se muestra si tiene valor.
+    leadTime: "",
     plans: [
       {
         id: "esencial",
@@ -110,6 +113,13 @@ window.SITE_CONFIG = {
       "Mantenimiento mensual",
     ],
   },
+
+  // Testimonios REALES. Déjalo vacío hasta tener autorización del cliente:
+  // la sección solo aparece cuando hay al menos uno. Formato:
+  //   { name: "Daniela V.", business: "Tienda de ropa", text: "Frase real del cliente." }
+  // Cómo conseguirlos sin encuestas: al entregar, envía UN mensaje por WhatsApp
+  // ("¿Me regalas una frase sobre cómo fue trabajar juntos? Puedo publicarla con tu nombre").
+  testimonials: [],
 
   // Analítica: NO activada. Ver instrucciones en el comentario de index.html.
   analytics: { provider: "", id: "" },
