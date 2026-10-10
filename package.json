@@ -12,6 +12,7 @@
     "smoke": "node scripts/smoke-static.mjs",
     "generate:quality-passports": "node scripts/generate-quality-passports.mjs",
     "validate:quality-passports": "node scripts/validate-quality-passports.mjs",
-    "validate:archetypes": "node scripts/validate-archetypes.mjs"
+    "validate:archetypes": "node scripts/validate-archetypes.mjs",
+    "validate:estimator": "node scripts/validate-estimator.mjs"
   }
 }
