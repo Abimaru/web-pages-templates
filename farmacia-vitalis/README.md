@@ -16,8 +16,9 @@ Abre http://localhost:5173
 - **Hero** con buscador, imagen de salud y tarjetas flotantes de confianza.
 - **Marquee** de garantías (domicilio, originales, farmacéuticos, 24/7).
 - **Categorías** (Medicamentos, Vitaminas, Dermocosmética, Bebé y mamá) con imágenes.
-- **Productos** con fichas basadas en **íconos** (Rx / Venta libre) y **añadir al carrito** funcional (contador + toast).
-- **Servicios** (receta digital, consulta farmacéutica, crónicos, domicilio), **cómo funciona** en 3 pasos, testimonios y CTA de app.
+- **Productos** con fichas basadas en **íconos** (Rx / Venta libre), **buscador** (sin acentos; también por palabras como "fiebre" o "dolor"), **filtros** por categoría y tipo de venta, y carrito funcional.
+- **Carrito con pedido por WhatsApp**: domicilio gratis desde un umbral, **flujo de fórmula** (si hay productos Rx exige confirmar el envío de la receta y la marca en el mensaje), **entrega recurrente cada 30 días** (programa de crónicos) y vista previa del mensaje. Lógica en `src/lib/cart.ts` (con pruebas). En la demo no hay número (`STORE_WHATSAPP` vacío): WhatsApp deja elegir el chat; en una farmacia real va su número y su proceso de validación.
+- **Servicios** (receta digital, consulta farmacéutica, crónicos, domicilio) con enlace a WhatsApp, **cómo funciona** en 3 pasos, testimonios y CTA de app.
 - **Aviso legal** visible y `Reveal on scroll` con `prefers-reduced-motion`.
 
 ## Sobre las imágenes y productos
