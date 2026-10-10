@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
 import { Link, homeHref } from "../lib/router";
 import { projects } from "../data/projects";
+import SaveToQuote from "../components/SaveToQuote";
 
 const cats = ["Todos", "Sala", "Comedor", "Dormitorio", "Oficina"] as const;
 
@@ -49,6 +50,7 @@ export default function Portfolio() {
         <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((p, i) => (
             <Reveal key={p.slug} delay={(i % 3) * 80}>
+              <div className="relative">
               <Link to={`/proyecto/${p.slug}`} className="group block">
                 <div className="img-zoom relative overflow-hidden rounded-2xl">
                   <img src={p.cover} alt={p.name} className="h-72 w-full object-cover" loading="lazy" />
@@ -62,6 +64,8 @@ export default function Portfolio() {
                   <ArrowUpRight size={20} className="mt-1 shrink-0 text-espresso/40 transition group-hover:text-terracotta" />
                 </div>
               </Link>
+              <SaveToQuote slug={p.slug} name={p.name} variant="icon" />
+              </div>
             </Reveal>
           ))}
         </div>

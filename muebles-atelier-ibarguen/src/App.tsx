@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Portfolio from "./pages/Portfolio";
 import Project from "./pages/Project";
 import DemoBanner from "./components/DemoBanner";
+import QuotePill from "./components/QuotePill";
 
 export default function App() {
   const path = useRoute();
@@ -33,6 +34,7 @@ export default function App() {
   return (
     <>
       {page}
+      <QuotePill />
       <DemoBanner
         disclaimer="Portafolio, proyectos, testimonios y precios son conceptuales e ilustrativos."
         waMessage="Hola, vi la demo de Atelier Ibargüen (muebles) de Estudio Abimaru. Quisiera una página así para mi negocio."
