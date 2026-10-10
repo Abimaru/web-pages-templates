@@ -85,7 +85,7 @@ nunca se envían datos personales (ni las respuestas del diagnóstico: solo la r
 Al activarse, el pie de página avisa que se miden visitas de forma anónima. Embudo registrado:
 `ver_seccion` (modelos → calculadora → planes → contacto), `scroll_50/90`, `whatsapp`, `ver_demo`,
 `calculadora_inicio/cotizar`, `compass_inicio/resultado`, `formulario_inicio`, `envio_formulario`.
-Añade parámetros UTM al flyer/QR (`?utm_source=flyer`) para saber de dónde llegan. GA4 no se incluye a
+Añade parámetros UTM al flyer/QR (`?utm_source=flyer`) para saber de dónde llegan. El enlace "Volver al catálogo" de cada demo ya lleva `utm_source=demo-<ruta>&utm_medium=banner` (el smoke de CI lo comprueba), así que verás qué demo trae visitas al catálogo. GA4 no se incluye a
 propósito (usa cookies y exigiría aviso de consentimiento).
 
 ## Rendimiento y recursos
