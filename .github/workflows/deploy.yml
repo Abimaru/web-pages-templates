@@ -48,6 +48,9 @@ jobs:
       - name: Validar arquetipos
         run: npm run validate:archetypes
 
+      - name: Validar calculadora de inversión
+        run: npm run validate:estimator
+
       - name: Generar Quality Passport (evidencia real)
         run: npm run generate:quality-passports
 

@@ -125,6 +125,22 @@
     .hero h1 .grad { background: linear-gradient(100deg, var(--orange), var(--orange-2) 40%, var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .hero p.lead { color: #c7ccdb; font-size: 18px; line-height: 1.6; max-width: 620px; margin-top: 20px; }
     .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .calc { display: grid; grid-template-columns: 1.4fr 1fr; gap: 22px; margin-top: 36px; align-items: start; }
+    @media (max-width: 860px) { .calc { grid-template-columns: 1fr; } }
+    .calc fieldset { border: 0; margin: 0 0 22px; padding: 0; min-width: 0; }
+    .calc legend { font-family: "Space Grotesk"; font-weight: 700; font-size: 16px; margin-bottom: 12px; padding: 0; }
+    .opt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+    .opt { position: relative; display: block; cursor: pointer; padding: 14px 16px; border: 1px solid var(--line-2); border-radius: 14px; background: #ffffff06; transition: border-color .15s, background .15s; }
+    .opt:hover { border-color: #ffffff44; }
+    .opt input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+    .opt b { display: block; font-size: 14.5px; }
+    .opt span { display: block; margin-top: 3px; font-size: 12.5px; color: var(--muted); }
+    .opt:has(input:checked) { border-color: var(--orange); background: #ff7a1a14; }
+    .opt:has(input:focus-visible) { outline: 2px solid var(--cyan); outline-offset: 2px; }
+    .calc-result { position: sticky; top: 96px; padding: 22px; border: 1px solid var(--line-2); border-radius: 18px; background: linear-gradient(160deg, #ffffff0a, #ffffff04); }
+    .calc-result .amount { font-family: "Space Grotesk"; font-size: 30px; font-weight: 700; line-height: 1.15; margin-top: 6px; }
+    .calc-result ul { margin: 12px 0 0 18px; color: #c7ccdb; font-size: 13.5px; line-height: 1.6; }
+    .calc-result small { display: block; margin-top: 12px; color: var(--muted); font-size: 12px; line-height: 1.5; }
     .btn-lg { padding: 16px 28px; font-size: 16px; }
     .hero-price { margin-top: 18px; font-size: 15px; color: #c7ccdb; }
     .hero-price b { color: var(--text); }
@@ -391,7 +407,7 @@
         <a href="#modelos" class="btn btn-ghost">Ver demos en vivo</a>
       </div>
       <p class="hero-price" id="heroPrice"></p>
-      <p class="hero-alt">¿No sabes qué necesitas? <a href="#compass">Haz el diagnóstico de 2 minutos</a> · <a href="#mas">Explora otras soluciones</a></p>
+      <p class="hero-alt">¿Cuánto cuesta? <a href="#calculadora">Calcula tu inversión</a> · ¿No sabes qué necesitas? <a href="#compass">Haz el diagnóstico de 2 minutos</a> · <a href="#mas">Explora otras soluciones</a></p>
       <div class="indicators">
         <span class="ind"><b id="count">8</b>&nbsp;modelos disponibles</span>
         <span class="ind">📱 Diseño responsivo</span>
@@ -537,6 +553,19 @@
             <a href="#compass" class="btn btn-primary btn-sm">Solicitar diagnóstico</a>
             <a href="nexo-lab/" class="btn btn-ghost btn-sm" style="color:#22d3ee">Ver NEXO LAB ↗</a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CALCULADORA ===================== -->
+    <section id="calculadora" class="block">
+      <div class="wrap">
+        <p class="eyebrow">Calculadora</p>
+        <h2 class="sec">Calcula tu inversión en 30 segundos</h2>
+        <p class="sec-sub">Responde tres cosas y ve el plan que te conviene y un rango de inversión. Sin dar tus datos.</p>
+        <div class="calc">
+          <div id="calcForm"></div>
+          <aside class="calc-result" aria-live="polite" id="calcResult"></aside>
         </div>
       </div>
     </section>
@@ -722,6 +751,7 @@
   <script src="config.js"></script>
   <script src="templates.js"></script>
   <script src="archetypes.js"></script>
+  <script src="estimator.js"></script>
   <script>
     const CFG = window.SITE_CONFIG;
     const MODELS = window.TEMPLATES || [];
@@ -960,6 +990,44 @@
     document.getElementById("costChips").innerHTML = CFG.pricing.externalCosts.map((c) => `<span class="chip">${esc(c)}</span>`).join("");
     document.querySelectorAll("#plans [data-ev]").forEach((el) =>
       el.addEventListener("click", () => track(el.dataset.ev, { plan: el.dataset.model })));
+
+
+    /* ---- Calculadora de inversión ---- */
+    (function () {
+      const calc = CFG.calculator, E = window.Estimator;
+      if (!calc || !E) { document.getElementById("calculadora").hidden = true; return; }
+      const sel = { goal: calc.goals[1] ? calc.goals[1].id : calc.goals[0].id, size: calc.sizes[0].id, extras: [] };
+      const radio = (name, items, key) => items.map((it) =>
+        `<label class="opt"><input type="radio" name="${name}" value="${esc(it.id)}"${sel[key] === it.id ? " checked" : ""} /><b>${esc(it.label)}</b>${it.hint ? `<span>${esc(it.hint)}</span>` : ""}</label>`).join("");
+      document.getElementById("calcForm").innerHTML =
+        `<fieldset><legend>1. ¿Qué quieres lograr?</legend><div class="opt-grid">${radio("c-goal", calc.goals, "goal")}</div></fieldset>` +
+        `<fieldset><legend>2. ¿Qué tan grande es tu catálogo?</legend><div class="opt-grid">${radio("c-size", calc.sizes, "size")}</div></fieldset>` +
+        `<fieldset><legend>3. ¿Necesitas algo más? <small style="color:var(--muted);font-weight:400">(opcional)</small></legend><div class="opt-grid">` +
+        calc.extras.map((e) => `<label class="opt"><input type="checkbox" name="c-extra" value="${esc(e.id)}" /><b>${esc(e.label)}</b></label>`).join("") +
+        `</div></fieldset>`;
+      const out = document.getElementById("calcResult");
+      function render() {
+        const r = E.estimate(CFG, sel);
+        if (!r) { out.innerHTML = ""; return; }
+        out.innerHTML =
+          `<p class="eyebrow">Plan sugerido</p><h3 style="font-family:'Space Grotesk';font-size:20px;margin-top:6px">${esc(r.planName)}</h3>` +
+          `<p class="amount">${esc(E.rangeText(r))} <span style="font-size:14px;color:var(--muted);font-weight:500">COP</span></p>` +
+          `<ul>${r.features.slice(0, 5).map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` +
+          `<a id="calcWa" class="btn btn-wa" style="margin-top:16px;width:100%;justify-content:center" target="_blank" rel="noopener noreferrer">Pedir cotización exacta</a>` +
+          `<small>${esc(calc.note)} No incluye costos externos (dominio, hosting, pasarela…).</small>`;
+        const a = document.getElementById("calcWa");
+        a.href = wa(E.buildMessage(CFG, sel, r));
+        a.addEventListener("click", () => track("calculadora_cotizar", { plan: r.planId, goal: sel.goal, size: sel.size, extras: sel.extras.join(",") }));
+      }
+      document.getElementById("calcForm").addEventListener("change", (e) => {
+        const t = e.target;
+        if (t.name === "c-goal") sel.goal = t.value;
+        else if (t.name === "c-size") sel.size = t.value;
+        else if (t.name === "c-extra") sel.extras = [...document.querySelectorAll('input[name="c-extra"]:checked')].map((i) => i.value);
+        render();
+      });
+      render();
+    })();
 
     /* ---- Personalización ---- */
     const perso = ["Logo", "Colores", "Tipografía", "Textos", "Imágenes", "Productos", "Servicios", "Categorías", "Formularios", "Botones", "WhatsApp", "Redes sociales", "Dominio", "Funcionalidades extra"];

@@ -57,6 +57,7 @@ npm run test:all     # Vitest en los 9 proyectos
 npm run build:all    # build con la base de GitHub Pages por proyecto
 npm run check:all    # lint:all + test:all
 npm run smoke        # smoke estático: salidas de build + assets + sitemap
+npm run validate:estimator  # calculadora de inversión: límites de planes y monotonía del estimado
 ```
 
 - **Pruebas destacadas:** matemática financiera de VíaNova (`amortization`, `scenarios`,
@@ -65,6 +66,14 @@ npm run smoke        # smoke estático: salidas de build + assets + sitemap
   resto de demos valida integridad de datos (ids únicos, precios ≥ 0, URLs válidas).
 - **CI (GitHub Actions):** `npm ci` con caché de npm → `check:all` → `build:all` → `smoke`
   → ensamblado → despliegue. El deploy **solo ocurre si todo pasa**.
+
+## Calculadora de inversión
+
+La landing incluye `#calculadora`: meta → tamaño → extras → plan sugerido y rango de inversión, con
+envío de la selección por WhatsApp. Lógica pura en `catalogo/estimator.js`; precios en
+`catalogo/config.js` (`priceMin`/`priceMax` por plan y bloque `calculator`). Los **pesos** de tamaño y
+extras son valores de ejemplo: ajústalos a tu criterio comercial. `npm run validate:estimator`
+(también en CI) garantiza que el estimado respete los límites del plan y no baje al agregar extras.
 
 ## Rendimiento y recursos
 
