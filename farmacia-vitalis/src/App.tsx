@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
   Search,
@@ -6,56 +6,34 @@ import {
   ShieldCheck,
   BadgeCheck,
   Clock,
-  Pill,
-  Thermometer,
-  Droplet,
-  Sun,
   HeartPulse,
-  Leaf,
-  Syringe,
   Stethoscope,
   FileText,
   Package,
   Plus,
+  X,
   Check,
   Star,
   Phone,
   Mail,
   MapPin,
   Info,
-  type LucideIcon,
 } from "lucide-react";
 import Navbar from "./components/Navbar";
 import DemoBanner from "./components/DemoBanner";
 import Reveal from "./components/Reveal";
+import CartDrawer from "./components/CartDrawer";
 import { images } from "./data/images";
+import { categories, products, filterProducts, type CategoryId, type Filter } from "./data/products";
+import { addLine, setQty, countItems, formatCOP, serviceMessage, whatsappUrl, type Line } from "./lib/cart";
 
-const perks = ["CATÁLOGO POR CATEGORÍAS", "BUSCADOR DE PRODUCTOS", "FLUJO DE RECETA (DEMO)", "CARRITO SIMULADO", "PROTOTIPO INTERACTIVO"];
-
-const categorias = [
-  { name: "Medicamentos", tag: "Con y sin fórmula", img: images.categoria.medicamentos },
-  { name: "Vitaminas y suplementos", tag: "Energía y defensas", img: images.categoria.vitaminas },
-  { name: "Dermocosmética", tag: "Cuida tu piel", img: images.categoria.dermo },
-  { name: "Bebé y mamá", tag: "Todo para los peques", img: images.categoria.bebe },
-];
-
-type Product = { name: string; cat: string; price: number; rx?: boolean; icon: LucideIcon; color: string; bg: string };
-const productos: Product[] = [
-  { name: "Acetaminofén 500 mg × 20", cat: "Analgésico", price: 8900, icon: Pill, color: "#0e78d4", bg: "#dcecfa" },
-  { name: "Vitamina C 1000 mg × 30", cat: "Suplemento", price: 28900, icon: Leaf, color: "#10a86e", bg: "#d8f2e6" },
-  { name: "Amoxicilina 500 mg × 21", cat: "Antibiótico", price: 18900, rx: true, icon: Syringe, color: "#0e78d4", bg: "#dcecfa" },
-  { name: "Protector solar SPF 50+", cat: "Dermocosmética", price: 45900, icon: Sun, color: "#f59e0b", bg: "#fdeecf" },
-  { name: "Suero oral hidratante", cat: "Hidratación", price: 6500, icon: Droplet, color: "#12b5a5", bg: "#d3f3ef" },
-  { name: "Termómetro digital", cat: "Dispositivo", price: 32900, icon: Thermometer, color: "#0e78d4", bg: "#dcecfa" },
-  { name: "Multivitamínico × 60", cat: "Suplemento", price: 54900, icon: HeartPulse, color: "#e0567a", bg: "#fbe0e8" },
-  { name: "Ibuprofeno 400 mg × 10", cat: "Antiinflamatorio", price: 12500, icon: Pill, color: "#10a86e", bg: "#d8f2e6" },
-];
+const perks = ["CATÁLOGO POR CATEGORÍAS", "BUSCADOR DE PRODUCTOS", "FLUJO DE RECETA (DEMO)", "PEDIDO POR WHATSAPP", "PROTOTIPO INTERACTIVO"];
 
 const servicios = [
-  { icon: FileText, title: "Receta digital", desc: "Sube tu fórmula médica y te preparamos el pedido validado por un farmacéutico." },
-  { icon: Stethoscope, title: "Consulta farmacéutica", desc: "Resuelve dudas sobre dosis, interacciones y cuidados con un profesional, gratis." },
-  { icon: HeartPulse, title: "Programa de crónicos", desc: "Recordatorios y entrega recurrente de tu tratamiento para no fallar ni un día." },
-  { icon: Truck, title: "Domicilio express", desc: "Recibe en 60 minutos o programa la entrega a la hora que más te convenga." },
+  { icon: FileText, title: "Receta digital", cta: "Enviar mi fórmula", desc: "Sube tu fórmula médica y te preparamos el pedido validado por un farmacéutico." },
+  { icon: Stethoscope, title: "Consulta farmacéutica", cta: "Hablar con un farmacéutico", desc: "Resuelve dudas sobre dosis, interacciones y cuidados con un profesional, gratis." },
+  { icon: HeartPulse, title: "Programa de crónicos", cta: "Inscribirme", desc: "Recordatorios y entrega recurrente de tu tratamiento para no fallar ni un día." },
+  { icon: Truck, title: "Domicilio express", cta: "Programar entrega", desc: "Recibe en 60 minutos o programa la entrega a la hora que más te convenga." },
 ];
 
 const pasos = [
@@ -70,22 +48,45 @@ const testimonios = [
   { name: "Marta L.", role: "Cliente frecuente", text: "Me encanta poder preguntarle al farmacéutico antes de comprar. Se nota que saben.", stars: 5 },
 ];
 
-const format = (n: number) => "$" + n.toLocaleString("es-CO");
+
+const filterChips: { id: Filter; label: string }[] = [
+  { id: "todo", label: "Todo" },
+  ...categories.map((c) => ({ id: c.id as Filter, label: c.name })),
+  { id: "libre", label: "Venta libre" },
+  { id: "rx", label: "Con fórmula" },
+];
 
 export default function App() {
-  const [cart, setCart] = useState(0);
+  const [cart, setCart] = useState<Line[]>([]);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [filter, setFilter] = useState<Filter>("todo");
+  const [query, setQuery] = useState("");
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimer = useRef<number | undefined>(undefined);
 
-  const add = (name: string) => {
-    setCart((c) => c + 1);
+  const add = (id: string, name: string) => {
+    setCart((c) => addLine(c, id));
     setToast(`${name} añadido al carrito`);
-    window.clearTimeout((add as unknown as { t?: number }).t);
-    (add as unknown as { t?: number }).t = window.setTimeout(() => setToast(null), 2200);
+    window.clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToast(null), 2200);
   };
+  const goProducts = () => document.getElementById("ofertas")?.scrollIntoView({ behavior: "smooth" });
+  const pickCategory = (c: CategoryId) => { setFilter(c); setQuery(""); goProducts(); };
+  const closeCart = useCallback(() => setCartOpen(false), []);
+  const changeQty = useCallback((id: string, qty: number) => setCart((c) => setQty(c, id, qty)), []);
+  const onQuery = (q: string) => { setQuery(q); if (q) setFilter("todo"); };
+
+  const visible = useMemo(() => filterProducts(products, filter, query), [filter, query]);
 
   return (
     <main id="top" className="bg-white text-ink">
-      <Navbar cart={cart} />
+      <Navbar
+        cart={countItems(cart)}
+        query={query}
+        onQuery={(q) => { onQuery(q); if (q.length === 1) goProducts(); }}
+        onCart={() => setCartOpen(true)}
+        onCategory={pickCategory}
+      />
       <DemoBanner
         disclaimer="No es una farmacia real: no vende medicamentos, no procesa fórmulas y no ofrece asesoría médica o farmacéutica."
         waMessage="Hola, vi la demo de VITALIS (farmacia digital) de Estudio Abimaru. Quisiera una página así para mi negocio."
@@ -118,11 +119,11 @@ export default function App() {
             </p>
 
             {/* Buscador hero */}
-            <div className="mt-7 flex max-w-lg items-center gap-2 rounded-2xl border border-mist bg-white p-2 shadow-sm">
+            <form onSubmit={(e) => { e.preventDefault(); goProducts(); }} role="search" className="mt-7 flex max-w-lg items-center gap-2 rounded-2xl border border-mist bg-white p-2 shadow-sm">
               <Search size={19} className="ml-2 text-slate/60" />
-              <input placeholder="¿Qué necesitas hoy?" className="flex-1 bg-transparent px-1 py-2 text-sm outline-none" />
-              <button className="btn-primary !py-2.5 !px-5">Buscar</button>
-            </div>
+              <input value={query} onChange={(e) => onQuery(e.target.value)} aria-label="¿Qué necesitas hoy?" placeholder="¿Qué necesitas hoy? (ej: dolor, vitamina C)" className="flex-1 bg-transparent px-1 py-2 text-sm outline-none" />
+              <button type="submit" className="btn-primary !py-2.5 !px-5">Buscar</button>
+            </form>
 
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate">
               <span className="flex items-center gap-2"><Truck size={17} className="text-teal" /> Domicilio 60 min</span>
@@ -171,57 +172,82 @@ export default function App() {
           <h2 className="mt-3 font-display text-4xl font-bold sm:text-5xl">Todo para el bienestar de tu familia</h2>
         </Reveal>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {categorias.map((c, i) => (
-            <Reveal key={c.name} delay={i * 80}>
-              <a href="#ofertas" className="img-zoom group relative block aspect-[4/5] overflow-hidden rounded-2xl">
-                <img src={c.img} alt={c.name} className="h-full w-full object-cover" loading="lazy" />
+          {categories.map((c, i) => (
+            <Reveal key={c.id} delay={i * 80}>
+              <button onClick={() => pickCategory(c.id)} className="img-zoom group relative block aspect-[4/5] w-full overflow-hidden rounded-2xl text-left">
+                <img src={images.categoria[c.id]} alt={c.name} className="h-full w-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/15 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                   <p className="text-xs text-white/80">{c.tag}</p>
                   <h3 className="mt-0.5 font-display text-xl font-bold">{c.name}</h3>
                   <span className="mt-2 inline-flex items-center gap-1.5 text-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100">Ver productos <ArrowRight size={14} /></span>
                 </div>
-              </a>
+              </button>
             </Reveal>
           ))}
         </div>
       </section>
 
       {/* ===================== PRODUCTOS ===================== */}
-      <section id="ofertas" className="border-y border-mist bg-cloud py-20">
+      <section id="ofertas" className="scroll-mt-24 border-y border-mist bg-cloud py-20">
         <div className="mx-auto max-w-7xl px-6">
-          <Reveal className="mb-12 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <span className="kicker text-medic">Más vendidos</span>
-              <h2 className="mt-3 font-display text-4xl font-bold sm:text-5xl">Los favoritos de nuestros clientes</h2>
-            </div>
-            <a href="#" className="link-underline flex items-center gap-2 text-sm font-semibold text-medic">Ver todo <ArrowRight size={16} /></a>
+          <Reveal className="mb-8">
+            <span className="kicker text-medic">Más vendidos</span>
+            <h2 className="mt-3 font-display text-4xl font-bold sm:text-5xl">Los favoritos de nuestros clientes</h2>
           </Reveal>
 
-          <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
-            {productos.map((p, i) => (
-              <Reveal key={p.name} delay={(i % 4) * 70}>
-                <div className="card group flex h-full flex-col p-5">
-                  <div className="relative flex aspect-square items-center justify-center rounded-xl" style={{ background: p.bg }}>
-                    <p.icon size={52} style={{ color: p.color }} strokeWidth={1.6} />
-                    {p.rx ? (
-                      <span className="absolute left-2 top-2 rounded-md bg-white px-2 py-0.5 text-[10px] font-bold text-medic-dark shadow-sm">Rx · Fórmula</span>
-                    ) : (
-                      <span className="absolute left-2 top-2 rounded-md bg-white px-2 py-0.5 text-[10px] font-bold text-green shadow-sm">Venta libre</span>
-                    )}
-                  </div>
-                  <p className="mt-3 text-xs uppercase tracking-wide text-slate/60">{p.cat}</p>
-                  <h3 className="mt-0.5 flex-1 font-display text-sm font-semibold leading-snug">{p.name}</h3>
-                  <div className="mt-3 flex items-center justify-between">
-                    <span className="font-display text-lg font-bold text-ink">{format(p.price)}</span>
-                    <button onClick={() => add(p.name)} className="grid h-9 w-9 place-items-center rounded-lg bg-medic text-white transition hover:bg-medic-dark" aria-label="Añadir">
-                      <Plus size={17} strokeWidth={2.5} />
-                    </button>
-                  </div>
-                </div>
-              </Reveal>
+          <div className="mb-6 -mx-6 flex gap-2 overflow-x-auto px-6 pb-1 lg:mx-0 lg:px-0" role="group" aria-label="Filtrar productos">
+            {filterChips.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => setFilter(c.id)}
+                aria-pressed={filter === c.id}
+                className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition ${filter === c.id ? "border-medic bg-medic text-white" : "border-mist bg-white text-slate hover:border-medic"}`}
+              >
+                {c.label}
+              </button>
             ))}
           </div>
+          {query && (
+            <p className="mb-4 flex items-center gap-2 text-sm text-slate">
+              Resultados para <b className="text-ink">“{query}”</b>
+              <button onClick={() => setQuery("")} aria-label="Limpiar búsqueda" className="grid h-6 w-6 place-items-center rounded-full bg-white hover:bg-mist"><X size={13} /></button>
+            </p>
+          )}
+          <p className="mb-5 text-sm text-slate/70" aria-live="polite">{visible.length} {visible.length === 1 ? "producto" : "productos"}</p>
+
+          {visible.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-mist bg-white py-14 text-center">
+              <p className="font-display text-xl font-bold">No encontramos productos con ese filtro</p>
+              <p className="mt-2 text-sm text-slate">Prueba con otra categoría o borra la búsqueda.</p>
+              <button onClick={() => { setFilter("todo"); setQuery(""); }} className="btn-primary mt-5">Ver todo</button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
+              {visible.map((p, i) => (
+                <Reveal key={p.id} delay={(i % 4) * 70}>
+                  <div className="card group flex h-full flex-col p-5">
+                    <div className="relative flex aspect-square items-center justify-center rounded-xl" style={{ background: p.bg }}>
+                      <p.icon size={52} style={{ color: p.color }} strokeWidth={1.6} />
+                      {p.rx ? (
+                        <span className="absolute left-2 top-2 rounded-md bg-white px-2 py-0.5 text-[10px] font-bold text-medic-dark shadow-sm">Rx · Fórmula</span>
+                      ) : (
+                        <span className="absolute left-2 top-2 rounded-md bg-white px-2 py-0.5 text-[10px] font-bold text-green shadow-sm">Venta libre</span>
+                      )}
+                    </div>
+                    <p className="mt-3 text-xs uppercase tracking-wide text-slate/60">{p.cat}</p>
+                    <h3 className="mt-0.5 flex-1 font-display text-sm font-semibold leading-snug">{p.name}</h3>
+                    <div className="mt-3 flex items-center justify-between">
+                      <span className="font-display text-lg font-bold text-ink">{formatCOP(p.price)}</span>
+                      <button onClick={() => add(p.id, p.name)} className="grid h-10 w-10 place-items-center rounded-lg bg-medic text-white transition hover:bg-medic-dark" aria-label={`Añadir ${p.name}`}>
+                        <Plus size={17} strokeWidth={2.5} />
+                      </button>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -240,6 +266,14 @@ export default function App() {
                 </div>
                 <h3 className="mt-5 font-display text-lg font-bold">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate">{s.desc}</p>
+                <a
+                  href={whatsappUrl(serviceMessage(s.title))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-medic transition hover:text-medic-dark"
+                >
+                  {s.cta} <ArrowRight size={14} />
+                </a>
               </div>
             </Reveal>
           ))}
@@ -370,6 +404,8 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      <CartDrawer open={cartOpen} cart={cart} onClose={closeCart} onQty={changeQty} onShop={goProducts} />
     </main>
   );
 }

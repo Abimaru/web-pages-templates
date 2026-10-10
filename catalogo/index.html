@@ -125,6 +125,22 @@
     .hero h1 .grad { background: linear-gradient(100deg, var(--orange), var(--orange-2) 40%, var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .hero p.lead { color: #c7ccdb; font-size: 18px; line-height: 1.6; max-width: 620px; margin-top: 20px; }
     .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn-lg { padding: 16px 28px; font-size: 16px; }
+    .hero-price { margin-top: 18px; font-size: 15px; color: #c7ccdb; }
+    .hero-price b { color: var(--text); }
+    .hero-alt { margin-top: 10px; font-size: 14px; color: var(--muted); }
+    .hero-alt a { color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; }
+    .proof { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: 8px; }
+    .proof .pf { padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: #ffffff06; }
+    .proof .pf b { display: block; font-family: "Space Grotesk"; font-size: 28px; line-height: 1.1; }
+    .proof .pf span { display: block; margin-top: 6px; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+    .quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 22px; }
+    .quotes figure { padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: #ffffff06; }
+    .quotes blockquote { color: #c7ccdb; line-height: 1.6; }
+    .quotes figcaption { margin-top: 12px; font-size: 13px; color: var(--muted); }
+    .more-fields { margin-top: 2px; }
+    .more-fields summary { cursor: pointer; color: var(--cyan); font-size: 13.5px; padding: 6px 14px; }
+    .more-fields > div, .more-fields > .two { margin-top: 12px; }
     .indicators { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
     .ind { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; color: #c7ccdb; background: #ffffff08; }
     .ind b { color: var(--text); }
@@ -371,15 +387,24 @@
       <h1>Páginas web que <span class="grad">venden</span>.<br />Soluciones digitales que <span class="grad">hacen crecer</span>.</h1>
       <p class="lead">Diseñamos páginas, aplicaciones y automatizaciones para mostrar, vender, operar y evolucionar. No entregamos solo pantallas: entendemos tu necesidad, construimos la solución y te acompañamos después del lanzamiento.</p>
       <div class="cta-row">
-        <a href="#compass" class="btn btn-primary">Diagnosticar mi necesidad</a>
-        <a href="#mas" class="btn btn-ghost">Explorar soluciones</a>
-        <a href="#modelos" class="btn btn-ghost">Cotizar una página</a>
+        <a id="heroWa" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">Cotizar por WhatsApp</a>
+        <a href="#modelos" class="btn btn-ghost">Ver demos en vivo</a>
       </div>
+      <p class="hero-price" id="heroPrice"></p>
+      <p class="hero-alt">¿No sabes qué necesitas? <a href="#compass">Haz el diagnóstico de 2 minutos</a> · <a href="#mas">Explora otras soluciones</a></p>
       <div class="indicators">
         <span class="ind"><b id="count">8</b>&nbsp;modelos disponibles</span>
         <span class="ind">📱 Diseño responsivo</span>
         <span class="ind">🎨 Personalización de marca</span>
         <span class="ind">🚀 Publicación incluida (según plan)</span>
+      </div>
+    </section>
+
+    <!-- ===================== CONFIANZA (solo datos verificables) ===================== -->
+    <section class="block" style="padding-top:8px" aria-label="Por qué confiar">
+      <div class="wrap">
+        <div class="proof" id="proof"></div>
+        <div class="quotes" id="quotes" hidden></div>
       </div>
     </section>
 
@@ -612,22 +637,25 @@
           <form class="quote" id="quoteForm" novalidate>
             <div class="two">
               <div><label for="f-nombre">Nombre</label><input class="field" id="f-nombre" name="nombre" autocomplete="name" required /></div>
-              <div><label for="f-negocio">Nombre del negocio</label><input class="field" id="f-negocio" name="negocio" required /></div>
+              <div><label for="f-wa">WhatsApp</label><input class="field" id="f-wa" name="whatsapp" inputmode="tel" autocomplete="tel" required /></div>
             </div>
-            <div class="two">
-              <div><label for="f-correo">Correo</label><input class="field" id="f-correo" name="correo" type="email" autocomplete="email" /></div>
-              <div><label for="f-wa">WhatsApp</label><input class="field" id="f-wa" name="whatsapp" inputmode="tel" autocomplete="tel" /></div>
-            </div>
-            <div class="two">
-              <div><label for="f-tipo">Tipo de solución</label>
-                <select class="field" id="f-tipo" name="tipo">
-                  <option>Catálogo web</option><option>Landing page</option><option>Tienda online</option><option>Página corporativa</option><option>Solución personalizada</option>
-                </select>
+            <div><label for="f-desc">¿Qué vende tu negocio y qué quieres lograr?</label><textarea class="field" id="f-desc" name="descripcion" placeholder="Ej: Vendo ropa por Instagram y quiero recibir pedidos organizados por WhatsApp."></textarea></div>
+            <details class="more-fields">
+              <summary>Agregar más detalles (opcional)</summary>
+              <div class="two">
+                <div><label for="f-negocio">Nombre del negocio</label><input class="field" id="f-negocio" name="negocio" /></div>
+                <div><label for="f-correo">Correo</label><input class="field" id="f-correo" name="correo" type="email" autocomplete="email" /></div>
               </div>
-              <div><label for="f-modelo">Modelo de referencia</label><select class="field" id="f-modelo" name="modelo"></select></div>
-            </div>
-            <div><label for="f-presu">Presupuesto aproximado (opcional)</label><input class="field" id="f-presu" name="presupuesto" placeholder="Ej: $1.500.000" /></div>
-            <div><label for="f-desc">Cuéntame tu necesidad</label><textarea class="field" id="f-desc" name="descripcion" placeholder="¿Qué vende tu negocio? ¿Qué te gustaría lograr con la página?"></textarea></div>
+              <div class="two">
+                <div><label for="f-tipo">Tipo de solución</label>
+                  <select class="field" id="f-tipo" name="tipo">
+                    <option>Catálogo web</option><option>Landing page</option><option>Tienda online</option><option>Página corporativa</option><option>Solución personalizada</option>
+                  </select>
+                </div>
+                <div><label for="f-modelo">Modelo de referencia</label><select class="field" id="f-modelo" name="modelo"></select></div>
+              </div>
+              <div><label for="f-presu">Presupuesto aproximado</label><input class="field" id="f-presu" name="presupuesto" placeholder="Ej: $1.500.000" /></div>
+            </details>
             <div class="form-actions">
               <button type="submit" class="btn btn-wa" style="justify-content:center">Enviar por WhatsApp</button>
               <button type="button" id="sendEmail" class="btn btn-ghost" style="justify-content:center">Enviar por correo</button>
@@ -712,7 +740,7 @@
 
     /* ---- Datos globales de contacto ---- */
     const generalMsg = `Hola, vi el catálogo de Estudio Abimaru. Me gustaría recibir información y una cotización para mi negocio.`;
-    ["navWa", "mWa", "infoWa", "finalWa", "footWa", "waFloat"].forEach((id) => {
+    ["navWa", "mWa", "heroWa", "infoWa", "finalWa", "footWa", "waFloat"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) { el.href = wa(generalMsg); el.addEventListener("click", () => track("whatsapp", { from: id })); }
     });
@@ -723,6 +751,32 @@
     footEmail.textContent = "Correo"; footEmail.href = "mailto:" + CFG.contact.email;
     document.getElementById("year").textContent = new Date().getFullYear();
     document.getElementById("count").textContent = MODELS.length;
+
+    /* ---- Hero: precio de entrada (de config.js) ---- */
+    (function () {
+      const plans = (CFG.pricing && CFG.pricing.plans) || [];
+      if (!plans.length) return;
+      const lead = CFG.pricing.leadTime ? ` · <b>${esc(CFG.pricing.leadTime)}</b>` : "";
+      document.getElementById("heroPrice").innerHTML =
+        `${esc(plans[0].name)} <b>${esc(plans[0].priceLabel.replace(/^Inversión /i, "").replace(/^Desde/, "desde"))}</b>${lead} · ves una demo funcional antes de decidir.`;
+    })();
+
+    /* ---- Confianza: solo hechos verificables + testimonios SI existen en config ---- */
+    (function () {
+      const facts = [
+        { b: String(MODELS.length), t: "demos funcionales que puedes abrir y probar ahora mismo" },
+        { b: "Alcance cerrado", t: "cada plan define qué incluye y qué se cobra aparte, sin sorpresas" },
+        { b: "Calidad medible", t: "build, tipos y pruebas verificados en cada demo (Quality Passport)" },
+        { b: "Tú decides", t: "cotización por WhatsApp sin compromiso y con la demo a la vista antes de decidir" },
+      ];
+      document.getElementById("proof").innerHTML = facts.map((f) => `<div class="pf"><b>${esc(f.b)}</b><span>${esc(f.t)}</span></div>`).join("");
+      const qs = (CFG.testimonials || []).filter((q) => q && q.text && q.name);
+      if (qs.length) {
+        const box = document.getElementById("quotes");
+        box.hidden = false;
+        box.innerHTML = qs.map((q) => `<figure><blockquote>“${esc(q.text)}”</blockquote><figcaption>${esc(q.name)}${q.business ? " · " + esc(q.business) : ""}</figcaption></figure>`).join("");
+      }
+    })();
 
     // Enlace secundario opcional al repo (oculto por configuración)
     if (CFG.showRepoLink && CFG.repositoryUrl) {
@@ -917,12 +971,12 @@
     /* ---- Envío del formulario → WhatsApp ---- */
     const g = (id) => document.getElementById(id).value.trim();
     function buildFormMessage() {
-      if (!g("f-nombre") || !g("f-negocio")) {
-        alert("Por favor completa tu nombre y el nombre del negocio.");
+      if (!g("f-nombre") || !g("f-wa")) {
+        alert("Por favor escribe tu nombre y tu WhatsApp para poder responderte.");
         return null;
       }
       return (
-        `Hola, soy ${g("f-nombre")} del negocio "${g("f-negocio")}".\n` +
+        `Hola, soy ${g("f-nombre")}${g("f-negocio") ? ` del negocio "${g("f-negocio")}"` : ""}.\n` +
         `Tipo de solución: ${g("f-tipo")}.\n` +
         (g("f-modelo") ? `Modelo de referencia: ${g("f-modelo")}.\n` : "") +
         (g("f-presu") ? `Presupuesto aproximado: ${g("f-presu")}.\n` : "") +

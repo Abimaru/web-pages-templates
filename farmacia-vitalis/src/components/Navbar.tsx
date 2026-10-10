@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Search, ShoppingCart, User, Plus, Truck } from "lucide-react";
 
-const links = [
-  { href: "#categorias", label: "Medicamentos" },
-  { href: "#categorias", label: "Vitaminas" },
-  { href: "#categorias", label: "Cuidado personal" },
-  { href: "#servicios", label: "Servicios" },
-  { href: "#ofertas", label: "Ofertas" },
+import type { CategoryId } from "../data/products";
+
+const cats: { id: CategoryId; label: string }[] = [
+  { id: "medicamentos", label: "Medicamentos" },
+  { id: "vitaminas", label: "Vitaminas" },
+  { id: "dermo", label: "Cuidado personal" },
+  { id: "bebe", label: "Bebé y mamá" },
 ];
 
-export default function Navbar({ cart = 0 }: { cart?: number }) {
+type NavbarProps = {
+  cart?: number;
+  query: string;
+  onQuery: (q: string) => void;
+  onCart: () => void;
+  onCategory: (c: CategoryId) => void;
+};
+
+export default function Navbar({ cart = 0, query, onQuery, onCart, onCategory }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -49,6 +58,9 @@ export default function Navbar({ cart = 0 }: { cart?: number }) {
           <div className="relative mx-2 hidden flex-1 md:block">
             <Search size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate/60" />
             <input
+              value={query}
+              onChange={(e) => onQuery(e.target.value)}
+              aria-label="Buscar productos"
               placeholder="Busca medicamentos, marcas o síntomas…"
               className="w-full rounded-xl border border-mist bg-cloud py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-medic focus:bg-white"
             />
@@ -58,7 +70,7 @@ export default function Navbar({ cart = 0 }: { cart?: number }) {
             <button className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-slate transition hover:text-medic sm:flex" aria-label="Cuenta">
               <User size={19} /> <span className="hidden lg:inline">Ingresar</span>
             </button>
-            <button className="relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-ink transition hover:text-medic" aria-label="Carrito">
+            <button onClick={onCart} className="relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-ink transition hover:text-medic" aria-label={`Carrito (${cart})`}>
               <ShoppingCart size={20} />
               <span className="hidden lg:inline">Carrito</span>
               {cart > 0 && (
@@ -73,11 +85,12 @@ export default function Navbar({ cart = 0 }: { cart?: number }) {
         {/* Categorías */}
         <div className="hidden border-t border-mist lg:block">
           <ul className="mx-auto flex max-w-7xl items-center gap-7 px-6 py-2.5">
-            {links.map((l, i) => (
-              <li key={i}>
-                <a href={l.href} className="link-underline text-sm font-medium text-slate transition hover:text-medic">{l.label}</a>
+            {cats.map((c) => (
+              <li key={c.id}>
+                <button onClick={() => onCategory(c.id)} className="link-underline text-sm font-medium text-slate transition hover:text-medic">{c.label}</button>
               </li>
             ))}
+            <li><a href="#servicios" className="link-underline text-sm font-medium text-slate transition hover:text-medic">Servicios</a></li>
           </ul>
         </div>
       </div>
@@ -86,14 +99,15 @@ export default function Navbar({ cart = 0 }: { cart?: number }) {
         <div className="mx-4 mt-2 rounded-2xl border border-mist bg-white p-4 shadow-xl lg:hidden">
           <div className="relative mb-3">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate/60" />
-            <input placeholder="Buscar…" className="w-full rounded-lg border border-mist bg-cloud py-2.5 pl-9 pr-3 text-sm outline-none" />
+            <input value={query} onChange={(e) => onQuery(e.target.value)} aria-label="Buscar productos" placeholder="Buscar…" className="w-full rounded-lg border border-mist bg-cloud py-2.5 pl-9 pr-3 text-sm outline-none" />
           </div>
           <ul className="flex flex-col">
-            {links.map((l, i) => (
-              <li key={i}>
-                <a href={l.href} onClick={() => setOpen(false)} className="block border-b border-mist py-2.5 text-sm font-medium text-slate">{l.label}</a>
+            {cats.map((c) => (
+              <li key={c.id}>
+                <button onClick={() => { setOpen(false); onCategory(c.id); }} className="block w-full border-b border-mist py-2.5 text-left text-sm font-medium text-slate">{c.label}</button>
               </li>
             ))}
+            <li><a href="#servicios" onClick={() => setOpen(false)} className="block py-2.5 text-sm font-medium text-slate">Servicios</a></li>
           </ul>
         </div>
       )}

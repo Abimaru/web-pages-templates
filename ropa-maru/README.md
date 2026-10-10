@@ -16,7 +16,10 @@ Abre http://localhost:5173
 - **Hero** editorial a pantalla completa con foto de moda y titular con brillo dorado.
 - **Marquee** de beneficios (envío, cambios, cuotas).
 - **Categorías** (Mujer, Hombre, Niños, Deportivo) con imágenes y overlay.
-- **Selección de productos** con tarjetas, favorito y **"Añadir a la bolsa"** funcional (contador en la barra + toast de confirmación).
+- **Colección con filtros**: chips por categoría (también desde el menú y las tarjetas de categoría), buscador, orden por precio y **favoritos** reales.
+- **Ficha de producto** (modal): color, talla obligatoria, cantidad, descuento y **"Completa el look"**.
+- **Bolsa lateral** con cantidades, barra de **envío gratis** y **checkout por WhatsApp**: arma el pedido (prendas, totales, nombre, ciudad, notas) y muestra el mensaje que recibiría la tienda. En la demo no hay número (`STORE_WHATSAPP` vacío en `src/lib/bag.ts`): WhatsApp deja elegir el chat; para una tienda real, pon su número ahí.
+- Datos del catálogo en `src/data/products.ts`; reglas de envío en `src/lib/bag.ts` (con pruebas).
 - **Lookbook**, tira de beneficios, testimonios con estrellas y **newsletter**.
 - `Reveal on scroll` y respeto a `prefers-reduced-motion`.
 

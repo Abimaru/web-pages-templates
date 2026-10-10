@@ -16,6 +16,7 @@ Abre http://localhost:3000
 - **Hero** animado con grid neón, orbes flotantes, título con efecto *glitch* al hover y stats.
 - **Marquee** de plataformas en scroll infinito.
 - **Catálogo** con tarjetas de portada generadas por gradiente (sin arte con copyright) y efecto *tilt 3D* al mover el cursor.
+- **Carrito con pedido por WhatsApp**: plataforma por juego, entrega digital o a domicilio y vista previa del mensaje (`app/lib/order.ts`, con pruebas). En la demo no hay número (`STORE_WHATSAPP` vacío): WhatsApp deja elegir el chat; en una tienda real va su número.
 - **Plataformas**, **Zona Retro/Nostalgia**, **Servicios** (reparación, torneos, trade-in, membresía) y **Comunidad** (testimonios).
 - **Reveal on scroll** con `IntersectionObserver` y respeto a `prefers-reduced-motion`.
 

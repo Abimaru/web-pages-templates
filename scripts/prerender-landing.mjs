@@ -80,12 +80,43 @@ let html = readFileSync(indexPath, "utf8");
 function injectInto(html, openTagRegex, content, label) {
   const m = html.match(openTagRegex);
   if (!m) { console.error("✗ No se encontró el contenedor de " + label); process.exit(1); }
-  return html.replace(openTagRegex, m[1] + content + "</div>");
+  // Función de reemplazo: evita que "$1", "$8"… de los precios se interpreten como grupos de la regex.
+  return html.replace(openTagRegex, () => m[1] + content + "</div>");
 }
 
 // Los contenedores están vacíos en el fuente: <div ... id="grid" ...></div>
 html = injectInto(html, /(<div class="grid" id="grid"[^>]*>)<\/div>/, modelsHtml, "modelos");
 html = injectInto(html, /(<div class="plans" id="plans"[^>]*>)<\/div>/, plansHtml, "planes");
+
+// --- JSON-LD (SEO): planes (config.js) + FAQ (HTML). El ProfessionalService base ya vive en index.html ---
+const priceNum = (label) => {
+  const m = String(label).match(/\$\s*([\d.]+)/);
+  return m ? Number(m[1].replace(/\./g, "")) : null;
+};
+const faqItems = [...html.matchAll(/<details><summary>(.*?)<\/summary><p>(.*?)<\/p><\/details>/g)].map((m) => ({
+  "@type": "Question",
+  name: m[1],
+  acceptedAnswer: { "@type": "Answer", text: m[2] },
+}));
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    name: "Planes de " + CFG.brand.name,
+    itemListElement: (CFG.pricing.plans || []).map((p) => {
+      const price = priceNum(p.priceLabel);
+      return {
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: p.name, description: p.tagline, provider: { "@type": "ProfessionalService", name: CFG.brand.name } },
+        ...(price ? { priceSpecification: { "@type": "PriceSpecification", minPrice: price, priceCurrency: CFG.pricing.currency || "COP" } } : {}),
+      };
+    }),
+  },
+  ...(faqItems.length ? [{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqItems }] : []),
+];
+const ld = '<script type="application/ld+json">' + JSON.stringify(jsonLd).replace(/</g, "\\u003c") + "</script>";
+if (!html.includes("</head>")) { console.error("✗ No se encontró </head>"); process.exit(1); }
+html = html.replace("</head>", () => ld + "\n</head>");
 
 writeFileSync(indexPath, html);
 console.log("✓ Pre-render aplicado · " + MODELS.length + " modelos y " + (CFG.pricing.plans || []).length + " planes inyectados en " + indexPath);

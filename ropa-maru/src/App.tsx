@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
-  ArrowUpRight,
+  Search,
+  X,
   Truck,
   RefreshCcw,
   ShieldCheck,
   Sparkles,
   Heart,
-  Plus,
   Quote,
   Star,
   AtSign,
@@ -17,29 +17,16 @@ import {
 import Navbar from "./components/Navbar";
 import DemoBanner from "./components/DemoBanner";
 import Reveal from "./components/Reveal";
+import BagDrawer from "./components/BagDrawer";
+import ProductModal from "./components/ProductModal";
 import { images } from "./data/images";
+import { categories, products, getProduct, discountPct, type CategoryId } from "./data/products";
+import { addLine, setQty, countItems, formatCOP, type BagLine } from "./lib/bag";
 
 const perks = ["ENVÍO GRATIS DESDE $150.000", "CAMBIOS EN 30 DÍAS", "PAGO SEGURO", "3 CUOTAS SIN INTERÉS", "NUEVA COLECCIÓN CADA MES"];
 
-const categorias = [
-  { id: "mujer", name: "Mujer", tag: "Elegancia diaria", img: images.categoria.mujer },
-  { id: "hombre", name: "Hombre", tag: "Estilo sin esfuerzo", img: images.categoria.hombre },
-  { id: "ninos", name: "Niños", tag: "Cómodos y felices", img: images.categoria.ninos },
-  { id: "deportivo", name: "Deportivo", tag: "Muévete con actitud", img: images.categoria.deportivo },
-];
-
-type Product = { name: string; cat: string; price: number; oldPrice?: number; img: string; tag?: string };
-
-const productos: Product[] = [
-  { name: "Blazer estructurado", cat: "Mujer", price: 189900, img: images.productos[0], tag: "NUEVO" },
-  { name: "Camisa lino premium", cat: "Hombre", price: 129900, oldPrice: 159900, img: images.productos[1], tag: "-19%" },
-  { name: "Vestido midi satén", cat: "Mujer", price: 219900, img: images.productos[2] },
-  { name: "Chaqueta denim", cat: "Unisex", price: 169900, img: images.productos[3], tag: "TOP" },
-  { name: "Conjunto casual niña", cat: "Niños", price: 89900, img: images.productos[4] },
-  { name: "Abrigo largo lana", cat: "Mujer", price: 289900, oldPrice: 349900, img: images.productos[5], tag: "-17%" },
-  { name: "Set deportivo tech", cat: "Deportivo", price: 149900, img: images.productos[6], tag: "NUEVO" },
-  { name: "Suéter tejido", cat: "Hombre", price: 119900, img: images.productos[7] },
-];
+type Filter = "todo" | "favoritos" | CategoryId;
+type Sort = "relevancia" | "menor" | "mayor";
 
 const testimonios = [
   { name: "Daniela V.", text: "La calidad me sorprendió: telas hermosas y el envío llegó en 2 días. Ya soy clienta fiel.", stars: 5 },
@@ -47,22 +34,61 @@ const testimonios = [
   { name: "Familia Ríos", text: "Vestimos a los tres niños para el colegio. Cómodo, bonito y a buen precio.", stars: 5 },
 ];
 
-const format = (n: number) => "$" + n.toLocaleString("es-CO");
 
 export default function App() {
-  const [bag, setBag] = useState(0);
+  const [bag, setBag] = useState<BagLine[]>([]);
+  const [bagOpen, setBagOpen] = useState(false);
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [favs, setFavs] = useState<string[]>([]);
+  const [filter, setFilter] = useState<Filter>("todo");
+  const [sort, setSort] = useState<Sort>("relevancia");
+  const [query, setQuery] = useState("");
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimer = useRef<number | undefined>(undefined);
+  const searchRef = useRef<HTMLInputElement>(null);
 
-  const addToBag = (name: string) => {
-    setBag((b) => b + 1);
-    setToast(`${name} añadido a la bolsa`);
-    window.clearTimeout((addToBag as unknown as { t?: number }).t);
-    (addToBag as unknown as { t?: number }).t = window.setTimeout(() => setToast(null), 2200);
+  const notify = (msg: string) => {
+    setToast(msg);
+    window.clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToast(null), 2400);
   };
+  const toggleFav = (id: string) => setFavs((f) => (f.includes(id) ? f.filter((x) => x !== id) : [...f, id]));
+  const goCollection = () => document.getElementById("coleccion")?.scrollIntoView({ behavior: "smooth" });
+  const pickCategory = (c: Filter) => { setFilter(c); setQuery(""); goCollection(); };
+  const closeBag = useCallback(() => setBagOpen(false), []);
+  const closeProduct = useCallback(() => setOpenId(null), []);
+  const setBagQty = useCallback((key: string, qty: number) => setBag((b) => setQty(b, key, qty)), []);
+
+  const openProduct = openId ? getProduct(openId) : undefined;
+
+  const visible = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const list = products.filter(
+      (p) =>
+        (filter === "todo" || (filter === "favoritos" ? favs.includes(p.id) : p.category === filter)) &&
+        (!q || p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)),
+    );
+    if (sort === "menor") return [...list].sort((a, b) => a.price - b.price);
+    if (sort === "mayor") return [...list].sort((a, b) => b.price - a.price);
+    return list;
+  }, [filter, query, sort, favs]);
+
+  const chips: { id: Filter; label: string }[] = [
+    { id: "todo", label: "Todo" },
+    ...categories.map((c) => ({ id: c.id as Filter, label: c.name })),
+    { id: "favoritos", label: `Favoritos${favs.length ? ` (${favs.length})` : ""}` },
+  ];
 
   return (
     <main id="top" className="bg-porcelain text-ink">
-      <Navbar bag={bag} />
+      <Navbar
+        bag={countItems(bag)}
+        favs={favs.length}
+        onBag={() => setBagOpen(true)}
+        onFavs={() => pickCategory("favoritos")}
+        onSearch={() => { goCollection(); window.setTimeout(() => searchRef.current?.focus(), 450); }}
+        onCategory={(c) => pickCategory(c)}
+      />
       <DemoBanner
         disclaimer="Productos, precios, envíos, cuotas y testimonios son ejemplos ilustrativos."
         waMessage="Hola, vi la demo de MARÚ (tienda de moda) de Estudio Abimaru. Quisiera una tienda online así para mi negocio."
@@ -99,7 +125,7 @@ export default function App() {
               <a href="#coleccion" className="btn-dark !bg-porcelain !text-ink hover:!bg-cream">
                 Ver colección <ArrowRight size={18} />
               </a>
-              <a href="#mujer" className="btn-line !border-porcelain/60 !text-porcelain hover:!bg-porcelain hover:!text-ink">
+              <a href="#coleccion" className="btn-line !border-porcelain/60 !text-porcelain hover:!bg-porcelain hover:!text-ink">
                 Explorar categorías
               </a>
             </div>
@@ -119,15 +145,15 @@ export default function App() {
       </div>
 
       {/* ===================== CATEGORÍAS ===================== */}
-      <section id="mujer" className="mx-auto max-w-7xl px-6 py-20">
+      <section className="mx-auto max-w-7xl px-6 py-20">
         <Reveal className="mb-12 text-center">
           <span className="kicker text-rose">Compra por categoría</span>
           <h2 className="mt-3 font-display text-4xl font-medium sm:text-5xl">Para cada quien, su estilo</h2>
         </Reveal>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {categorias.map((c, i) => (
+          {categories.map((c, i) => (
             <Reveal key={c.id} delay={i * 80}>
-              <a id={c.id} href="#coleccion" className="img-zoom group relative block aspect-[3/4] overflow-hidden rounded-2xl">
+              <button onClick={() => pickCategory(c.id)} className="img-zoom group relative block aspect-[3/4] w-full overflow-hidden rounded-2xl text-left">
                 <img src={c.img} alt={c.name} className="h-full w-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6 text-porcelain">
@@ -137,55 +163,106 @@ export default function App() {
                     Comprar <ArrowRight size={14} />
                   </span>
                 </div>
-              </a>
+              </button>
             </Reveal>
           ))}
         </div>
       </section>
 
       {/* ===================== PRODUCTOS ===================== */}
-      <section id="coleccion" className="mx-auto max-w-7xl px-6 py-16">
-        <Reveal className="mb-12 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <span className="kicker text-rose">Lo más deseado</span>
-            <h2 className="mt-3 font-display text-4xl font-medium sm:text-5xl">Selección de la semana</h2>
-          </div>
-          <a href="#" className="link-underline flex items-center gap-2 text-sm font-medium">Ver todo <ArrowUpRight size={16} /></a>
+      <section id="coleccion" className="mx-auto max-w-7xl scroll-mt-20 px-6 py-16">
+        <Reveal className="mb-8">
+          <span className="kicker text-rose">Lo más deseado</span>
+          <h2 className="mt-3 font-display text-4xl font-medium sm:text-5xl">Selección de la semana</h2>
         </Reveal>
 
-        <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
-          {productos.map((p, i) => (
-            <Reveal key={p.name} delay={(i % 4) * 70}>
-              <article className="group">
-                <div className="img-zoom relative aspect-[3/4] overflow-hidden rounded-2xl bg-cream">
-                  <img src={p.img} alt={p.name} className="h-full w-full object-cover" loading="lazy" />
-                  {p.tag && (
-                    <span className="absolute left-3 top-3 rounded-full bg-porcelain/95 px-3 py-1 text-[11px] font-semibold tracking-wide text-ink">
-                      {p.tag}
-                    </span>
-                  )}
-                  <button aria-label="Favorito" className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-porcelain/90 text-ink/70 opacity-0 transition hover:text-rose group-hover:opacity-100">
-                    <Heart size={16} />
-                  </button>
-                  <button
-                    onClick={() => addToBag(p.name)}
-                    className="absolute inset-x-3 bottom-3 flex translate-y-3 items-center justify-center gap-2 rounded-full bg-ink py-2.5 text-sm font-medium text-porcelain opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-                  >
-                    <Plus size={15} /> Añadir a la bolsa
-                  </button>
-                </div>
-                <div className="mt-3">
-                  <p className="text-xs uppercase tracking-wider text-ink/45">{p.cat}</p>
-                  <h3 className="mt-0.5 font-display text-lg">{p.name}</h3>
-                  <div className="mt-1 flex items-baseline gap-2">
-                    <span className="font-medium">{format(p.price)}</span>
-                    {p.oldPrice && <span className="text-sm text-ink/40 line-through">{format(p.oldPrice)}</span>}
-                  </div>
-                </div>
-              </article>
-            </Reveal>
-          ))}
+        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="-mx-6 flex gap-2 overflow-x-auto px-6 pb-1 lg:mx-0 lg:px-0" role="group" aria-label="Filtrar por categoría">
+            {chips.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => setFilter(c.id)}
+                aria-pressed={filter === c.id}
+                className={`shrink-0 rounded-full border px-4 py-2 text-sm transition ${filter === c.id ? "border-ink bg-ink text-porcelain" : "border-ink/20 hover:border-ink"}`}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex gap-3">
+            <label className="relative flex-1 lg:w-64">
+              <span className="sr-only">Buscar prendas</span>
+              <Search size={16} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink/40" />
+              <input ref={searchRef} value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar" className="w-full rounded-full border border-ink/20 bg-transparent py-2.5 pl-10 pr-9 text-sm outline-none transition focus:border-ink" />
+              {query && <button onClick={() => setQuery("")} aria-label="Limpiar búsqueda" className="absolute right-3 top-1/2 -translate-y-1/2 text-ink/45 hover:text-ink"><X size={15} /></button>}
+            </label>
+            <label>
+              <span className="sr-only">Ordenar por</span>
+              <select value={sort} onChange={(e) => setSort(e.target.value as Sort)} className="rounded-full border border-ink/20 bg-transparent px-4 py-2.5 text-sm outline-none focus:border-ink">
+                <option value="relevancia">Destacados</option>
+                <option value="menor">Precio: menor a mayor</option>
+                <option value="mayor">Precio: mayor a menor</option>
+              </select>
+            </label>
+          </div>
         </div>
+
+        <p className="mb-5 text-sm text-ink/50" aria-live="polite">{visible.length} {visible.length === 1 ? "prenda" : "prendas"}</p>
+
+        {visible.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-ink/20 py-16 text-center">
+            <p className="font-display text-2xl">{filter === "favoritos" && !query ? "Aún no tienes favoritos" : "No encontramos prendas con ese filtro"}</p>
+            <p className="mt-2 text-sm text-ink/55">{filter === "favoritos" && !query ? "Toca el corazón en cualquier prenda para guardarla." : "Prueba con otra categoría o borra la búsqueda."}</p>
+            <button onClick={() => { setFilter("todo"); setQuery(""); }} className="btn-line mt-6">Ver todo</button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
+            {visible.map((p) => {
+              const isFav = favs.includes(p.id);
+              const pct = discountPct(p);
+              return (
+                <article key={p.id} className="group">
+                  <div className="img-zoom relative aspect-[3/4] overflow-hidden rounded-2xl bg-cream">
+                    <button onClick={() => setOpenId(p.id)} aria-label={`Ver ${p.name}`} className="absolute inset-0 h-full w-full">
+                      <img src={p.img} alt={p.name} className="h-full w-full object-cover" loading="lazy" />
+                    </button>
+                    {p.tag && (
+                      <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-porcelain/95 px-3 py-1 text-[11px] font-semibold tracking-wide text-ink">
+                        {p.tag}
+                      </span>
+                    )}
+                    <button
+                      onClick={() => { toggleFav(p.id); notify(isFav ? "Quitado de favoritos" : `${p.name} guardado en favoritos`); }}
+                      aria-label={isFav ? "Quitar de favoritos" : "Guardar en favoritos"}
+                      aria-pressed={isFav}
+                      className={`absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-porcelain/90 transition hover:text-rose ${isFav ? "text-rose" : "text-ink/70 md:opacity-0 md:group-hover:opacity-100"}`}
+                    >
+                      <Heart size={16} className={isFav ? "fill-rose" : ""} />
+                    </button>
+                    <button
+                      onClick={() => setOpenId(p.id)}
+                      className="absolute inset-x-3 bottom-3 hidden translate-y-3 items-center justify-center gap-2 rounded-full bg-ink py-2.5 text-sm font-medium text-porcelain opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 md:flex"
+                    >
+                      Elegir talla
+                    </button>
+                  </div>
+                  <div className="mt-3">
+                    <p className="text-xs uppercase tracking-wider text-ink/45">{p.category === "ninos" ? "Niños" : p.category}</p>
+                    <h3 className="mt-0.5 font-display text-lg"><button onClick={() => setOpenId(p.id)} className="text-left hover:underline">{p.name}</button></h3>
+                    <div className="mt-1 flex items-baseline gap-2">
+                      <span className="font-medium">{formatCOP(p.price)}</span>
+                      {p.oldPrice && <span className="text-sm text-ink/40 line-through">{formatCOP(p.oldPrice)}</span>}
+                      {pct > 0 && <span className="text-xs font-semibold text-rose-deep">-{pct}%</span>}
+                    </div>
+                    <div className="mt-1.5 flex gap-1" aria-hidden="true">
+                      {p.colors.map((c) => <span key={c.name} className="h-3 w-3 rounded-full border border-ink/15" style={{ background: c.hex }} />)}
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       {/* ===================== LOOKBOOK ===================== */}
@@ -317,6 +394,23 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      <BagDrawer open={bagOpen} bag={bag} onClose={closeBag} onQty={setBagQty} onShop={goCollection} />
+      {openProduct && (
+        <ProductModal
+          key={openProduct.id}
+          product={openProduct}
+          fav={favs.includes(openProduct.id)}
+          onFav={() => toggleFav(openProduct.id)}
+          onClose={closeProduct}
+          onOpenOther={setOpenId}
+          onAdd={(size, color, qty) => {
+            setBag((b) => addLine(b, { productId: openProduct.id, size, color, qty }));
+            setOpenId(null);
+            setBagOpen(true);
+          }}
+        />
+      )}
     </main>
   );
 }

@@ -1,98 +1,58 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Check, Cpu, Gauge, HardDrive, MemoryStick, Monitor, Snowflake, ArrowRight } from "lucide-react";
+import { Check, Cpu, Gauge, HardDrive, MemoryStick, Monitor, Snowflake, MessageCircle, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import {
+  categories, presets, defaultSelection, totalFor, optionOf, sameSelection, formatCOP, buildQuoteMessage, whatsappUrl,
+  type Selection,
+} from "@/app/lib/build";
 
-type Option = { label: string; note: string; price: number };
-type Category = { key: string; title: string; icon: LucideIcon; options: Option[] };
-
-const categories: Category[] = [
-  {
-    key: "perfil",
-    title: "Perfil de uso",
-    icon: Monitor,
-    options: [
-      { label: "Oficina esencial", note: "Board + gabinete + fuente", price: 900000 },
-      { label: "Creador / Diseño", note: "Base para render y edición", price: 1400000 },
-      { label: "Gamer", note: "Base optimizada para juegos", price: 1600000 },
-      { label: "Workstation Pro", note: "Máximo rendimiento sostenido", price: 2200000 },
-    ],
-  },
-  {
-    key: "cpu",
-    title: "Procesador",
-    icon: Cpu,
-    options: [
-      { label: "Ryzen 5 / Core i5", note: "6-8 núcleos", price: 750000 },
-      { label: "Ryzen 7 / Core i7", note: "8-12 núcleos", price: 1150000 },
-      { label: "Ryzen 9 / Core i9", note: "16+ núcleos", price: 1900000 },
-    ],
-  },
-  {
-    key: "gpu",
-    title: "Tarjeta gráfica",
-    icon: Gauge,
-    options: [
-      { label: "Gráficos integrados", note: "Oficina y multimedia", price: 0 },
-      { label: "RTX 4060 / equivalente", note: "1080p alto", price: 1500000 },
-      { label: "RTX 4070 / equivalente", note: "1440p ultra", price: 2600000 },
-      { label: "RTX 4080 / equivalente", note: "4K y creación", price: 4200000 },
-    ],
-  },
-  {
-    key: "ram",
-    title: "Memoria RAM",
-    icon: MemoryStick,
-    options: [
-      { label: "16 GB DDR5", note: "Uso general y gaming", price: 260000 },
-      { label: "32 GB DDR5", note: "Multitarea y edición", price: 480000 },
-      { label: "64 GB DDR5", note: "Render y virtualización", price: 950000 },
-    ],
-  },
-  {
-    key: "storage",
-    title: "Almacenamiento",
-    icon: HardDrive,
-    options: [
-      { label: "SSD 500 GB NVMe", note: "Rápido y esencial", price: 220000 },
-      { label: "SSD 1 TB NVMe", note: "El punto dulce", price: 380000 },
-      { label: "SSD 2 TB NVMe", note: "Para librerías grandes", price: 720000 },
-    ],
-  },
-  {
-    key: "cooling",
-    title: "Refrigeración",
-    icon: Snowflake,
-    options: [
-      { label: "Aire de alto flujo", note: "Silencioso y confiable", price: 120000 },
-      { label: "Líquida 240 mm", note: "Frío para overclock", price: 380000 },
-      { label: "Líquida 360 mm", note: "Máxima disipación", price: 560000 },
-    ],
-  },
-];
-
-const format = (n: number) => "$" + n.toLocaleString("es-CO");
+const icons: Record<string, LucideIcon> = {
+  perfil: Monitor, cpu: Cpu, gpu: Gauge, ram: MemoryStick, storage: HardDrive, cooling: Snowflake,
+};
 
 export default function Configurator() {
-  const [selected, setSelected] = useState<Record<string, number>>(
-    Object.fromEntries(categories.map((c) => [c.key, c.key === "gpu" ? 1 : 0]))
-  );
+  const [selected, setSelected] = useState<Selection>(defaultSelection);
+  const [name, setName] = useState("");
 
-  const total = useMemo(
-    () => categories.reduce((sum, c) => sum + c.options[selected[c.key]].price, 0),
-    [selected]
-  );
+  const total = useMemo(() => totalFor(selected), [selected]);
+  const message = useMemo(() => buildQuoteMessage(selected, name), [selected, name]);
+  const canSend = name.trim().length > 0;
 
   return (
     <div className="mx-auto max-w-7xl px-5 pb-24">
       <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
         {/* Categorías */}
         <div className="space-y-8">
+          <div>
+            <h3 className="mb-3 flex items-center gap-2 font-display text-lg font-semibold text-white">
+              <Sparkles size={18} className="text-electric" /> ¿No sabes por dónde empezar? Parte de una base
+            </h3>
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              {presets.map((p) => {
+                const active = sameSelection(selected, p.sel);
+                return (
+                  <button
+                    key={p.id}
+                    onClick={() => setSelected({ ...p.sel })}
+                    aria-pressed={active}
+                    className={`rounded-xl border p-4 text-left transition ${active ? "border-teal bg-teal/10" : "border-electric/15 bg-panel/40 hover:border-electric/40"}`}
+                  >
+                    <p className="font-medium text-white">{p.name}</p>
+                    <p className="mt-0.5 text-xs text-white/50">{p.note}</p>
+                    <p className="mono mt-2 text-sm text-electric">{formatCOP(totalFor(p.sel))}</p>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="mt-2 text-xs text-white/40">Después ajusta cada componente a tu gusto.</p>
+          </div>
+
           {categories.map((cat) => (
             <div key={cat.key}>
               <h3 className="mb-3 flex items-center gap-2 font-display text-lg font-semibold text-white">
-                <cat.icon size={18} className="text-electric" /> {cat.title}
+                {(() => { const Icon = icons[cat.key]; return <Icon size={18} className="text-electric" />; })()} {cat.title}
               </h3>
               <div className="grid gap-3 sm:grid-cols-2">
                 {cat.options.map((opt, i) => {
@@ -113,7 +73,7 @@ export default function Configurator() {
                       </div>
                       <div className="ml-3 text-right">
                         <span className="mono text-sm text-electric">
-                          {opt.price === 0 ? "Incluido" : "+" + format(opt.price)}
+                          {opt.price === 0 ? "Incluido" : "+" + formatCOP(opt.price)}
                         </span>
                         {active && <Check size={16} className="ml-auto mt-1 text-teal" />}
                       </div>
@@ -133,24 +93,42 @@ export default function Configurator() {
               {categories.map((c) => (
                 <li key={c.key} className="flex items-start justify-between gap-3">
                   <span className="text-white/55">{c.title}</span>
-                  <span className="text-right text-white/85">{c.options[selected[c.key]].label}</span>
+                  <span className="text-right text-white/85">{optionOf(c, selected).label}</span>
                 </li>
               ))}
             </ul>
             <div className="mt-5 border-t border-white/10 pt-5">
               <p className="text-xs uppercase tracking-widest text-white/40">Estimado total</p>
-              <p className="mono mt-1 text-3xl font-bold text-electric glow-text">{format(total)}</p>
+              <p className="mono mt-1 text-3xl font-bold text-electric glow-text">{formatCOP(total)}</p>
               <p className="mt-1 text-xs text-white/40">Precio referencial · sujeto a disponibilidad</p>
             </div>
+            <label className="mt-5 block text-xs text-white/50" htmlFor="quote-name">Tu nombre</label>
+            <input
+              id="quote-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              autoComplete="name"
+              placeholder="Para saber a quién responder"
+              className="mt-1 w-full rounded-lg border border-electric/20 bg-space px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/30 focus:border-electric"
+            />
             <a
-              href="/#contacto"
-              className="btn-primary mt-5 w-full justify-center"
+              href={canSend ? whatsappUrl(message) : undefined}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-disabled={!canSend}
+              onClick={(e) => !canSend && e.preventDefault()}
+              className={`mt-3 flex w-full items-center justify-center gap-2 rounded-lg py-3 text-sm font-semibold transition ${canSend ? "bg-[#25d366] text-[#06310f] hover:brightness-105" : "cursor-not-allowed bg-white/10 text-white/40"}`}
             >
-              Solicitar esta cotización <ArrowRight size={16} />
+              <MessageCircle size={17} /> {canSend ? "Cotizar por WhatsApp" : "Escribe tu nombre para cotizar"}
             </a>
+            <details className="mt-3 text-xs text-white/50">
+              <summary className="cursor-pointer select-none underline underline-offset-4">Ver el mensaje que recibirá la tienda</summary>
+              <pre className="mt-2 max-h-40 overflow-auto whitespace-pre-wrap rounded-lg bg-space p-3 leading-relaxed text-white/70">{message}</pre>
+            </details>
             <p className="mt-3 text-center text-xs text-white/40">
               Un ingeniero valida y ajusta tu build sin costo.
             </p>
+            <p className="mt-1 text-center text-[11px] text-white/30">Demo: WhatsApp te deja elegir el chat. En tu tienda iría tu número.</p>
           </div>
         </aside>
       </div>

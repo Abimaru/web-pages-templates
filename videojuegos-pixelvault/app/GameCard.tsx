@@ -42,7 +42,8 @@ export default function GameCard({ game }: { game: Game }) {
       style={{ ...style, transition: "transform 0.15s ease" }}
       className="card-neon group overflow-hidden p-3 will-change-transform"
     >
-      <Link href={`/juego/${game.slug}`} className="block">
+      <div className="relative">
+        <Link href={`/juego/${game.slug}`} className="block" tabIndex={-1} aria-hidden="true">
         {/* Portada generada con gradiente (sin usar arte con copyright) */}
         <div
           className="relative flex aspect-[3/4] items-center justify-center overflow-hidden rounded-lg"
@@ -56,15 +57,19 @@ export default function GameCard({ game }: { game: Game }) {
               {game.tag}
             </span>
           )}
-          <button
-            onClick={onAdd}
-            aria-label="Añadir al carrito"
-            className="absolute bottom-2 right-2 grid h-9 w-9 translate-y-2 place-items-center rounded-lg bg-neon-cyan text-void opacity-0 shadow-[0_0_16px_rgba(34,227,255,0.6)] transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-          >
-            <Plus size={18} strokeWidth={3} />
-          </button>
         </div>
+        </Link>
+        {/* Fuera del <Link> (HTML válido). Siempre visible en táctil; en escritorio aparece al pasar el cursor o con foco. */}
+        <button
+          onClick={onAdd}
+          aria-label={`Añadir ${game.title} al carrito`}
+          className="absolute bottom-2 right-2 z-10 grid h-10 w-10 place-items-center rounded-lg bg-neon-cyan text-void shadow-[0_0_16px_rgba(34,227,255,0.6)] transition-all duration-300 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 md:focus-visible:translate-y-0 md:focus-visible:opacity-100"
+        >
+          <Plus size={18} strokeWidth={3} />
+        </button>
+      </div>
 
+      <Link href={`/juego/${game.slug}`} className="block">
         <div className="px-1 pt-3">
           <p className="text-xs uppercase tracking-wider text-neon-purple">{game.genre}</p>
           <h3 className="mt-0.5 truncate font-display text-base font-bold text-white">

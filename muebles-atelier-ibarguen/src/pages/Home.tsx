@@ -1,4 +1,7 @@
+import { useState } from "react";
 import {
+  X,
+  MessageCircle,
   ArrowRight,
   ArrowUpRight,
   TreePine,
@@ -20,6 +23,7 @@ import Reveal from "../components/Reveal";
 import { Link } from "../lib/router";
 import { images } from "../data/images";
 import { projects } from "../data/projects";
+import { useQuoteSlugs, resolvePieces, toggleInQuote, buildQuoteMessage, whatsappUrl } from "../lib/quote";
 
 const materials = ["MADERA CERTIFICADA", "HECHO A MANO", "DISEÑO A LA MEDIDA", "ACABADOS NATURALES", "INSTALACIÓN INCLUIDA"];
 
@@ -52,7 +56,19 @@ const testimonios = [
 
 const featured = projects.slice(0, 6);
 
+const field = "rounded-xl border border-espresso/15 bg-white px-4 py-3 text-sm outline-none transition focus:border-walnut";
+
 export default function Home() {
+  const pieces = resolvePieces(useQuoteSlugs());
+  const [form, setForm] = useState({ name: "", phone: "", email: "", type: "", notes: "" });
+  const [sent, setSent] = useState(false);
+  const set = (k: keyof typeof form) => (e: { target: { value: string } }) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    window.open(whatsappUrl(buildQuoteMessage({ ...form, pieces })), "_blank", "noopener,noreferrer");
+    setSent(true);
+  };
+
   return (
     <main id="top" className="bg-ivory text-ink">
       <Navbar />
@@ -308,19 +324,36 @@ export default function Home() {
               </ul>
             </div>
 
-            <form className="grid gap-4 rounded-3xl bg-ivory p-7 text-ink" onSubmit={(e) => e.preventDefault()}>
+            <form className="grid gap-4 rounded-3xl bg-ivory p-7 text-ink" onSubmit={submit}>
+              {pieces.length > 0 && (
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider text-espresso/60">Piezas que te inspiran</p>
+                  <ul className="mt-2 flex flex-wrap gap-2">
+                    {pieces.map((p) => (
+                      <li key={p.slug} className="flex items-center gap-1.5 rounded-full border border-espresso/15 bg-linen py-1.5 pl-3 pr-1.5 text-sm text-espresso">
+                        {p.name}
+                        <button type="button" onClick={() => toggleInQuote(p.slug)} aria-label={`Quitar ${p.name}`} className="grid h-6 w-6 place-items-center rounded-full hover:bg-espresso/10"><X size={13} /></button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <div className="grid gap-4 sm:grid-cols-2">
-                <input required placeholder="Nombre" className="rounded-xl border border-espresso/15 bg-white px-4 py-3 text-sm outline-none transition focus:border-walnut" />
-                <input required placeholder="Teléfono" className="rounded-xl border border-espresso/15 bg-white px-4 py-3 text-sm outline-none transition focus:border-walnut" />
+                <input required aria-label="Nombre" autoComplete="name" value={form.name} onChange={set("name")} placeholder="Nombre" className={field} />
+                <input required aria-label="Teléfono" autoComplete="tel" inputMode="tel" value={form.phone} onChange={set("phone")} placeholder="Teléfono / WhatsApp" className={field} />
               </div>
-              <input type="email" required placeholder="Correo" className="rounded-xl border border-espresso/15 bg-white px-4 py-3 text-sm outline-none transition focus:border-walnut" />
-              <select className="rounded-xl border border-espresso/15 bg-white px-4 py-3 text-sm text-ink/70 outline-none transition focus:border-walnut">
-                <option>Tipo de proyecto…</option>
+              <input type="email" aria-label="Correo (opcional)" autoComplete="email" value={form.email} onChange={set("email")} placeholder="Correo (opcional)" className={field} />
+              <select aria-label="Tipo de proyecto" value={form.type} onChange={set("type")} className={`${field} text-ink/70`}>
+                <option value="">Tipo de proyecto…</option>
                 <option>Sala</option><option>Comedor</option><option>Dormitorio</option>
                 <option>Oficina / Corporativo</option><option>Cocina / Carpintería fija</option>
               </select>
-              <textarea rows={3} placeholder="Cuéntanos tu idea, medidas o inspiración…" className="rounded-xl border border-espresso/15 bg-white px-4 py-3 text-sm outline-none transition focus:border-walnut" />
-              <button type="submit" className="btn-solid justify-center">Enviar solicitud <ArrowRight size={18} /></button>
+              <textarea rows={3} aria-label="Tu idea" value={form.notes} onChange={set("notes")} placeholder="Cuéntanos tu idea, medidas o inspiración…" className={field} />
+              <button type="submit" className="btn-solid justify-center"><MessageCircle size={18} /> Enviar por WhatsApp</button>
+              <p className="text-center text-xs text-ink/50" aria-live="polite">
+                {sent ? "Se abrió WhatsApp con tu solicitud lista para enviar." : "Se abrirá WhatsApp con tu solicitud ya redactada."}
+                {" "}Demo: WhatsApp te deja elegir el chat.
+              </p>
             </form>
           </div>
         </Reveal>

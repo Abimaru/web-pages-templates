@@ -1,15 +1,25 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Search, ShoppingBag, Heart } from "lucide-react";
 
-const links = [
-  { href: "#mujer", label: "Mujer" },
-  { href: "#hombre", label: "Hombre" },
-  { href: "#ninos", label: "Niños" },
-  { href: "#deportivo", label: "Deportivo" },
-  { href: "#accesorios", label: "Accesorios" },
+import type { CategoryId } from "../data/products";
+
+const cats: { id: CategoryId; label: string }[] = [
+  { id: "mujer", label: "Mujer" },
+  { id: "hombre", label: "Hombre" },
+  { id: "ninos", label: "Niños" },
+  { id: "deportivo", label: "Deportivo" },
 ];
 
-export default function Navbar({ bag = 0 }: { bag?: number }) {
+type NavbarProps = {
+  bag?: number;
+  favs?: number;
+  onBag: () => void;
+  onFavs: () => void;
+  onSearch: () => void;
+  onCategory: (c: CategoryId) => void;
+};
+
+export default function Navbar({ bag = 0, favs = 0, onBag, onFavs, onSearch, onCategory }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -36,19 +46,25 @@ export default function Navbar({ bag = 0 }: { bag?: number }) {
         </a>
 
         <ul className="hidden items-center gap-8 lg:flex">
-          {links.map((l) => (
-            <li key={l.href}>
-              <a href={l.href} className="link-underline text-sm font-medium uppercase tracking-wider text-ink/75 transition hover:text-ink">
-                {l.label}
-              </a>
+          {cats.map((c) => (
+            <li key={c.id}>
+              <button onClick={() => onCategory(c.id)} className="link-underline text-sm font-medium uppercase tracking-wider text-ink/75 transition hover:text-ink">
+                {c.label}
+              </button>
             </li>
           ))}
+          <li>
+            <a href="#accesorios" className="link-underline text-sm font-medium uppercase tracking-wider text-ink/75 transition hover:text-ink">Lookbook</a>
+          </li>
         </ul>
 
         <div className="flex items-center gap-4">
-          <button aria-label="Buscar" className="hidden text-ink/70 transition hover:text-ink sm:block"><Search size={20} /></button>
-          <button aria-label="Favoritos" className="hidden text-ink/70 transition hover:text-rose sm:block"><Heart size={20} /></button>
-          <button aria-label="Bolsa" className="relative text-ink/80 transition hover:text-ink">
+          <button aria-label="Buscar" onClick={onSearch} className="text-ink/70 transition hover:text-ink"><Search size={20} /></button>
+          <button aria-label={`Favoritos (${favs})`} onClick={onFavs} className="relative hidden text-ink/70 transition hover:text-rose sm:block">
+            <Heart size={20} className={favs > 0 ? "fill-rose text-rose" : ""} />
+            {favs > 0 && <span className="absolute -right-2 -top-2 grid h-4 min-w-4 place-items-center rounded-full bg-ink px-1 text-[10px] font-semibold text-porcelain">{favs}</span>}
+          </button>
+          <button aria-label={`Bolsa (${bag})`} onClick={onBag} className="relative text-ink/80 transition hover:text-ink">
             <ShoppingBag size={21} />
             {bag > 0 && (
               <span className="absolute -right-2 -top-2 grid h-4 min-w-4 place-items-center rounded-full bg-rose px-1 text-[10px] font-semibold text-white">
@@ -62,13 +78,18 @@ export default function Navbar({ bag = 0 }: { bag?: number }) {
       {open && (
         <div className="mx-4 mt-3 rounded-2xl border border-ink/10 bg-porcelain p-5 shadow-xl lg:hidden">
           <ul className="flex flex-col">
-            {links.map((l) => (
-              <li key={l.href}>
-                <a href={l.href} onClick={() => setOpen(false)} className="block border-b border-ink/5 py-3 text-sm font-medium uppercase tracking-wider text-ink/80">
-                  {l.label}
-                </a>
+            {cats.map((c) => (
+              <li key={c.id}>
+                <button onClick={() => { setOpen(false); onCategory(c.id); }} className="block w-full border-b border-ink/5 py-3 text-left text-sm font-medium uppercase tracking-wider text-ink/80">
+                  {c.label}
+                </button>
               </li>
             ))}
+            <li>
+              <button onClick={() => { setOpen(false); onFavs(); }} className="block w-full py-3 text-left text-sm font-medium uppercase tracking-wider text-ink/80">
+                Favoritos {favs > 0 && `(${favs})`}
+              </button>
+            </li>
           </ul>
         </div>
       )}

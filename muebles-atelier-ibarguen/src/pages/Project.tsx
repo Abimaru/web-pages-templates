@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
 import { Link, homeHref, navigate } from "../lib/router";
 import { getProject, relatedProjects } from "../data/projects";
+import SaveToQuote from "../components/SaveToQuote";
 
 export default function Project({ slug }: { slug: string }) {
   const p = getProject(slug);
@@ -87,6 +88,7 @@ export default function Project({ slug }: { slug: string }) {
                 ))}
               </dl>
               <a href={homeHref("#contacto")} className="btn-solid mt-6 w-full justify-center">Quiero una pieza así <ArrowRight size={16} /></a>
+              <SaveToQuote slug={p.slug} name={p.name} />
             </div>
           </Reveal>
         </div>
