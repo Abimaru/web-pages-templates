@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-@theme inline {
+/* Sin "inline": las utilidades usan var(--color-*) y así el tema de marca se puede cambiar en vivo. */
+@theme {
   --font-display: "Playfair Display", Georgia, serif;
   --font-sans: "Jost", system-ui, sans-serif;
 

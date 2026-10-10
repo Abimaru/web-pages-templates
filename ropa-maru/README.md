@@ -20,6 +20,7 @@ Abre http://localhost:5173
 - **Ficha de producto** (modal): color, talla obligatoria, cantidad, descuento y **"Completa el look"**.
 - **Bolsa lateral** con cantidades, barra de **envío gratis** y **checkout por WhatsApp**: arma el pedido (prendas, totales, nombre, ciudad, notas) y muestra el mensaje que recibiría la tienda. En la demo no hay número (`STORE_WHATSAPP` vacío en `src/lib/bag.ts`): WhatsApp deja elegir el chat; para una tienda real, pon su número ahí.
 - Datos del catálogo en `src/data/products.ts`; reglas de envío en `src/lib/bag.ts` (con pruebas).
+- **"Pruébalo con tu marca"**: el prospecto escribe el nombre de su negocio, elige un color (o sube su logo) y la tienda se redibuja en vivo (logotipo, acento, título, mensaje de pedido). Genera un **enlace para compartir** (`?marca=Nombre&color=%23hex`) y un botón "Quiero una tienda así" al estudio. Todo local: el logo no se sube ni viaja en el enlace; los colores claros se oscurecen solos para mantener la legibilidad. Lógica en `src/lib/brand.ts` (con pruebas).
 - **Lookbook**, tira de beneficios, testimonios con estrellas y **newsletter**.
 - `Reveal on scroll` y respeto a `prefers-reduced-motion`.
 

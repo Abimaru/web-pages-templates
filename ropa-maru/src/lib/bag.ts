@@ -42,7 +42,7 @@ export const remainingForFreeShipping = (sub: number) => (sub <= 0 ? 0 : Math.ma
 export type Customer = { name: string; city?: string; notes?: string };
 
 /** Mensaje de pedido listo para WhatsApp. */
-export function buildOrderMessage(bag: BagLine[], customer: Customer): string {
+export function buildOrderMessage(bag: BagLine[], customer: Customer, storeName = "MARÚ"): string {
   const rows = bag
     .map((l) => ({ l, p: getProduct(l.productId) }))
     .filter((r): r is { l: BagLine; p: NonNullable<typeof r.p> } => !!r.p)
@@ -50,7 +50,7 @@ export function buildOrderMessage(bag: BagLine[], customer: Customer): string {
   const sub = subtotal(bag);
   const ship = shippingFor(sub);
   return [
-    `Hola MARÚ, quiero hacer este pedido:`,
+    `Hola ${storeName}, quiero hacer este pedido:`,
     "",
     ...rows,
     "",
