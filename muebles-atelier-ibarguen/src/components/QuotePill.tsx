@@ -9,7 +9,7 @@ export default function QuotePill() {
   return (
     <a
       href={homeHref("#contacto")}
-      className="fixed bottom-24 right-4 z-[60] flex items-center gap-2 rounded-full bg-espresso px-5 py-3 text-sm font-medium text-ivory shadow-xl transition hover:bg-walnut sm:right-6"
+      className="fixed bottom-36 right-4 z-[60] sm:bottom-24 flex items-center gap-2 rounded-full bg-espresso px-5 py-3 text-sm font-medium text-ivory shadow-xl transition hover:bg-walnut sm:right-6"
     >
       <BookmarkCheck size={17} /> Mi cotización · {n} {n === 1 ? "pieza" : "piezas"}
     </a>

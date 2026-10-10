@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
   Search,
@@ -19,6 +19,9 @@ import DemoBanner from "./components/DemoBanner";
 import Reveal from "./components/Reveal";
 import BagDrawer from "./components/BagDrawer";
 import ProductModal from "./components/ProductModal";
+import BrandStudio from "./components/BrandStudio";
+import Wordmark from "./components/Wordmark";
+import { accentTheme, isDefaultBrand, readBrandFromSearch, resolveBrand, type Brand } from "./lib/brand";
 import { images } from "./data/images";
 import { categories, products, getProduct, discountPct, type CategoryId } from "./data/products";
 import { addLine, setQty, countItems, formatCOP, type BagLine } from "./lib/bag";
@@ -35,7 +38,35 @@ const testimonios = [
 ];
 
 
+const BRAND_KEY = "maru-brand";
+
+/** Marca inicial: enlace compartido (?marca=&color=) > última marca guardada > MARÚ. */
+function loadBrand(): Brand {
+  const fromUrl = readBrandFromSearch(window.location.search);
+  if (fromUrl) return resolveBrand(fromUrl);
+  try {
+    const raw = localStorage.getItem(BRAND_KEY);
+    if (raw) return resolveBrand(JSON.parse(raw));
+  } catch { /* sin almacenamiento: usa la marca por defecto */ }
+  return resolveBrand(null);
+}
+
 export default function App() {
+  const [draft, setDraft] = useState<Brand>(loadBrand);
+  const brand = useMemo(() => resolveBrand(draft), [draft]);
+  useEffect(() => {
+    const t = accentTheme(brand.color);
+    const root = document.documentElement.style;
+    root.setProperty("--color-rose", t.rose);
+    root.setProperty("--color-rose-deep", t.roseDeep);
+    root.setProperty("--color-blush", t.blush);
+    document.title = `${brand.name} — Moda para toda la familia`;
+    try {
+      if (isDefaultBrand(brand)) localStorage.removeItem(BRAND_KEY);
+      else localStorage.setItem(BRAND_KEY, JSON.stringify({ name: brand.name, color: brand.color }));
+    } catch { /* noop */ }
+  }, [brand]);
+
   const [bag, setBag] = useState<BagLine[]>([]);
   const [bagOpen, setBagOpen] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
@@ -82,6 +113,7 @@ export default function App() {
   return (
     <main id="top" className="bg-porcelain text-ink">
       <Navbar
+        brand={brand}
         bag={countItems(bag)}
         favs={favs.length}
         onBag={() => setBagOpen(true)}
@@ -341,7 +373,7 @@ export default function App() {
       {/* ===================== NEWSLETTER ===================== */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <Reveal className="overflow-hidden rounded-[2.5rem] bg-ink px-8 py-14 text-center text-porcelain sm:px-16">
-          <span className="kicker text-gold">Únete al club MARÚ</span>
+          <span className="kicker text-gold">Únete al club {brand.name}</span>
           <h2 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-medium leading-tight sm:text-5xl">
             10% en tu primera compra + acceso anticipado a rebajas
           </h2>
@@ -360,7 +392,7 @@ export default function App() {
         <div className="mx-auto max-w-7xl px-6 py-14">
           <div className="grid gap-10 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
             <div>
-              <a href="#top" className="font-display text-3xl font-semibold tracking-[0.2em]">MAR<span className="text-rose">Ú</span></a>
+              <a href="#top" className="inline-block font-display text-3xl font-semibold tracking-[0.2em]"><Wordmark brand={brand} /></a>
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink/55">
                 Moda para toda la familia. Prendas que combinan estilo, calidad y precio
                 justo. Hecho con cariño para ti.
@@ -376,7 +408,7 @@ export default function App() {
             {[
               { h: "Comprar", items: ["Mujer", "Hombre", "Niños", "Deportivo", "Accesorios"] },
               { h: "Ayuda", items: ["Guía de tallas", "Envíos", "Cambios y devoluciones", "Contacto"] },
-              { h: "MARÚ", items: ["Nosotros", "Sostenibilidad", "Tiendas", "Trabaja con nosotros"] },
+              { h: brand.name, items: ["Nosotros", "Sostenibilidad", "Tiendas", "Trabaja con nosotros"] },
             ].map((col) => (
               <div key={col.h}>
                 <h4 className="kicker text-ink/70">{col.h}</h4>
@@ -389,13 +421,14 @@ export default function App() {
             ))}
           </div>
           <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-ink/10 pt-6 text-xs text-ink/45 sm:flex-row">
-            <p>© {new Date().getFullYear()} MARÚ — Prototipo por Abimaru. Solo demostración.</p>
+            <p>© {new Date().getFullYear()} {brand.name} — Prototipo por Abimaru. Solo demostración.</p>
             <p>Diseñado con estilo en Cali, Colombia.</p>
           </div>
         </div>
       </footer>
 
-      <BagDrawer open={bagOpen} bag={bag} onClose={closeBag} onQty={setBagQty} onShop={goCollection} />
+      <BrandStudio brand={draft} onChange={setDraft} onReset={() => setDraft(resolveBrand(null))} />
+      <BagDrawer storeName={brand.name} open={bagOpen} bag={bag} onClose={closeBag} onQty={setBagQty} onShop={goCollection} />
       {openProduct && (
         <ProductModal
           key={openProduct.id}

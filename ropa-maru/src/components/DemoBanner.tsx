@@ -8,7 +8,7 @@ import { Info, X, ArrowUpRight } from "lucide-react";
 
 // UTM: la analítica del catálogo atribuye las visitas que llegan desde esta demo.
 const CATALOG_URL = "https://abimaru.github.io/web-pages-templates/?utm_source=demo-maru&utm_medium=banner&utm_campaign=volver-catalogo";
-const WA_BASE = "https://wa.me/573157076691?text=";
+export const WA_BASE = "https://wa.me/573157076691?text=";
 
 interface DemoBannerProps {
   /** Aclaración específica del sector (una línea). */

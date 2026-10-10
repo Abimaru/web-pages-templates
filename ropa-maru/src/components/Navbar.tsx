@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Menu, X, Search, ShoppingBag, Heart } from "lucide-react";
 
 import type { CategoryId } from "../data/products";
+import type { Brand } from "../lib/brand";
+import Wordmark from "./Wordmark";
 
 const cats: { id: CategoryId; label: string }[] = [
   { id: "mujer", label: "Mujer" },
@@ -11,6 +13,7 @@ const cats: { id: CategoryId; label: string }[] = [
 ];
 
 type NavbarProps = {
+  brand: Brand;
   bag?: number;
   favs?: number;
   onBag: () => void;
@@ -19,7 +22,7 @@ type NavbarProps = {
   onCategory: (c: CategoryId) => void;
 };
 
-export default function Navbar({ bag = 0, favs = 0, onBag, onFavs, onSearch, onCategory }: NavbarProps) {
+export default function Navbar({ brand, bag = 0, favs = 0, onBag, onFavs, onSearch, onCategory }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -42,7 +45,7 @@ export default function Navbar({ bag = 0, favs = 0, onBag, onFavs, onSearch, onC
         </button>
 
         <a href="#top" className="font-display text-3xl font-semibold tracking-[0.2em] text-ink lg:text-4xl">
-          MAR<span className="text-rose">Ú</span>
+          <Wordmark brand={brand} />
         </a>
 
         <ul className="hidden items-center gap-8 lg:flex">

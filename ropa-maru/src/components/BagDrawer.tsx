@@ -13,9 +13,10 @@ type Props = {
   onClose: () => void;
   onQty: (key: string, qty: number) => void;
   onShop: () => void;
+  storeName?: string;
 };
 
-export default function BagDrawer({ open, bag, onClose, onQty, onShop }: Props) {
+export default function BagDrawer({ open, bag, onClose, onQty, onShop, storeName }: Props) {
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
   const [notes, setNotes] = useState("");
@@ -26,7 +27,7 @@ export default function BagDrawer({ open, bag, onClose, onQty, onShop }: Props) 
   const ship = shippingFor(sub);
   const missing = remainingForFreeShipping(sub);
   const progress = Math.min(100, (sub / FREE_SHIPPING_FROM) * 100);
-  const message = buildOrderMessage(bag, { name, city, notes });
+  const message = buildOrderMessage(bag, { name, city, notes }, storeName);
   const canOrder = bag.length > 0 && name.trim().length > 0;
 
   return (
