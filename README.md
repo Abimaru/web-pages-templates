@@ -58,6 +58,7 @@ npm run build:all    # build con la base de GitHub Pages por proyecto
 npm run check:all    # lint:all + test:all
 npm run smoke        # smoke estático: salidas de build + assets + sitemap
 npm run validate:estimator  # calculadora de inversión: límites de planes y monotonía del estimado
+npm run validate:analytics  # analítica: sin terceros por defecto, DNT/localhost, cola y propiedades
 ```
 
 - **Pruebas destacadas:** matemática financiera de VíaNova (`amortization`, `scenarios`,
@@ -74,6 +75,18 @@ envío de la selección por WhatsApp. Lógica pura en `catalogo/estimator.js`; p
 `catalogo/config.js` (`priceMin`/`priceMax` por plan y bloque `calculator`). Los **pesos** de tamaño y
 extras son valores de ejemplo: ajústalos a tu criterio comercial. `npm run validate:estimator`
 (también en CI) garantiza que el estimado respete los límites del plan y no baje al agregar extras.
+
+## Analítica (opcional, sin cookies)
+
+Apagada por defecto: **no se carga nada de terceros**. Para activarla, edita `analytics` en
+`catalogo/config.js` con Plausible (`{ provider: "plausible", id: "tu-dominio" }`) o Umami
+(`{ provider: "umami", id, src }`). No se activa en localhost ni si el visitante envía "No rastrear";
+nunca se envían datos personales (ni las respuestas del diagnóstico: solo la ruta recomendada).
+Al activarse, el pie de página avisa que se miden visitas de forma anónima. Embudo registrado:
+`ver_seccion` (modelos → calculadora → planes → contacto), `scroll_50/90`, `whatsapp`, `ver_demo`,
+`calculadora_inicio/cotizar`, `compass_inicio/resultado`, `formulario_inicio`, `envio_formulario`.
+Añade parámetros UTM al flyer/QR (`?utm_source=flyer`) para saber de dónde llegan. GA4 no se incluye a
+propósito (usa cookies y exigiría aviso de consentimiento).
 
 ## Rendimiento y recursos
 
