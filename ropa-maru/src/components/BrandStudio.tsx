@@ -6,7 +6,7 @@ import {
 import { WA_BASE } from "./DemoBanner";
 import { useDialog } from "./useDialog";
 
-type Props = { brand: Brand; onChange: (b: Brand) => void; onReset: () => void };
+type Props = { brand: Brand; onChange: (b: Brand) => void; onReset: () => void; lift?: boolean };
 
 /** Reduce el logo a un máximo de 320×120 y lo devuelve como data URL (todo local: nada se sube). */
 async function shrinkLogo(file: File): Promise<string> {
@@ -29,7 +29,7 @@ async function shrinkLogo(file: File): Promise<string> {
   }
 }
 
-export default function BrandStudio({ brand, onChange, onReset }: Props) {
+export default function BrandStudio({ brand, onChange, onReset, lift = false }: Props) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [logoError, setLogoError] = useState("");
@@ -57,7 +57,8 @@ export default function BrandStudio({ brand, onChange, onReset }: Props) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-36 left-4 z-[60] sm:bottom-20 flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-porcelain shadow-xl transition hover:bg-charcoal sm:left-6"
+        data-lift={lift}
+        className="fixed bottom-[calc(var(--demo-banner-h,0px)+1rem)] left-4 z-[60] max-md:data-[lift=true]:bottom-[calc(var(--demo-banner-h,0px)+5.25rem)] sm:left-6 flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-porcelain shadow-xl transition hover:bg-charcoal"
       >
         <Palette size={17} className="text-gold" /> Pruébalo con tu marca
       </button>

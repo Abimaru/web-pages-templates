@@ -68,6 +68,13 @@ npm run validate:analytics  # analítica: sin terceros por defecto, DNT/localhos
 - **CI (GitHub Actions):** `npm ci` con caché de npm → `check:all` → `build:all` → `smoke`
   → ensamblado → despliegue. El deploy **solo ocurre si todo pasa**.
 
+## Barra fija en móvil
+
+En móvil la landing muestra una barra inferior ("Calcular inversión" + "Cotizar por WhatsApp") que aparece al
+salir del hero y se oculta en la calculadora y el contacto; reemplaza al botón flotante de WhatsApp (que se
+conserva en escritorio). Es accesible (`aria-hidden` y `tabindex` cuando está oculta) y respeta
+`prefers-reduced-motion` y el área segura de iOS.
+
 ## Calculadora de inversión
 
 La landing incluye `#calculadora`: meta → tamaño → extras → plan sugerido y rango de inversión, con

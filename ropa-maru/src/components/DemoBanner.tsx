@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Info, X, ArrowUpRight } from "lucide-react";
 
 /* Aviso de prototipo estándar del ecosistema Estudio Abimaru.
@@ -19,10 +19,25 @@ interface DemoBannerProps {
 
 export default function DemoBanner({ disclaimer, waMessage }: DemoBannerProps) {
   const [open, setOpen] = useState(true);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Publica la altura del banner (--demo-banner-h) para que otros elementos fijos se apilen encima.
+  useEffect(() => {
+    const root = document.documentElement.style;
+    const el = ref.current;
+    if (!open || !el) { root.setProperty("--demo-banner-h", "0px"); return; }
+    const set = () => root.setProperty("--demo-banner-h", `${el.offsetHeight}px`);
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(el);
+    return () => { ro.disconnect(); root.setProperty("--demo-banner-h", "0px"); };
+  }, [open]);
+
   if (!open) return null;
 
   return (
     <div
+      ref={ref}
       role="region"
       aria-label="Aviso de prototipo"
       className="fixed inset-x-0 bottom-0 z-[70] border-t border-amber-400/40 bg-zinc-950/92 text-zinc-100 backdrop-blur-md"
