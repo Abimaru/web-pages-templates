@@ -143,6 +143,7 @@
     .calc-result ul { margin: 12px 0 0 18px; color: #c7ccdb; font-size: 13.5px; line-height: 1.6; }
     .calc-result small { display: block; margin-top: 12px; color: var(--muted); font-size: 12px; line-height: 1.5; }
     .btn-lg { padding: 16px 28px; font-size: 16px; }
+    .hero .eyebrow { margin-bottom: 12px; }
     .hero-price { margin-top: 18px; font-size: 15px; color: #c7ccdb; }
     .hero-price b { color: var(--text); }
     .hero-alt { margin-top: 10px; font-size: 14px; color: var(--muted); }
@@ -158,6 +159,16 @@
     .more-fields { margin-top: 2px; }
     .more-fields summary { cursor: pointer; color: var(--cyan); font-size: 13.5px; padding: 6px 14px; }
     .more-fields > div, .more-fields > .two { margin-top: 12px; }
+    /* Móvil: objetivos táctiles cómodos (≥ 40px) y enlaces del hero fuera del botón flotante de WhatsApp */
+    @media (max-width: 640px) {
+      .btn-sm { min-height: 40px; }
+      .preview-play { min-height: 40px; }
+      .hero-alt { display: flex; flex-direction: column; gap: 2px; padding-right: 64px; }
+      .hero-alt a { display: inline-block; padding: 8px 0; }
+      .hero-alt .sep { display: none; }
+      .hero-price { padding-right: 64px; }
+      footer .links a, .contact-info a { display: inline-block; padding: 9px 2px; }
+    }
     .indicators { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
     .ind { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; color: #c7ccdb; background: #ffffff08; }
     .ind b { color: var(--text); }
@@ -408,7 +419,11 @@
         <a href="#modelos" class="btn btn-ghost">Ver demos en vivo</a>
       </div>
       <p class="hero-price" id="heroPrice"></p>
-      <p class="hero-alt">¿Cuánto cuesta? <a href="#calculadora">Calcula tu inversión</a> · ¿No sabes qué necesitas? <a href="#compass">Haz el diagnóstico de 2 minutos</a> · <a href="#mas">Explora otras soluciones</a></p>
+      <p class="hero-alt">
+        <span>¿Cuánto cuesta? <a href="#calculadora">Calcula tu inversión</a></span><span class="sep" aria-hidden="true"> · </span>
+        <span>¿No sabes qué necesitas? <a href="#compass">Haz el diagnóstico de 2 minutos</a></span><span class="sep" aria-hidden="true"> · </span>
+        <span><a href="#mas">Explora otras soluciones</a></span>
+      </p>
       <div class="indicators">
         <span class="ind"><b id="count">8</b>&nbsp;modelos disponibles</span>
         <span class="ind">📱 Diseño responsivo</span>
