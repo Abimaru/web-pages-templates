@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import { Wallet, Car, ShieldCheck, Info, ArrowRight, Check } from "lucide-react";
 import Reveal from "../components/Reveal";
 import EffortMeter from "../components/EffortMeter";
+import LeadPanel from "../components/LeadPanel";
+import { buildSimulationMessage } from "../lib/request";
 import {
   financedAmount,
   amortization,
@@ -39,8 +41,8 @@ export default function FreeCredit() {
     return insurancePlans.find((p) => p.id === id) ?? insurancePlans[1];
   }, [value, condition]);
 
-  // Botón "continuar" NO enlaza a un canal real: VíaNova es un prototipo y no vende
-  // vehículos ni tramita créditos. Al pulsar muestra un aviso demostrativo.
+  // "Continuar mi solicitud" abre un panel que arma la simulación para un asesor por WhatsApp.
+  // VíaNova es un prototipo: la demo no fija número y lo dice en el panel.
   const [demoNote, setDemoNote] = useState(false);
 
   return (
@@ -282,18 +284,14 @@ export default function FreeCredit() {
 
           {demoNote && (
             <Reveal>
-              <div
-                aria-live="polite"
-                className="flex items-start gap-3 rounded-2xl border border-cyan/25 bg-cyan-soft p-4 text-sm text-ink/80"
-              >
-                <Info size={20} className="mt-0.5 shrink-0 text-cyan" />
-                <p>
-                  <strong className="text-ink">Función demostrativa.</strong> En una implementación
-                  real, aquí conectaríamos tu solicitud con el flujo de originación y un asesor.
-                  VíaNova es un prototipo de Estudio Abimaru: <strong>no vende vehículos ni tramita
-                  créditos</strong>. Próximamente: seguimiento de solicitud y estados en tiempo real.
-                </p>
-              </div>
+              <LeadPanel
+                build={(name) =>
+                  buildSimulationMessage({
+                    name, value, type, condition, down, months, rateMonthly: rate,
+                    cuota: credit.cuota, total: credit.total, planName: plan.name, effort: eff.level,
+                  })
+                }
+              />
             </Reveal>
           )}
         </div>
