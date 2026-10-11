@@ -1,5 +1,5 @@
 /* Generado por scripts/generate-pwa-assets.mjs — no editar a mano. */
-const CACHE = "pixelvault-v1";
+const CACHE = "pixelvault-v2";
 const SHELL = ["./", "manifest.webmanifest", "icon-192.png"]; // relativo al alcance del service worker
 
 self.addEventListener("install", (e) => {
@@ -20,15 +20,17 @@ self.addEventListener("fetch", (e) => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return; // WhatsApp, fuentes, analítica…: siempre a la red
 
-  // Páginas: red primero (contenido fresco); sin conexión, la copia guardada o la portada.
-  if (req.mode === "navigate") {
+  // Páginas y la configuración del sitio (config.js / analytics.js): red primero (así activar o cambiar la
+  // analítica surte efecto en la siguiente visita); sin conexión, la copia guardada o la portada.
+  const fresh = req.mode === "navigate" || /[/](config|analytics)[.]js$/.test(url.pathname); // sin barras invertidas: esto vive en una plantilla
+  if (fresh) {
     e.respondWith(
       fetch(req)
         .then((res) => {
           if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
           return res;
         })
-        .catch(() => caches.match(req).then((hit) => hit || caches.match("./")))
+        .catch(() => caches.match(req).then((hit) => hit || (req.mode === "navigate" ? caches.match("./") : Response.error())))
     );
     return;
   }

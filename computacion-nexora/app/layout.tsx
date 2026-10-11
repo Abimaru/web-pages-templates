@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import DemoBanner from "./DemoBanner";
 import "./globals.css";
 import ServiceWorker from "@/app/ServiceWorker";
+import AnalyticsLoader from "@/app/AnalyticsLoader";
 
 export const viewport: Viewport = { themeColor: "#050914" };
 
@@ -69,6 +70,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-space">
         <ServiceWorker />
+        <AnalyticsLoader demo="nexora" />
         {children}
         <DemoBanner
           disclaimer="Productos, precios, soporte y cifras mostrados son ejemplos ilustrativos."

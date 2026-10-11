@@ -2,7 +2,7 @@
 // su salida (index.html + OG + favicon) y que el sitemap y el catálogo enlazan todo.
 // No reemplaza pruebas E2E; detecta regresiones de ensamblado y rutas de forma barata.
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -76,6 +76,13 @@ for (const d of DEMOS) {
   if (!/rel="manifest"/.test(html)) problems.push("index.html no enlaza el manifest");
   const sw = readFileSync(join(base, "sw.js"), "utf8");
   if (!sw.includes('addEventListener("fetch"')) problems.push("sw.js sin manejador fetch");
+  try { new Function(sw); } catch (e) { problems.push("sw.js con error de sintaxis: " + e.message); } // p. ej. un escape perdido que vuelva comentario una regex
+  // Todas las demos deben cargar la analítica del catálogo (config.js + analytics.js del sitio).
+  const dir = join(base, d.out === "out" ? "_next" : "assets");
+  const js = [];
+  const walk = (p) => { try { for (const f of readdirSync(p, { withFileTypes: true })) f.isDirectory() ? walk(join(p, f.name)) : f.name.endsWith(".js") && js.push(join(p, f.name)); } catch { /* sin carpeta */ } };
+  walk(dir);
+  if (!js.some((f) => readFileSync(f, "utf8").includes("analytics.js"))) problems.push("no carga la analítica del catálogo (analytics.js)");
   problems.length ? bad(`${d.path}: ${problems.join("; ")}`) : ok(`${d.path}: manifest, íconos y service worker`);
 }
 

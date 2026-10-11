@@ -67,6 +67,17 @@ for (const [label, over, cfg] of [
   check(got.length === 1 && got[0][0] === "ver" && got[0][1].m === "MARÚ", "umami: entrega la cola tras onload");
   a.track("otro"); check(got.length === 2, "umami: entrega directa tras cargar"); }
 
+// Clasificación de enlaces de las demos
+{ const { classifyLink } = g.Analytics; const studio = "573157076691";
+  const ev = (h) => classifyLink(h, "maru", studio)?.event ?? null;
+  check(ev("https://wa.me/573157076691?text=Hola") === "cta_estudio", "WhatsApp al estudio → cta_estudio");
+  check(ev("https://wa.me/?text=pedido") === "pedido_demo", "WhatsApp de la demo → pedido_demo");
+  check(ev("https://wa.me/573009999999?text=x") === "pedido_demo", "WhatsApp a otro número → pedido_demo");
+  check(ev("https://abimaru.github.io/web-pages-templates/?utm_source=demo-maru&utm_medium=banner&utm_campaign=volver-catalogo") === "volver_catalogo", "volver al catálogo");
+  check(ev("https://example.com/") === null && ev("#top") === null && ev(undefined) === null, "otros enlaces → null");
+  check(classifyLink("https://wa.me/?text=x", "vitalis", studio).props.demo === "vitalis", "la demo viaja en las props");
+  check(classifyLink("https://wa.me/573157076691", "x", "").event === "pedido_demo", "sin número del estudio configurado nada se marca como estudio"); }
+
 // config.js
 { const w = {}; load("catalogo/config.js", w); const a = w.SITE_CONFIG.analytics;
   check(a && typeof a.provider === "string" && typeof a.id === "string", "config.js: analytics {provider,id} requerido");

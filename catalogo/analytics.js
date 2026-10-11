@@ -91,13 +91,40 @@
     return { init: init, track: track, once: once, state: state, clean: clean, isLocal: isLocal };
   }
 
-  var api = { createAnalytics: createAnalytics };
+  /**
+   * Clasifica un enlace de una demo en un evento de conversión (o null si no interesa):
+   *  - cta_estudio:     WhatsApp al estudio ("Quiero una solución así", "Quiero una tienda así…")
+   *  - pedido_demo:     WhatsApp de un pedido/cotización de la demo (el cliente final)
+   *  - volver_catalogo: enlace "Volver al catálogo" (lleva UTM)
+   */
+  function classifyLink(href, demo, studioWhatsapp) {
+    if (typeof href !== "string") return null;
+    var props = { demo: demo || "" };
+    if (href.indexOf("https://wa.me/") === 0) {
+      var studio = studioWhatsapp ? "https://wa.me/" + studioWhatsapp : "";
+      return { event: studio && href.indexOf(studio) === 0 ? "cta_estudio" : "pedido_demo", props: props };
+    }
+    if (href.indexOf("utm_campaign=volver-catalogo") !== -1) return { event: "volver_catalogo", props: props };
+    return null;
+  }
+
+  var api = { createAnalytics: createAnalytics, classifyLink: classifyLink };
   if (typeof document !== "undefined" && typeof navigator !== "undefined") {
     var inst = createAnalytics({ win: root, doc: document, nav: navigator, loc: root.location });
     api.track = inst.track;
     api.once = inst.once;
     api.init = inst.init;
     api.state = inst.state;
+    /** Mide las conversiones de una demo con UN solo listener de clics (sin tocar sus componentes). */
+    api.trackDemo = function (demo, cfg) {
+      if (!inst.state.active) return;
+      var studio = cfg && cfg.contact && cfg.contact.whatsapp;
+      document.addEventListener("click", function (e) {
+        var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+        var hit = a && classifyLink(a.href, demo, studio);
+        if (hit) inst.track(hit.event, hit.props);
+      }, true);
+    };
   }
   root.Analytics = api;
 })(typeof window !== "undefined" ? window : (typeof globalThis !== "undefined" ? globalThis : this));
