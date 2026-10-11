@@ -7,7 +7,8 @@ import { join } from "node:path";
  * descuentos concretos ni sustituir al médico. Esta prueba evita que esas frases vuelvan a la plantilla.
  */
 const FORBIDDEN: [RegExp, string][] = [
-  [/en \d+ min(utos)?\b/i, "promesa de tiempo de entrega"],
+  [/\b\d+ ?min(utos)?\b/i, "promesa de tiempo de entrega"],
+  [/24\/7/, "disponibilidad absoluta"],
   [/me cambi[oó] la vida|nunca m[aá]s|no fallar ni un d[ií]a/i, "promesa o testimonio de resultado de salud"],
   [/\d+ ?% de descuento/i, "descuento concreto"],
   [/ahorra en cada/i, "promesa de ahorro"],

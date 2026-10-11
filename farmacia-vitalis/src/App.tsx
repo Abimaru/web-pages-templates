@@ -127,9 +127,9 @@ export default function App() {
             </form>
 
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate">
-              <span className="flex items-center gap-2"><Truck size={17} className="text-teal" /> Domicilio 60 min</span>
+              <span className="flex items-center gap-2"><Truck size={17} className="text-teal" /> Domicilio a tu puerta (ejemplo)</span>
               <span className="flex items-center gap-2"><ShieldCheck size={17} className="text-teal" /> Proveedores autorizados (ejemplo)</span>
-              <span className="flex items-center gap-2"><Clock size={17} className="text-teal" /> Atención 24/7</span>
+              <span className="flex items-center gap-2"><Clock size={17} className="text-teal" /> Atención por chat (ejemplo)</span>
             </div>
           </Reveal>
 
