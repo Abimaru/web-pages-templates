@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Check, Cpu, Gauge, HardDrive, MemoryStick, Monitor, Snowflake, MessageCircle, Sparkles } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Check, Cpu, Gauge, HardDrive, MemoryStick, Monitor, Snowflake, MessageCircle, Sparkles, ArrowRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import {
   categories, presets, defaultSelection, totalFor, optionOf, sameSelection, formatCOP, buildQuoteMessage, whatsappUrl,
@@ -19,6 +19,22 @@ export default function Configurator() {
   const total = useMemo(() => totalFor(selected), [selected]);
   const message = useMemo(() => buildQuoteMessage(selected, name), [selected, name]);
   const canSend = name.trim().length > 0;
+
+  // Barra fija (solo móvil): visible mientras el resumen no está en pantalla.
+  const summaryRef = useRef<HTMLElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const [summaryVisible, setSummaryVisible] = useState(false);
+  useEffect(() => {
+    const el = summaryRef.current;
+    if (!el || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(([e]) => setSummaryVisible(e.isIntersecting), { threshold: 0.2 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  const goToSummary = () => {
+    summaryRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => nameRef.current?.focus({ preventScroll: true }), 500);
+  };
 
   return (
     <div className="mx-auto max-w-7xl px-5 pb-24">
@@ -86,7 +102,7 @@ export default function Configurator() {
         </div>
 
         {/* Resumen */}
-        <aside className="lg:sticky lg:top-24 lg:self-start">
+        <aside id="resumen" ref={summaryRef} className="scroll-mt-20 lg:sticky lg:top-24 lg:self-start">
           <div className="card-tech p-6">
             <h3 className="font-display text-lg font-semibold text-white">Tu configuración</h3>
             <ul className="mt-4 space-y-2.5 text-sm">
@@ -105,6 +121,7 @@ export default function Configurator() {
             <label className="mt-5 block text-xs text-white/50" htmlFor="quote-name">Tu nombre</label>
             <input
               id="quote-name"
+              ref={nameRef}
               value={name}
               onChange={(e) => setName(e.target.value)}
               autoComplete="name"
@@ -132,6 +149,22 @@ export default function Configurator() {
           </div>
         </aside>
       </div>
+
+      {!summaryVisible && (
+        <div className="fixed inset-x-0 z-[55] px-3 pb-2 lg:hidden" style={{ bottom: "var(--demo-banner-h, 0px)" }}>
+          <button
+            onClick={goToSummary}
+            aria-label={`Tu configuración: ${formatCOP(total)}. Ir al resumen para cotizar`}
+            className="flex w-full items-center justify-between rounded-xl border border-electric/50 bg-panel/95 px-5 py-3.5 text-white shadow-[0_0_24px_rgba(56,189,248,0.25)] backdrop-blur transition active:scale-[.99]"
+          >
+            <span className="text-left">
+              <span className="block text-[11px] uppercase tracking-widest text-white/50">Tu configuración</span>
+              <span className="mono text-lg font-bold text-electric">{formatCOP(total)}</span>
+            </span>
+            <span className="flex items-center gap-1.5 text-sm font-medium text-electric">Cotizar <ArrowRight size={16} /></span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
