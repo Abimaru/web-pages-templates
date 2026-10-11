@@ -2,7 +2,7 @@
 // prototipo de demostración: NO constituye una oferta ni asesoría financiera.
 
 export const formatCOP = (n: number) =>
-  "$" + Math.round(n).toLocaleString("es-CO");
+  "$" + (Number.isFinite(n) ? Math.round(n) : 0).toLocaleString("es-CO");
 
 /* ---------- AHORRO: Cuenta Progreso (a plazo, en días) ---------- */
 export type SavingsTerm = { days: number; ea: number }; // ea = tasa efectiva anual
