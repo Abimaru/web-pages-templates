@@ -14,6 +14,7 @@ const FORBIDDEN: [RegExp, string][] = [
   [/ahorra en cada/i, "promesa de ahorro"],
   [/farmac[eé]uticos de verdad/i, "afirmación de respaldo no verificable"],
   [/r[aá]pido, seguro/i, "afirmación absoluta"],
+  [/siempre disponibles?|entrega r[aá]pida|productos originales|100% originales/i, "afirmación absoluta o no verificable"],
   [/garantiz|100 ?%/i, "garantía o absoluto"],
   [/\bcura(r|n|s)?\b/i, "promesa terapéutica"],
 ];

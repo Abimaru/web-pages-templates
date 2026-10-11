@@ -42,7 +42,7 @@ export const STORE_WHATSAPP = "";
 
 export const whatsappUrl = (message: string) => `https://wa.me/${STORE_WHATSAPP}?text=${encodeURIComponent(message)}`;
 
-export function buildOrderMessage(cart: Line[], c: Customer): string {
+export function buildOrderMessage(cart: Line[], c: Customer, brandName = "VITALIS"): string {
   const rows = cart.flatMap((l) => {
     const p = getProduct(l.productId);
     return p ? [`• ${l.qty} × ${p.name}${p.rx ? " (CON FÓRMULA)" : ""} — ${formatCOP(p.price * l.qty)}`] : [];
@@ -50,7 +50,7 @@ export function buildOrderMessage(cart: Line[], c: Customer): string {
   const sub = subtotal(cart);
   const fee = deliveryFor(sub);
   return [
-    "Hola VITALIS, quiero hacer este pedido:",
+    `Hola ${brandName}, quiero hacer este pedido:`,
     "",
     ...rows,
     "",
@@ -67,4 +67,4 @@ export function buildOrderMessage(cart: Line[], c: Customer): string {
 }
 
 /** Mensaje genérico para servicios (receta digital, consulta, crónicos…). */
-export const serviceMessage = (service: string) => `Hola VITALIS, quiero información sobre: ${service}.`;
+export const serviceMessage = (service: string, brandName = "VITALIS") => `Hola ${brandName}, quiero información sobre: ${service}.`;
