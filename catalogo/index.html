@@ -304,6 +304,16 @@
     footer .legal { color: #6b7185; font-size: 12.5px; margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line); line-height: 1.6; }
 
     /* WhatsApp flotante */
+    /* Barra fija de CTA (solo móvil): aparece al salir del hero y se oculta en calculadora/contacto */
+    .sticky-cta { display: none; }
+    @media (max-width: 640px) {
+      .sticky-cta { display: grid; grid-template-columns: 1fr 1.3fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 61; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: #0a0b12ee; backdrop-filter: blur(12px); border-top: 1px solid var(--line-2); transform: translateY(110%); transition: transform .25s ease; }
+      .sticky-cta.show { transform: translateY(0); }
+      .sticky-cta .btn { justify-content: center; min-height: 44px; padding: 10px 12px; font-size: 14px; }
+      #waFloat.wa-float { display: none; } /* la barra ya incluye WhatsApp */
+      body { padding-bottom: 70px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .sticky-cta { transition: none; } }
     .wa-float { position: fixed; right: 20px; bottom: 20px; z-index: 60; width: 58px; height: 58px; border-radius: 50%; background: #25d366; display: grid; place-items: center; box-shadow: 0 10px 30px #25d36655; transition: transform .2s; }
     .wa-float:hover { transform: scale(1.08); }
     .wa-float svg { width: 30px; height: 30px; }
@@ -760,6 +770,11 @@
     </div>
   </div>
 
+  <div class="sticky-cta" id="stickyCta" aria-hidden="true">
+    <a href="#calculadora" class="btn btn-ghost" id="stickyCalc" tabindex="-1">Calcular inversión</a>
+    <a id="stickyWa" class="btn btn-wa" target="_blank" rel="noopener noreferrer" tabindex="-1">Cotizar por WhatsApp</a>
+  </div>
+
   <a id="waFloat" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Hablar por WhatsApp">
     <svg viewBox="0 0 32 32" fill="#06310f" aria-hidden="true"><path d="M16 3C9 3 3.5 8.5 3.5 15.5c0 2.3.6 4.4 1.7 6.3L3 29l7.4-2.1c1.8 1 3.9 1.5 6 1.5 7 0 12.5-5.5 12.5-12.5S23 3 16 3zm0 22.6c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.4 1.2 1.2-4.3-.3-.4c-1-1.6-1.6-3.5-1.6-5.5C5.4 9.6 10.1 5 16 5s10.6 4.6 10.6 10.5S21.9 25.6 16 25.6zm5.9-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2s-.8 1-1 1.2c-.2.2-.4.2-.7.1-1.9-.9-3.1-1.7-4.4-3.8-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6s-.7-1.7-1-2.3c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.5 3.9 6.1 5.4 2.3 1 3.2 1 4.3.9.7-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg>
   </a>
@@ -813,7 +828,7 @@
 
     /* ---- Datos globales de contacto ---- */
     const generalMsg = `Hola, vi el catálogo de Estudio Abimaru. Me gustaría recibir información y una cotización para mi negocio.`;
-    ["navWa", "mWa", "heroWa", "infoWa", "finalWa", "footWa", "waFloat"].forEach((id) => {
+    ["navWa", "mWa", "heroWa", "stickyWa", "infoWa", "finalWa", "footWa", "waFloat"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) { el.href = wa(generalMsg); el.addEventListener("click", () => track("whatsapp", { from: id })); }
     });
@@ -1034,6 +1049,30 @@
     document.querySelectorAll("#plans [data-ev]").forEach((el) =>
       el.addEventListener("click", () => track(el.dataset.ev, { plan: el.dataset.model })));
 
+
+    /* ---- Barra fija móvil: visible fuera del hero, oculta en calculadora/contacto ---- */
+    (function () {
+      const bar = document.getElementById("stickyCta");
+      const hero = document.querySelector(".hero");
+      if (!bar || !hero || !("IntersectionObserver" in window)) return;
+      const hideOn = ["calculadora", "contacto"].map((id) => document.getElementById(id)).filter(Boolean);
+      let heroVisible = true;
+      const hidden = new Set();
+      const links = bar.querySelectorAll("a");
+      function update() {
+        const show = !heroVisible && hidden.size === 0;
+        bar.classList.toggle("show", show);
+        bar.setAttribute("aria-hidden", show ? "false" : "true");
+        links.forEach((a) => (show ? a.removeAttribute("tabindex") : a.setAttribute("tabindex", "-1")));
+      }
+      new IntersectionObserver((e) => { heroVisible = e[0].isIntersecting; update(); }, { threshold: 0.05 }).observe(hero);
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => (en.isIntersecting ? hidden.add(en.target.id) : hidden.delete(en.target.id)));
+        update();
+      }, { threshold: 0.15 });
+      hideOn.forEach((el) => io.observe(el));
+      document.getElementById("stickyCalc").addEventListener("click", () => track("sticky_calculadora"));
+    })();
 
     /* ---- Calculadora de inversión ---- */
     (function () {

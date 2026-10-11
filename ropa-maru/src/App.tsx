@@ -20,11 +20,12 @@ import Reveal from "./components/Reveal";
 import BagDrawer from "./components/BagDrawer";
 import ProductModal from "./components/ProductModal";
 import BrandStudio from "./components/BrandStudio";
+import BagBar from "./components/BagBar";
 import Wordmark from "./components/Wordmark";
 import { accentTheme, isDefaultBrand, readBrandFromSearch, resolveBrand, type Brand } from "./lib/brand";
 import { images } from "./data/images";
 import { categories, products, getProduct, discountPct, type CategoryId } from "./data/products";
-import { addLine, setQty, countItems, formatCOP, type BagLine } from "./lib/bag";
+import { addLine, setQty, countItems, subtotal, formatCOP, type BagLine } from "./lib/bag";
 
 const perks = ["ENVÍO GRATIS DESDE $150.000", "CAMBIOS EN 30 DÍAS", "PAGO SEGURO", "3 CUOTAS SIN INTERÉS", "NUEVA COLECCIÓN CADA MES"];
 
@@ -91,6 +92,7 @@ export default function App() {
   const setBagQty = useCallback((key: string, qty: number) => setBag((b) => setQty(b, key, qty)), []);
 
   const openProduct = openId ? getProduct(openId) : undefined;
+  const bagBarVisible = bag.length > 0 && !bagOpen && !openProduct;
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -427,7 +429,8 @@ export default function App() {
         </div>
       </footer>
 
-      <BrandStudio brand={draft} onChange={setDraft} onReset={() => setDraft(resolveBrand(null))} />
+      {bagBarVisible && <BagBar count={countItems(bag)} total={subtotal(bag)} onOpen={() => setBagOpen(true)} />}
+      <BrandStudio lift={bagBarVisible} brand={draft} onChange={setDraft} onReset={() => setDraft(resolveBrand(null))} />
       <BagDrawer storeName={brand.name} open={bagOpen} bag={bag} onClose={closeBag} onQty={setBagQty} onShop={goCollection} />
       {openProduct && (
         <ProductModal
