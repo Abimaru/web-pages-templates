@@ -35,6 +35,11 @@ export function savingsSeries(amount: number, days: number, ea: number, points =
 }
 
 /* ---------- CRÉDITO: cuota fija (sistema francés) ---------- */
+/** Límites del simulador de crédito (también alimentan las cifras de la página: así son ciertas dentro de la demo). */
+export const CREDIT_TERMS = [6, 12, 18, 24, 36, 48];
+export const CREDIT_MIN = 500_000;
+export const CREDIT_MAX = 50_000_000;
+
 export const CREDIT_MONTHLY_RATE = 0.019; // 1.9% mensual (~25.3% E.A. aprox.)
 export const creditEA = Math.pow(1 + CREDIT_MONTHLY_RATE, 12) - 1;
 
@@ -50,4 +55,14 @@ export function computeCredit(amount: number, months: number, r = CREDIT_MONTHLY
   const cuota = (p * r) / (1 - Math.pow(1 + r, -n));
   const total = cuota * n;
   return { cuota, total, interest: total - p };
+}
+
+/** Cifras de la franja de estadísticas: salen de los simuladores, no son métricas de clientes. */
+export function demoFacts() {
+  return {
+    maxCreditMillions: CREDIT_MAX / 1_000_000,
+    maxCreditMonths: Math.max(...CREDIT_TERMS),
+    savingsTerms: savingsTerms.length,
+    maxSavingsEA: Math.max(...savingsTerms.map((t) => t.ea)) * 100,
+  };
 }

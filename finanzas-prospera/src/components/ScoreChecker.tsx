@@ -47,7 +47,7 @@ export default function ScoreChecker() {
         <Gauge size={20} className="text-forest" />
         <h3 className="font-display text-xl font-bold">Tu score crediticio</h3>
       </div>
-      <p className="text-sm text-slate">Consúltalo gratis, sin afectar tu historial.</p>
+      <p className="text-sm text-slate">Simulación: no consulta ninguna central de riesgo.</p>
 
       <div className="relative mx-auto mt-6 w-[220px]">
         <svg viewBox="0 0 220 130">
@@ -75,12 +75,12 @@ export default function ScoreChecker() {
 
       {!shown ? (
         <button onClick={check} className="btn-primary mt-4 w-full justify-center">
-          <ShieldCheck size={16} /> Consultar mi score gratis
+          <ShieldCheck size={16} /> Simular mi score
         </button>
       ) : (
         <>
           <p className="mt-4 text-sm text-slate">
-            Con este score podrías acceder a créditos <strong className="text-forest">preaprobados</strong>.
+            Con un score así podrías explorar opciones de crédito, <strong className="text-forest">sujetas a estudio</strong>.
           </p>
           <button onClick={check} className="btn-ghost mt-3 w-full justify-center">
             <RefreshCw size={15} /> Simular otro score

@@ -11,6 +11,10 @@ npm run dev
 
 Abre http://localhost:5173
 
+## Textos de un sector regulado
+
+PRÓSPERA simula una fintech, así que el texto **no promete** velocidad, aprobación, preaprobación, ahorro garantizado ni comparaciones con otras entidades (frases como "aprobación en 10 min", "mismo día", "sin letra pequeña"). Las cifras de la franja de estadísticas salen de los propios simuladores (`demoFacts()` en `src/lib/finance.ts`), no son métricas de clientes. `src/claims.test.ts` falla si alguna de esas frases vuelve a la plantilla; al adaptarla a una entidad real, revisa los textos con su área legal y de cumplimiento.
+
 ## Qué incluye
 
 - **Hero** amigable con tarjeta flotante de crecimiento.

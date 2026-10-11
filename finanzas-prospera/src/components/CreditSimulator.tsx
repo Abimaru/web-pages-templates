@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Banknote, CalendarClock, ArrowRight, CheckCircle2 } from "lucide-react";
 import LeadCta from "./LeadCta";
 import { buildCreditMessage } from "../lib/request";
-import { computeCredit, creditEA, formatCOP, CREDIT_MONTHLY_RATE } from "../lib/finance";
+import { computeCredit, creditEA, formatCOP, CREDIT_MONTHLY_RATE, CREDIT_TERMS, CREDIT_MIN, CREDIT_MAX } from "../lib/finance";
 
-const terms = [6, 12, 18, 24, 36, 48];
+const terms = CREDIT_TERMS;
 
 export default function CreditSimulator() {
   const [amount, setAmount] = useState(5_000_000);
@@ -27,7 +27,7 @@ export default function CreditSimulator() {
         <span className="text-slate">Monto</span>
         <span className="font-display text-lg font-bold text-forest">{formatCOP(amount)}</span>
       </label>
-      <input type="range" aria-label="Monto del crédito" aria-valuetext={formatCOP(amount)} min={500_000} max={50_000_000} step={500_000} value={amount} onChange={(e) => setAmount(+e.target.value)} className="range" />
+      <input type="range" aria-label="Monto del crédito" aria-valuetext={formatCOP(amount)} min={CREDIT_MIN} max={CREDIT_MAX} step={500_000} value={amount} onChange={(e) => setAmount(+e.target.value)} className="range" />
       <div className="mt-1 flex justify-between text-xs text-slate/60"><span>$500 mil</span><span>$50 millones</span></div>
 
       {/* Plazo */}
