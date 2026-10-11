@@ -21,6 +21,7 @@ Abre http://localhost:5173
 - **Solicitud multipaso** (5 pasos) con pantalla de "solicitud recibida" (demo).
 - **Venta / retoma**, **compra de cartera** (antes/después) y **seguros integrados** (3 planes).
 - Proceso, beneficios, casos de uso, FAQ y CTA final.
+- **Cierre por WhatsApp**: "Continuar mi solicitud" (crédito por monto) y la pantalla final de la solicitud por pasos envían un resumen a un asesor (vehículo, inicial, plazo, cuota, tasa, seguro sugerido). La solicitud **no incluye documento, ingresos ni correo**: son datos sensibles que se piden por un canal seguro. Lógica en `src/lib/request.ts` (con pruebas). En la demo no hay número (`STORE_WHATSAPP` vacío): WhatsApp deja elegir el chat.
 
 ## Notas
 

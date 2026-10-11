@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { FileText, ArrowLeft, ArrowRight, Check, PartyPopper, RotateCcw, Info } from "lucide-react";
 import Reveal from "../components/Reveal";
+import LeadPanel from "../components/LeadPanel";
+import { buildApplicationMessage } from "../lib/request";
 import { vehicles, getVehicle } from "../data/vehicles";
 import { insurancePlans } from "../data/insurance";
 import { scenarios } from "../lib/finance";
@@ -56,13 +58,26 @@ export default function Application() {
             <span className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-mint/15 text-mint"><PartyPopper size={30} /></span>
             <p className="mt-4 chip mx-auto w-fit bg-mint/15 text-mint">Solicitud recibida (DEMO)</p>
             <h3 className="mt-3 font-display text-2xl font-bold">¡Gracias, {d.nombre || "conductor"}!</h3>
-            <p className="mt-2 text-muted">Tu solicitud demostrativa quedó registrada con el número <strong className="text-ink">{sent}</strong>.</p>
+            <p className="mt-2 text-muted">Esta es una solicitud de demostración (referencia simulada <strong className="text-ink">{sent}</strong>). Envía tu resumen a un asesor por WhatsApp para continuar.</p>
 
             <div className="mt-6 rounded-2xl border border-line bg-panel/50 p-5 text-left text-sm">
               <div className="flex justify-between border-b border-line py-2"><span className="text-muted">Vehículo</span><span className="font-medium">{vehicle.name}</span></div>
               <div className="flex justify-between border-b border-line py-2"><span className="text-muted">Cuota estimada</span><span className="font-display font-bold text-cobre-2">{formatCOP(scen[1].cuota)}/mes · {scen[1].months} meses</span></div>
               <div className="flex justify-between border-b border-line py-2"><span className="text-muted">Protección</span><span className="font-medium">Plan {plan.name}</span></div>
               <div className="flex justify-between py-2"><span className="text-muted">Contacto</span><span className="font-medium">{d.canal}</span></div>
+            </div>
+
+            <div className="mt-5 text-left">
+              <LeadPanel
+                knownName={d.nombre}
+                cta="Enviar mi resumen por WhatsApp"
+                build={(name) =>
+                  buildApplicationMessage({
+                    name, city: d.ciudad, vehicleName: vehicle.name, vehiclePrice: vehicle.price,
+                    downPct: d.downPct, plazo: d.plazo, cuota: scen[1].cuota, planName: plan.name, channel: d.canal,
+                  })
+                }
+              />
             </div>
 
             <div className="mt-5 text-left">
