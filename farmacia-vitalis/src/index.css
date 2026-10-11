@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme inline {
+@theme {
   --font-display: "Sora", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, sans-serif;
 
@@ -13,6 +13,7 @@
   /* Salud */
   --color-medic: #0e78d4;
   --color-medic-dark: #0a5ba8;
+  --color-brand: #10a86e; /* logo; sigue al color de marca solo cuando el usuario personaliza */
   --color-teal: #12b5a5;
   --color-green: #10a86e;
   --color-soft-blue: #dcecfa;

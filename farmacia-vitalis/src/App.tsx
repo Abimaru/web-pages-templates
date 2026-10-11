@@ -25,6 +25,9 @@ import Reveal from "./components/Reveal";
 import CartDrawer from "./components/CartDrawer";
 import CartBar from "./components/CartBar";
 import { images } from "./data/images";
+import Wordmark from "./components/Wordmark";
+import BrandStudio from "./components/BrandStudio";
+import { useBrand } from "./lib/brandStore";
 import { categories, products, filterProducts, type CategoryId, type Filter } from "./data/products";
 import { addLine, setQty, countItems, subtotal, needsPrescription, formatCOP, serviceMessage, whatsappUrl, type Line } from "./lib/cart";
 
@@ -58,6 +61,7 @@ const filterChips: { id: Filter; label: string }[] = [
 ];
 
 export default function App() {
+  const brand = useBrand();
   const [cart, setCart] = useState<Line[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [filter, setFilter] = useState<Filter>("todo");
@@ -88,6 +92,7 @@ export default function App() {
         onCart={() => setCartOpen(true)}
         onCategory={pickCategory}
       />
+      <BrandStudio hasCart={cart.length > 0 && !cartOpen} />
       <DemoBanner
         disclaimer="No es una farmacia real: no vende medicamentos, no procesa fórmulas y no ofrece asesoría médica o farmacéutica."
         waMessage="Hola, vi la demo de VITALIS (farmacia digital) de Estudio Abimaru. Quisiera una página así para mi negocio."
@@ -268,7 +273,7 @@ export default function App() {
                 <h3 className="mt-5 font-display text-lg font-bold">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate">{s.desc}</p>
                 <a
-                  href={whatsappUrl(serviceMessage(s.title))}
+                  href={whatsappUrl(serviceMessage(s.title, brand.name))}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-medic transition hover:text-medic-dark"
@@ -336,7 +341,7 @@ export default function App() {
           <div className="grid items-center gap-8 lg:grid-cols-[1.3fr_1fr]">
             <div>
               <span className="kicker text-white/80">Salud a la mano</span>
-              <h2 className="mt-3 font-display text-4xl font-bold leading-tight sm:text-5xl">Descarga la app VITALIS y pide más fácil</h2>
+              <h2 className="mt-3 font-display text-4xl font-bold leading-tight sm:text-5xl">Descarga la app {brand.name} y pide más fácil</h2>
               <p className="mt-4 max-w-lg text-white/80">Recordatorios de medicamentos, historial de compras y beneficios de bienvenida (ejemplo).</p>
               <form onSubmit={(e) => e.preventDefault()} className="mt-7 flex max-w-md flex-col gap-3 sm:flex-row">
                 <input type="email" required placeholder="Tu correo" className="w-full rounded-xl bg-white/15 px-4 py-3 text-sm text-white placeholder-white/60 outline-none ring-1 ring-white/20 focus:ring-white/50" />
@@ -373,12 +378,11 @@ export default function App() {
           <div className="grid gap-10 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
             <div>
               <a href="#top" className="flex items-center gap-2">
-                <span className="grid h-9 w-9 place-items-center rounded-xl bg-green text-white"><Plus size={20} strokeWidth={3} /></span>
-                <span className="font-display text-2xl font-extrabold">VITAL<span className="text-green">IS</span></span>
+                <Wordmark />
               </a>
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate">
-                Tu farmacia digital de confianza. Cuidamos tu salud con productos originales,
-                entrega rápida y farmacéuticos siempre disponibles.
+                Tu farmacia digital. Medicamentos, vitaminas y cuidado personal con entrega a domicilio
+                y acompañamiento farmacéutico (ejemplo de texto de demostración).
               </p>
               <div className="mt-5 space-y-1.5 text-sm text-slate">
                 <p className="flex items-center gap-2"><Phone size={15} className="text-medic" /> 01 8000 VITALIS</p>
@@ -389,7 +393,7 @@ export default function App() {
             {[
               { h: "Comprar", items: ["Medicamentos", "Vitaminas", "Dermocosmética", "Bebé y mamá", "Ofertas"] },
               { h: "Servicios", items: ["Receta digital", "Consulta farmacéutica", "Programa de crónicos", "Domicilio"] },
-              { h: "VITALIS", items: ["Nosotros", "Farmacovigilancia", "Términos", "Privacidad"] },
+              { h: brand.name, items: ["Nosotros", "Farmacovigilancia", "Términos", "Privacidad"] },
             ].map((col) => (
               <div key={col.h}>
                 <h4 className="kicker text-ink/70">{col.h}</h4>
@@ -400,7 +404,7 @@ export default function App() {
             ))}
           </div>
           <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-mist pt-6 text-xs text-slate/70 sm:flex-row">
-            <p>© {new Date().getFullYear()} VITALIS — Prototipo por Abimaru. Solo demostración.</p>
+            <p>© {new Date().getFullYear()} {brand.name} — Prototipo por Abimaru. Solo demostración.</p>
             <p>Hecho con cuidado en Cali, Colombia.</p>
           </div>
         </div>

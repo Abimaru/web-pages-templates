@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   addLine, setQty, countItems, subtotal, deliveryFor, remainingForFreeDelivery, needsPrescription, buildOrderMessage,
-  FREE_DELIVERY_FROM, DELIVERY_FEE, MAX_QTY, whatsappUrl,
+  FREE_DELIVERY_FROM, DELIVERY_FEE, MAX_QTY, whatsappUrl, serviceMessage,
 } from "./cart";
 import { products, getProduct, filterProducts } from "../data/products";
 
@@ -74,5 +74,14 @@ describe("catálogo VITALIS", () => {
     expect(filterProducts(products, "todo", "fiebre").map((p) => p.id)).toEqual(expect.arrayContaining(["acetaminofen", "termometro"]));
     expect(filterProducts(products, "dermo", "ibuprofeno")).toEqual([]);
     expect(filterProducts(products, "todo", "zzz")).toEqual([]);
+  });
+});
+
+describe("marca personalizada en los mensajes", () => {
+  it("usa el nombre de la marca en pedidos y servicios (VITALIS por defecto)", () => {
+    expect(serviceMessage("Domicilio")).toContain("Hola VITALIS");
+    expect(serviceMessage("Domicilio", "Botica Sur")).toContain("Hola Botica Sur");
+    expect(buildOrderMessage([], { name: "A", address: "B" }, "Botica Sur")).toContain("Hola Botica Sur");
+    expect(buildOrderMessage([], { name: "A", address: "B" })).toContain("Hola VITALIS");
   });
 });

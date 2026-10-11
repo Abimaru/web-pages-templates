@@ -1,5 +1,6 @@
+import Wordmark from "./Wordmark";
 import { useEffect, useState } from "react";
-import { Menu, X, Search, ShoppingCart, User, Plus, Truck } from "lucide-react";
+import { Menu, X, Search, ShoppingCart, User, Truck } from "lucide-react";
 
 import type { CategoryId } from "../data/products";
 
@@ -46,12 +47,7 @@ export default function Navbar({ cart = 0, query, onQuery, onCart, onCategory }:
           </button>
 
           <a href="#top" className="flex items-center gap-2">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-green text-white">
-              <Plus size={20} strokeWidth={3} />
-            </span>
-            <span className="font-display text-2xl font-extrabold tracking-tight text-ink">
-              VITAL<span className="text-green">IS</span>
-            </span>
+            <Wordmark />
           </a>
 
           {/* Buscador */}

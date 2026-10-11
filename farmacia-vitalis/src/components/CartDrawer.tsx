@@ -1,3 +1,4 @@
+import { useBrand } from "../lib/brandStore";
 import { useState } from "react";
 import { X, Minus, Plus, Trash2, ShoppingCart, MessageCircle, Truck, FileText, CalendarClock } from "lucide-react";
 import { getProduct } from "../data/products";
@@ -31,7 +32,8 @@ export default function CartDrawer({ open, cart, onClose, onQty, onShop }: Props
   const missing = remainingForFreeDelivery(sub);
   const progress = Math.min(100, (sub / FREE_DELIVERY_FROM) * 100);
   const rx = needsPrescription(cart);
-  const message = buildOrderMessage(cart, { name, address, notes, recurring });
+  const brand = useBrand();
+  const message = buildOrderMessage(cart, { name, address, notes, recurring }, brand.name);
   const canOrder = cart.length > 0 && name.trim() !== "" && address.trim() !== "" && (!rx || rxOk);
   const hint = !name.trim() ? "Escribe tu nombre para pedir" : !address.trim() ? "Escribe tu dirección para pedir" : "Confirma el envío de tu fórmula";
 
