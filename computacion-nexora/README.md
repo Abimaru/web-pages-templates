@@ -17,6 +17,7 @@ Abre http://localhost:3000
 - **Marquee** de servicios con máscara de desvanecido.
 - **Productos** (PC gamer, laptops, monitores, componentes, periféricos, almacenamiento).
 - **Arma tu PC** con configuraciones base de un clic (Oficina, Gamer, Creador, Workstation), estimado en vivo y **cotización por WhatsApp** con la build completa (datos y reglas en `app/lib/build.ts`, con pruebas). En la demo no hay número (`STORE_WHATSAPP` vacío): WhatsApp deja elegir el chat; en una tienda real va su número.
+- **Barra fija en móvil** en el configurador ("Tu configuración · total · Cotizar"): sigue el total en vivo, aparece mientras el resumen no está en pantalla y al tocarla lleva al resumen y enfoca el nombre. Se apila sobre el banner de demo con `--demo-banner-h`.
 - **Soporte técnico** (mantenimiento, recuperación de datos, redes, seguridad, tuning, remoto).
 - **Por qué NEXORA** con un núcleo animado de **órbitas** alrededor de una CPU.
 - Testimonios + CTA de contacto. `Reveal on scroll` y respeto a `prefers-reduced-motion`.
