@@ -68,7 +68,7 @@ export default function Cartera() {
               <div className="mt-4 space-y-1.5 text-sm">
                 <div className="flex justify-between"><span className="text-muted">Tasa ref. VíaNova</span><span className="font-medium">{formatPct(viaRate, 2)}</span></div>
                 <div className="flex items-center justify-between"><span className="text-muted">Diferencia mensual</span><span className={`flex items-center gap-1 font-semibold ${ahorroMensual ? "text-mint" : "text-[#f87171]"}`}>{ahorroMensual ? <ArrowDown size={13} /> : <ArrowUp size={13} />} {formatCOP(Math.abs(r.monthlyDiff))}</span></div>
-                <div className="flex items-center justify-between"><span className="text-muted">Diferencia total</span><span className={`flex items-center gap-1 font-semibold ${ahorroTotal ? "text-mint" : "text-[#f87171]"}`}>{ahorroTotal ? "Ahorras" : "Cuesta más"} {formatCOP(Math.abs(r.totalDiff))}</span></div>
+                <div className="flex items-center justify-between"><span className="text-muted">Diferencia total</span><span className={`flex items-center gap-1 font-semibold ${ahorroTotal ? "text-mint" : "text-[#f87171]"}`}>{ahorroTotal ? "Diferencia a tu favor" : "Diferencia en contra"} {formatCOP(Math.abs(r.totalDiff))}</span></div>
               </div>
               <a href="#solicitud" className="btn btn-cobre btn-sm mt-auto pt-0"><TrendingUp size={15} /> Evaluar mi crédito <ArrowRight size={14} /></a>
             </div>
