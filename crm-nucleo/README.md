@@ -11,6 +11,16 @@ npm run dev
 
 Abre http://localhost:5173
 
+## Funciones interactivas (sin backend)
+
+La demo ya no tiene controles decorativos: los datos viven en un estado en memoria (`src/store/crmStore.tsx`, lógica pura en `src/lib/crmState.ts` con pruebas) y se reinician al recargar.
+
+- **Nuevo** (barra superior): crea un contacto, una tarea o un negocio con validación; abre en el tipo de la vista actual y deja constancia en la actividad reciente.
+- **Búsqueda global** en la barra superior: lleva a Contactos y filtra por nombre, empresa o correo.
+- **Exportar CSV**: descarga exactamente lo que se ve (filtros incluidos), con BOM para Excel y neutralización de fórmulas (`=`, `+`, `-`, `@`) contra *CSV injection* (`src/lib/csv.ts`).
+- **Campana**: muestra las tareas pendientes y lleva a Tareas; el teléfono de cada contacto es un enlace `tel:`.
+- El Dashboard, el tablero de negocios y las tareas leen del mismo estado, así que todo se refleja al instante.
+
 ## Qué incluye
 
 - **Shell** con sidebar (índigo) y topbar; navegación por vistas sin recargar.

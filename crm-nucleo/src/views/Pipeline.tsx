@@ -1,6 +1,7 @@
 import { useState, type DragEvent } from "react";
 import { GripVertical, Building2 } from "lucide-react";
-import { deals as seed, stages, moneyShort, money, type Deal, type Stage } from "../data/crm";
+import { stages, moneyShort, money, type Stage } from "../data/crm";
+import { useCrm } from "../store/crmStore";
 
 const stageColor: Record<Stage, string> = {
   Prospecto: "#94a3b8",
@@ -17,12 +18,12 @@ const isTouch =
   (navigator.maxTouchPoints > 0 || "ontouchstart" in window);
 
 export default function Pipeline() {
-  const [deals, setDeals] = useState<Deal[]>(seed);
+  const { deals, moveDeal } = useCrm();
   const [dragId, setDragId] = useState<number | null>(null);
   const [overStage, setOverStage] = useState<Stage | null>(null);
 
   const onDrop = (stage: Stage) => {
-    if (dragId != null) setDeals((ds) => ds.map((d) => (d.id === dragId ? { ...d, stage } : d)));
+    if (dragId != null) moveDeal(dragId, stage);
     setDragId(null);
     setOverStage(null);
   };

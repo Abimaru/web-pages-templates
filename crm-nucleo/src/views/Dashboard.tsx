@@ -1,9 +1,11 @@
 import { DollarSign, Briefcase, Target, UserPlus, ArrowUpRight } from "lucide-react";
 import { KpiCard } from "../components/ui";
 import { LineAreaChart, DonutChart } from "../components/Charts";
-import { revenueSeries, sourceSplit, activities, deals, money } from "../data/crm";
+import { revenueSeries, sourceSplit, money } from "../data/crm";
+import { useCrm } from "../store/crmStore";
 
 export default function Dashboard() {
+  const { deals, activities } = useCrm();
   const abiertos = deals.filter((d) => d.stage !== "Ganado").length;
   const topDeals = [...deals].sort((a, b) => b.value - a.value).slice(0, 4);
 
