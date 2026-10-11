@@ -1,5 +1,6 @@
 "use client";
 
+import BrandMark, { BrandName } from "@/app/BrandMark";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Gamepad2, Menu, X, Search, ShoppingCart } from "lucide-react";
@@ -35,12 +36,7 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5">
         <Link href="/" className="group flex items-center gap-2.5">
-          <span className="relative grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-neon-cyan to-neon-purple text-void shadow-[0_0_18px_rgba(34,227,255,0.6)]">
-            <Gamepad2 size={22} strokeWidth={2.5} />
-          </span>
-          <span className="font-display text-xl font-extrabold tracking-widest text-white">
-            PIXEL<span className="neon-cyan">VAULT</span>
-          </span>
+          <BrandMark />
         </Link>
 
         <ul className="hidden items-center gap-8 lg:flex">

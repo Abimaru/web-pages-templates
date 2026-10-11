@@ -63,7 +63,7 @@ export default function GameCard({ game }: { game: Game }) {
         <button
           onClick={onAdd}
           aria-label={`Añadir ${game.title} al carrito`}
-          className="absolute bottom-2 right-2 z-10 grid h-10 w-10 place-items-center rounded-lg bg-neon-cyan text-void shadow-[0_0_16px_rgba(34,227,255,0.6)] transition-all duration-300 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 md:focus-visible:translate-y-0 md:focus-visible:opacity-100"
+          className="absolute bottom-2 right-2 z-10 grid h-10 w-10 place-items-center rounded-lg bg-neon-cyan text-void shadow-[0_0_16px_rgba(var(--neon-rgb),0.6)] transition-all duration-300 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 md:focus-visible:translate-y-0 md:focus-visible:opacity-100"
         >
           <Plus size={18} strokeWidth={3} />
         </button>

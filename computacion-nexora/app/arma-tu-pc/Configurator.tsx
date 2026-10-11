@@ -1,5 +1,6 @@
 "use client";
 
+import { useBrand } from "@/app/lib/brandStore";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Cpu, Gauge, HardDrive, MemoryStick, Monitor, Snowflake, MessageCircle, Sparkles, ArrowRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -17,7 +18,8 @@ export default function Configurator() {
   const [name, setName] = useState("");
 
   const total = useMemo(() => totalFor(selected), [selected]);
-  const message = useMemo(() => buildQuoteMessage(selected, name), [selected, name]);
+  const brand = useBrand();
+  const message = useMemo(() => buildQuoteMessage(selected, name, brand.name), [selected, name, brand.name]);
   const canSend = name.trim().length > 0;
 
   // Barra fija (solo móvil): visible mientras el resumen no está en pantalla.
@@ -79,7 +81,7 @@ export default function Configurator() {
                       onClick={() => setSelected((s) => ({ ...s, [cat.key]: i }))}
                       className={`flex items-center justify-between rounded-xl border p-4 text-left transition ${
                         active
-                          ? "border-electric bg-electric/10 shadow-[0_0_0_1px_rgba(56,189,248,0.3)]"
+                          ? "border-electric bg-electric/10 shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.3)]"
                           : "border-electric/15 bg-panel/40 hover:border-electric/40"
                       }`}
                     >
@@ -155,7 +157,7 @@ export default function Configurator() {
           <button
             onClick={goToSummary}
             aria-label={`Tu configuración: ${formatCOP(total)}. Ir al resumen para cotizar`}
-            className="flex w-full items-center justify-between rounded-xl border border-electric/50 bg-panel/95 px-5 py-3.5 text-white shadow-[0_0_24px_rgba(56,189,248,0.25)] backdrop-blur transition active:scale-[.99]"
+            className="flex w-full items-center justify-between rounded-xl border border-electric/50 bg-panel/95 px-5 py-3.5 text-white shadow-[0_0_24px_rgba(var(--accent-rgb),0.25)] backdrop-blur transition active:scale-[.99]"
           >
             <span className="text-left">
               <span className="block text-[11px] uppercase tracking-widest text-white/50">Tu configuración</span>

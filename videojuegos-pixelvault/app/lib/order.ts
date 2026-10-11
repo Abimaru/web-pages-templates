@@ -16,9 +16,9 @@ export const orderTotal = (lines: OrderLine[]) => lines.reduce((n, l) => n + l.g
 /** Número de la tienda real. Vacío en la demo: WhatsApp deja elegir el chat. */
 export const STORE_WHATSAPP = "";
 
-export function buildOrderMessage(lines: OrderLine[], c: Customer): string {
+export function buildOrderMessage(lines: OrderLine[], c: Customer, brandName = "PIXELVAULT"): string {
   return [
-    "Hola PIXELVAULT, quiero hacer este pedido:",
+    `Hola ${brandName}, quiero hacer este pedido:`,
     "",
     ...lines.map((l) => `• ${l.qty} × ${l.game.title} (${platformOf(l)}) — ${formatCOP(l.game.price * l.qty)}`),
     "",

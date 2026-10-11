@@ -28,3 +28,7 @@ Abre http://localhost:3000
 - Tipografías: `Space Grotesk` (display), `Inter` (texto), `JetBrains Mono` (labels tipo código).
 - Mensaje de marca ligado a la guía de Abimaru: *"tecnología con conciencia"*, la técnica al servicio de las personas.
 - Sin logos de marcas reales para evitar temas de marca registrada; las imágenes de producto son iconos/gradientes sustituibles por fotos reales en `public/`.
+
+## Pruébalo con tu marca
+
+El prospecto cambia nombre, color y logo en vivo (todo en su navegador; el logo no se sube ni viaja en el enlace) y copia un enlace `?marca=&color=` para compartir. Lógica pura y probada en `app/lib/brand.ts` (el color se aclara si no se lee sobre el fondo oscuro); estado en `app/lib/brandStore.ts`; panel en `app/BrandStudio.tsx`. El acento vive en un `@theme` **no** `inline` de `globals.css` y los brillos usan `rgba(var(--…-rgb), …)` para seguir al color.

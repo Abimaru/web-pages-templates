@@ -1,3 +1,4 @@
+import BrandStudio from "@/app/BrandStudio";
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import DemoBanner from "./DemoBanner";
@@ -72,6 +73,7 @@ export default function RootLayout({
         <ServiceWorker />
         <AnalyticsLoader demo="nexora" />
         {children}
+        <BrandStudio />
         <DemoBanner
           disclaimer="Productos, precios, soporte y cifras mostrados son ejemplos ilustrativos."
           waMessage="Hola, vi la demo de NEXORA (computación y soporte) de Estudio Abimaru. Quisiera una página así para mi negocio."

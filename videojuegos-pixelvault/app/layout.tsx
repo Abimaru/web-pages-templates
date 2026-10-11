@@ -1,3 +1,4 @@
+import BrandStudio from "@/app/BrandStudio";
 import type { Metadata, Viewport } from "next";
 import { Orbitron, Rajdhani, Press_Start_2P } from "next/font/google";
 import { CartProvider } from "@/app/CartContext";
@@ -79,6 +80,7 @@ export default function RootLayout({
           {children}
           <CartBar />
           <CartDrawer />
+          <BrandStudio />
         </CartProvider>
         <DemoBanner
           disclaimer="Catálogo, carrito, precios y marcas mencionadas son ejemplos ilustrativos."
