@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Orbitron, Rajdhani, Press_Start_2P } from "next/font/google";
 import { CartProvider } from "@/app/CartContext";
 import CartDrawer from "@/app/CartDrawer";
+import CartBar from "@/app/CartBar";
 import DemoBanner from "@/app/DemoBanner";
 import "./globals.css";
 
@@ -68,6 +69,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-void">
         <CartProvider>
           {children}
+          <CartBar />
           <CartDrawer />
         </CartProvider>
         <DemoBanner
