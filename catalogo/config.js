@@ -149,10 +149,10 @@ window.SITE_CONFIG = {
   // ("¿Me regalas una frase sobre cómo fue trabajar juntos? Puedo publicarla con tu nombre").
   testimonials: [],
 
-  // Analítica SIN cookies, apagada por defecto. Para activarla elige UNO:
-  //   Plausible: { provider: "plausible", id: "tudominio.com" }       (plausible.io o autoalojado con src)
-  //   Umami:     { provider: "umami", id: "<website-id>", src: "https://cloud.umami.is/script.js" }
-  // Con GitHub Pages el "dominio" es abimaru.github.io (o tu dominio propio cuando lo tengas).
-  // No se activa en localhost ni si el visitante envía "No rastrear". Ver catalogo/analytics.js.
-  analytics: { provider: "", id: "" },
+  // Analítica SIN cookies — Umami (elegido). Queda APAGADA hasta que pegues tu Website ID en `id`:
+  //   1) Crea el sitio en https://cloud.umami.is con el dominio abimaru.github.io (o el propio, cuando lo tengas).
+  //   2) Copia el "Website ID" (un UUID) y pégalo en `id`. Con eso se enciende la landing y las 8 demos.
+  // Si prefieres Plausible: { provider: "plausible", id: "tu-dominio" }. No se activa en localhost ni con "No rastrear".
+  // Ver catalogo/analytics.js y el README.
+  analytics: { provider: "umami", id: "", src: "https://cloud.umami.is/script.js" },
 };
