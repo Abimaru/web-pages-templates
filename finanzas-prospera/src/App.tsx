@@ -28,35 +28,37 @@ import CreditSimulator from "./components/CreditSimulator";
 import SavingsSimulator from "./components/SavingsSimulator";
 import ScoreChecker from "./components/ScoreChecker";
 import { images } from "./data/images";
+import { demoFacts } from "./lib/finance";
 
-const perks = ["SIMULADORES EN VIVO", "EXPERIENCIA 100% DIGITAL", "FLUJO DE SOLICITUD (DEMO)", "PROTOTIPO INTERACTIVO", "VALORES ILUSTRATIVOS"];
+const perks = ["SIMULADORES EN VIVO", "EXPERIENCIA EN LÍNEA (DEMO)", "FLUJO DE SOLICITUD (DEMO)", "PROTOTIPO INTERACTIVO", "VALORES ILUSTRATIVOS"];
 
 type Product = { icon: LucideIcon; name: string; desc: string; highlight: string; gold?: boolean };
 const productos: Product[] = [
-  { icon: Banknote, name: "Crédito de libre inversión", desc: "Cumple tus metas con cuota fija y plazos cómodos.", highlight: "Hasta $50 millones" },
-  { icon: Zap, name: "Crédito exprés", desc: "Para imprevistos: solicítalo y recíbelo el mismo día.", highlight: "Aprobación en 10 min" },
-  { icon: Wallet, name: "Cuenta de ahorro", desc: "Tu dinero disponible siempre, sin costos ocultos.", highlight: "$0 cuota de manejo" },
-  { icon: TrendingUp, name: "Cuenta Progreso", desc: "Deja tu dinero a plazo y gana rendimientos crecientes.", highlight: "Hasta 13,75% E.A.", gold: true },
+  { icon: Banknote, name: "Crédito de libre inversión", desc: "Cumple tus metas con cuota fija y plazos que puedes comparar.", highlight: "Simula montos hasta $50 millones" },
+  { icon: Zap, name: "Crédito exprés", desc: "Pensado para imprevistos, con un proceso ágil y en línea. Sujeto a estudio.", highlight: "Proceso ágil y en línea" },
+  { icon: Wallet, name: "Cuenta de ahorro", desc: "Tu dinero disponible, con las condiciones explicadas antes de abrir.", highlight: "Cuota de manejo: ver condiciones" },
+  { icon: TrendingUp, name: "Cuenta Progreso", desc: "Deja tu dinero a plazo y gana rendimientos crecientes.", highlight: "Tasa de ejemplo hasta 13,75% E.A.", gold: true },
 ];
 
 const pasos = [
-  { icon: Send, title: "Solicita en línea", desc: "Llena el formulario en 2 minutos, desde tu celular." },
-  { icon: ShieldCheck, title: "Validamos tu score", desc: "Consultamos tu historial al instante y sin costo." },
-  { icon: FileSignature, title: "Firma digital", desc: "Acepta tu oferta con firma electrónica segura." },
-  { icon: Banknote, title: "Recibe el desembolso", desc: "El dinero llega a tu cuenta el mismo día." },
+  { icon: Send, title: "Solicita en línea", desc: "Un formulario corto, desde tu celular." },
+  { icon: ShieldCheck, title: "Revisamos tu perfil", desc: "Analizamos tu solicitud y, solo con tu autorización, consultamos tu historial." },
+  { icon: FileSignature, title: "Firma digital", desc: "Si te interesa la oferta, la aceptas con firma electrónica." },
+  { icon: Banknote, title: "Recibe el desembolso", desc: "Si tu solicitud es aprobada, te informamos cuándo llega el dinero a tu cuenta." },
 ];
 
+const facts = demoFacts();
 const stats = [
-  { render: () => <><Counter to={120} suffix="K+" /></>, label: "clientes confían en nosotros" },
-  { render: () => <><span>$</span><Counter to={850} suffix=" mil M" /></>, label: "desembolsados" },
-  { render: () => <><Counter to={10} suffix=" min" /></>, label: "aprobación promedio" },
-  { render: () => <><Counter to={4.9} decimals={1} suffix="/5" /></>, label: "calificación de clientes" },
+  { render: () => <><span>$</span><Counter to={facts.maxCreditMillions} suffix=" millones" /></>, label: "monto máximo en el simulador de crédito" },
+  { render: () => <><Counter to={facts.maxCreditMonths} suffix=" meses" /></>, label: "plazo máximo para simular tu cuota" },
+  { render: () => <><Counter to={facts.savingsTerms} /></>, label: "plazos de ahorro para comparar" },
+  { render: () => <><Counter to={facts.maxSavingsEA} decimals={2} suffix="%" /></>, label: "tasa E.A. máxima (de ejemplo) en ahorro" },
 ];
 
 const testimonios = [
-  { name: "Andrea C.", role: "Emprendedora", img: images.testimonios[0], text: "Necesitaba capital para mi negocio y en 8 minutos tenía el desembolso. Salvaron mi temporada alta." },
-  { name: "Jorge M.", role: "Consolidó sus deudas", img: images.testimonios[1], text: "Junté todas mis deudas en un solo crédito con cuota más baja. Por fin respiro y duermo tranquilo." },
-  { name: "Paola R.", role: "Cuenta Progreso", img: images.testimonios[2], text: "Mi Cuenta Progreso rindió más que el banco de siempre, y sin letra pequeña ni sorpresas." },
+  { name: "Andrea C.", role: "Emprendedora", img: images.testimonios[0], text: "Necesitaba capital para mi negocio y el proceso en línea fue claro. Pude simular la cuota antes de decidir y planear mi temporada alta." },
+  { name: "Jorge M.", role: "Consolidó sus deudas", img: images.testimonios[1], text: "Simulé juntar mis deudas en un solo crédito y ver cuánto pagaría cada mes me ayudó a decidir con tranquilidad." },
+  { name: "Paola R.", role: "Cuenta Progreso", img: images.testimonios[2], text: "Me gustó poder ver cuánto crecería mi dinero según el plazo, con las condiciones claras desde el principio." },
 ];
 
 export default function App() {
@@ -80,17 +82,17 @@ export default function App() {
               Resuelve tu presente,<br /><span className="text-forest">haz crecer</span> tu futuro
             </h1>
             <p className="mt-5 max-w-lg text-lg leading-relaxed text-slate">
-              Créditos que se aprueban en minutos y una Cuenta Progreso que pone tu dinero
-              a trabajar. Sin filas, sin letra pequeña, con gente que te explica todo.
+              Simula tu crédito o tu ahorro y mira, antes de decidir, cuánto pagarías o cuánto
+              crecería tu dinero. Condiciones claras y gente que te explica todo.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <a href="#simuladores" className="btn-primary">Simular ahora <ArrowRight size={18} /></a>
               <a href="#productos" className="btn-ghost">Ver productos</a>
             </div>
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate">
-              <span className="flex items-center gap-2"><Clock size={17} className="text-green" /> Aprobación en 10 min</span>
-              <span className="flex items-center gap-2"><ShieldCheck size={17} className="text-green" /> Datos protegidos</span>
-              <span className="flex items-center gap-2"><CheckCircle2 size={17} className="text-green" /> 100% digital</span>
+              <span className="flex items-center gap-2"><Clock size={17} className="text-green" /> Simulación en segundos</span>
+              <span className="flex items-center gap-2"><ShieldCheck size={17} className="text-green" /> Tus datos, con tu autorización</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={17} className="text-green" /> Proceso en línea</span>
             </div>
           </Reveal>
 
@@ -99,7 +101,7 @@ export default function App() {
               <img src={images.hero} alt="Persona feliz gestionando sus finanzas" className="h-[440px] w-full object-cover" />
             </div>
             <div className="animate-float absolute -left-5 bottom-10 w-52 rounded-2xl bg-white p-4 shadow-xl">
-              <p className="text-xs text-slate">Tu dinero creció</p>
+              <p className="text-xs text-slate">Ejemplo de crecimiento</p>
               <p className="font-display text-2xl font-extrabold text-forest">+$1.375.000</p>
               <div className="mt-2 flex items-end gap-1">
                 {[30, 45, 40, 60, 72, 90].map((h, i) => (
@@ -174,12 +176,12 @@ export default function App() {
               Descubre tu <span className="text-forest">score</span> y a qué puedes acceder
             </h2>
             <p className="mt-5 max-w-md leading-relaxed text-slate">
-              Tu score crediticio abre puertas. Consúltalo gratis y sin afectar tu
-              historial, entiende qué lo mejora y accede a ofertas preaprobadas hechas a tu
-              medida.
+              Tu score crediticio resume tu perfil de crédito. Aquí lo simulas sin consultar ninguna
+              central de riesgo, entiendes qué suele mejorarlo y exploras qué productos podrían
+              encajar contigo.
             </p>
             <ul className="mt-6 space-y-3">
-              {["Consulta gratis e ilimitada", "Consejos para subir tu puntaje", "Ofertas preaprobadas según tu perfil"].map((t) => (
+              {["Simulación gratuita e ilimitada", "Ideas generales para mejorar tu puntaje", "Orientación sobre qué productos podrían encajar"].map((t) => (
                 <li key={t} className="flex items-center gap-3 text-slate"><CheckCircle2 size={18} className="text-green" /> {t}</li>
               ))}
             </ul>
@@ -192,7 +194,7 @@ export default function App() {
       <section id="como" className="border-y border-mist bg-paper py-20">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal className="mb-14 text-center">
-            <span className="kicker text-forest">Rápido y sin filas</span>
+            <span className="kicker text-forest">Paso a paso</span>
             <h2 className="mt-3 font-display text-4xl font-bold sm:text-5xl">Tu crédito en 4 pasos</h2>
           </Reveal>
           <div className="grid gap-6 md:grid-cols-4">
@@ -222,7 +224,7 @@ export default function App() {
             </Reveal>
           ))}
         </div>
-        <p className="mt-4 text-center text-xs text-slate/70">Cifras ilustrativas de demostración — no representan clientes, desembolsos ni calificaciones reales.</p>
+        <p className="mt-4 text-center text-xs text-slate/70">Cifras tomadas de los simuladores de esta demo: no son métricas de clientes, desembolsos ni calificaciones.</p>
       </section>
 
       {/* ===================== TESTIMONIOS ===================== */}
@@ -261,7 +263,7 @@ export default function App() {
             <div>
               <span className="kicker text-gold-light">Empieza hoy</span>
               <h2 className="mt-3 font-display text-4xl font-bold leading-tight sm:text-5xl">Tu próxima meta está a un clic</h2>
-              <p className="mt-4 max-w-lg text-white/80">Abre tu cuenta o solicita tu crédito en minutos. Sin filas, sin papeleo, con acompañamiento humano.</p>
+              <p className="mt-4 max-w-lg text-white/80">Abre tu cuenta o solicita tu crédito desde el celular, con acompañamiento humano en cada paso.</p>
               <div className="mt-7 flex flex-wrap gap-4">
                 <a href="#productos" className="btn-gold">Abrir cuenta</a>
                 <a href="#simuladores" className="rounded-lg border border-white/30 px-6 py-3 font-display text-sm font-semibold transition hover:bg-white/10">Simular crédito</a>
