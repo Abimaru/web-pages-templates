@@ -5,6 +5,7 @@ import CartDrawer from "@/app/CartDrawer";
 import CartBar from "@/app/CartBar";
 import DemoBanner from "@/app/DemoBanner";
 import "./globals.css";
+import ServiceWorker from "@/app/ServiceWorker";
 
 export const viewport: Viewport = { themeColor: "#06040f" };
 
@@ -32,7 +33,11 @@ const pressStart = Press_Start_2P({
 const SITE = "https://abimaru.github.io/web-pages-templates/pixelvault/";
 const OG = "https://abimaru.github.io/web-pages-templates/pixelvault/og.jpg";
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export const metadata: Metadata = {
+  manifest: `${BASE_PATH}/manifest.webmanifest`,
+  icons: { apple: `${BASE_PATH}/apple-touch-icon.png` },
   metadataBase: new URL(SITE),
   title: "PIXELVAULT — Videojuegos, consolas y cultura gamer",
   description:
@@ -67,6 +72,7 @@ export default function RootLayout({
       className={`${orbitron.variable} ${rajdhani.variable} ${pressStart.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-void">
+        <ServiceWorker />
         <CartProvider>
           {children}
           <CartBar />
