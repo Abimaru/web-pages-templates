@@ -23,9 +23,10 @@ import Navbar from "./components/Navbar";
 import DemoBanner from "./components/DemoBanner";
 import Reveal from "./components/Reveal";
 import CartDrawer from "./components/CartDrawer";
+import CartBar from "./components/CartBar";
 import { images } from "./data/images";
 import { categories, products, filterProducts, type CategoryId, type Filter } from "./data/products";
-import { addLine, setQty, countItems, formatCOP, serviceMessage, whatsappUrl, type Line } from "./lib/cart";
+import { addLine, setQty, countItems, subtotal, needsPrescription, formatCOP, serviceMessage, whatsappUrl, type Line } from "./lib/cart";
 
 const perks = ["CATÁLOGO POR CATEGORÍAS", "BUSCADOR DE PRODUCTOS", "FLUJO DE RECETA (DEMO)", "PEDIDO POR WHATSAPP", "PROTOTIPO INTERACTIVO"];
 
@@ -405,6 +406,7 @@ export default function App() {
         </div>
       </footer>
 
+      {cart.length > 0 && !cartOpen && <CartBar count={countItems(cart)} total={subtotal(cart)} hasRx={needsPrescription(cart)} onOpen={() => setCartOpen(true)} />}
       <CartDrawer open={cartOpen} cart={cart} onClose={closeCart} onQty={changeQty} onShop={goProducts} />
     </main>
   );
