@@ -47,7 +47,7 @@ const retro = [
 ];
 
 const testimonials = [
-  { name: "Camilo R.", role: "Gamer competitivo", text: "Me repararon el drift del control en 30 minutos y de paso me llevé un combo. Estos manes saben.", emoji: "🎯" },
+  { name: "Camilo R.", role: "Gamer competitivo", text: "Me revisaron el drift del control y de paso me llevé un combo. Estos manes saben.", emoji: "🎯" },
   { name: "Valentina G.", role: "Mamá gamer", text: "Compré la consola de mi hijo aquí y me asesoraron con control parental incluido. 10/10.", emoji: "💜" },
   { name: "Andrés M.", role: "Nostálgico de los 90", text: "Encontré mi SNES con los cartuchos de la infancia. Sentí que volví a tener 10 años.", emoji: "🕹️" },
 ];
@@ -98,9 +98,9 @@ export default function Home() {
 
             <div className="mt-10 grid max-w-md grid-cols-3 gap-4">
               {[
-                { n: "12K+", l: "Gamers felices" },
-                { n: "800+", l: "Títulos en stock" },
-                { n: "24/7", l: "Soporte online" },
+                { n: String(new Set(games.flatMap((g) => g.platforms)).size), l: "Plataformas" },
+                { n: String(games.length), l: "Títulos en el catálogo demo" },
+                { n: String(new Set(games.map((g) => g.genre)).size), l: "Géneros" },
               ].map((s) => (
                 <div key={s.l} className="text-center">
                   <p className="font-display text-3xl font-extrabold text-neon-cyan">{s.n}</p>

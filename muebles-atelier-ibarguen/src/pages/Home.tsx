@@ -43,9 +43,9 @@ const proceso = [
 ];
 
 const valores = [
-  { icon: Leaf, title: "Madera responsable", desc: "Origen certificado y acabados de bajo impacto." },
+  { icon: Leaf, title: "Madera responsable", desc: "Maderas de proveedores con origen documentado y acabados de bajo impacto (ejemplo)." },
   { icon: Ruler, title: "Cien por ciento a la medida", desc: "Cada pieza nace del espacio real donde vivirá." },
-  { icon: ShieldCheck, title: "Garantía de por vida", desc: "Respaldamos la estructura de cada mueble que firmamos." },
+  { icon: ShieldCheck, title: "Garantía por escrito", desc: "Cada mueble se entrega con sus condiciones de garantía definidas por escrito (ejemplo)." },
   { icon: Truck, title: "Entrega e instalación", desc: "Llevamos y montamos con cuidado de relojero." },
 ];
 
@@ -98,9 +98,9 @@ export default function Home() {
             </div>
             <div className="mt-12 flex items-center gap-8">
               {[
-                { n: "35+", l: "años de oficio" },
-                { n: "1.200+", l: "piezas firmadas" },
-                { n: "100%", l: "a la medida" },
+                { n: "1:1", l: "diseño contigo" },
+                { n: String(projects.length), l: "piezas en el portafolio demo" },
+                { n: "A medida", l: "cada pieza" },
               ].map((s) => (
                 <div key={s.l}>
                   <p className="font-display text-4xl font-semibold text-espresso">{s.n}</p>
@@ -317,7 +317,7 @@ export default function Home() {
                 Cuéntanos qué imaginas.<br />Lo hacemos realidad en madera.
               </h2>
               <p className="mt-5 max-w-md text-ivory/75">
-                Diseño sin costo para tu proyecto a la medida. Respondemos en menos de 24 horas.
+                Diseño sin costo para tu proyecto a la medida. Te respondemos por WhatsApp lo antes posible.
               </p>
               <ul className="mt-8 space-y-3 text-ivory/80">
                 <li className="flex items-center gap-3"><Phone size={18} className="text-oak" /> +57 300 000 0000</li>

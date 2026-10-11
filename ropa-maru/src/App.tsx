@@ -27,13 +27,13 @@ import { images } from "./data/images";
 import { categories, products, getProduct, discountPct, type CategoryId } from "./data/products";
 import { addLine, setQty, countItems, subtotal, formatCOP, type BagLine } from "./lib/bag";
 
-const perks = ["ENVÍO GRATIS DESDE $150.000", "CAMBIOS EN 30 DÍAS", "PAGO SEGURO", "3 CUOTAS SIN INTERÉS", "NUEVA COLECCIÓN CADA MES"];
+const perks = ["ENVÍO GRATIS DESDE $150.000", "CAMBIOS EN 30 DÍAS", "PAGO EN LÍNEA (EJEMPLO)", "CUOTAS (EJEMPLO)", "NUEVA COLECCIÓN CADA MES"];
 
 type Filter = "todo" | "favoritos" | CategoryId;
 type Sort = "relevancia" | "menor" | "mayor";
 
 const testimonios = [
-  { name: "Daniela V.", text: "La calidad me sorprendió: telas hermosas y el envío llegó en 2 días. Ya soy clienta fiel.", stars: 5 },
+  { name: "Daniela V.", text: "La calidad me sorprendió: telas hermosas y un empaque muy cuidado. Ya soy clienta fiel.", stars: 5 },
   { name: "Carlos M.", text: "Encontré todo para mi look de oficina en un solo lugar. Asesoría de tallas impecable.", stars: 5 },
   { name: "Familia Ríos", text: "Vestimos a los tres niños para el colegio. Cómodo, bonito y a buen precio.", stars: 5 },
 ];
@@ -329,7 +329,7 @@ export default function App() {
           {[
             { icon: Truck, t: "Envío a todo el país", d: "Gratis desde $150.000" },
             { icon: RefreshCcw, t: "Cambios fáciles", d: "30 días para decidir" },
-            { icon: ShieldCheck, t: "Pago 100% seguro", d: "Tarjeta, PSE y contraentrega" },
+            { icon: ShieldCheck, t: "Medios de pago (ejemplo)", d: "Tarjeta, PSE y contraentrega" },
             { icon: Sparkles, t: "Nuevos ingresos", d: "Colección cada mes" },
           ].map((v, i) => (
             <Reveal key={v.t} delay={i * 70}>

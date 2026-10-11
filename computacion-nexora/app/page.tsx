@@ -22,12 +22,13 @@ import Navbar from "@/app/Navbar";
 import Reveal from "@/app/Reveal";
 import Terminal from "@/app/Terminal";
 import { services } from "@/app/lib/support";
+import { categories } from "@/app/lib/build";
 
 const products = [
   { icon: Cpu, name: "PC Gamer NEXORA", spec: "RTX · Ryzen · refrigeración líquida", price: "desde $3.900.000", tag: "TOP", color: "#38bdf8" },
   { icon: Laptop, name: "Laptops", spec: "Ultrabooks, workstations y gaming", price: "desde $2.100.000", color: "#22d3ee" },
   { icon: Monitor, name: "Monitores", spec: "144Hz · 4K · IPS · ultrawide", price: "desde $650.000", color: "#6366f1" },
-  { icon: MemoryStick, name: "Componentes", spec: "GPU, RAM, tarjetas madre, fuentes", price: "precios mayoristas", tag: "STOCK", color: "#2dd4bf" },
+  { icon: MemoryStick, name: "Componentes", spec: "GPU, RAM, tarjetas madre, fuentes", price: "consulta precios", tag: "STOCK", color: "#2dd4bf" },
   { icon: Keyboard, name: "Periféricos", spec: "Mecánicos, mouse, audio, streaming", price: "desde $90.000", color: "#38bdf8" },
   { icon: HardDrive, name: "Almacenamiento", spec: "SSD NVMe, discos y respaldo NAS", price: "desde $180.000", color: "#22d3ee" },
 ];
@@ -36,14 +37,14 @@ const steps = [
   { icon: MousePointerClick, title: "Elige tu propósito", desc: "Gaming, diseño, edición, oficina o servidor. Nos dices para qué y con cuánto." },
   { icon: Cog, title: "Configuramos a la medida", desc: "Seleccionamos cada componente balanceando rendimiento, futuro y presupuesto." },
   { icon: Settings2, title: "Ensamblamos y probamos", desc: "Cableado limpio, stress test, optimización térmica y benchmarks reales." },
-  { icon: Rocket, title: "Listo para volar", desc: "Entrega con sistema optimizado, garantía y soporte de por vida del equipo." },
+  { icon: Rocket, title: "Listo para volar", desc: "Entrega con sistema optimizado, garantía y acompañamiento posventa (condiciones según el plan)." },
 ];
 
 const why = [
-  { n: "10+", l: "años a la vanguardia" },
-  { n: "5.000+", l: "equipos ensamblados" },
-  { n: "98%", l: "diagnósticos el mismo día" },
-  { n: "∞", l: "soporte por vida del equipo" },
+  { n: String(services.length), l: "servicios de soporte" },
+  { n: String(categories.length), l: "componentes a elegir en tu PC" },
+  { n: "A la medida", l: "cada configuración" },
+  { n: "Por escrito", l: "garantía y condiciones" },
 ];
 
 const testimonials = [
@@ -52,7 +53,7 @@ const testimonials = [
   { name: "Julián D.", role: "Streamer", text: "Recuperaron 4 años de contenido de un SSD muerto. Les debo la vida (digital).", emoji: "💾" },
 ];
 
-const marquee = ["ENSAMBLE A LA MEDIDA", "SOPORTE 24/7", "RECUPERACIÓN DE DATOS", "REDES EMPRESARIALES", "GARANTÍA REAL", "OPTIMIZACIÓN", "UPGRADES", "BACKUP AUTOMÁTICO"];
+const marquee = ["ENSAMBLE A LA MEDIDA", "SOPORTE POR CHAT", "RECUPERACIÓN DE DATOS", "REDES EMPRESARIALES", "GARANTÍA POR ESCRITO", "OPTIMIZACIÓN", "UPGRADES", "BACKUP AUTOMÁTICO"];
 
 export default function Home() {
   return (
@@ -102,9 +103,9 @@ export default function Home() {
             </div>
 
             <div className="mt-10 flex flex-wrap gap-6 text-sm text-white/60">
-              <span className="flex items-center gap-2"><CheckCircle2 size={17} className="text-teal" /> Garantía real</span>
-              <span className="flex items-center gap-2"><CheckCircle2 size={17} className="text-teal" /> Diagnóstico el mismo día</span>
-              <span className="flex items-center gap-2"><CheckCircle2 size={17} className="text-teal" /> Soporte de por vida</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={17} className="text-teal" /> Garantía por escrito</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={17} className="text-teal" /> Diagnóstico claro</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={17} className="text-teal" /> Soporte posventa</span>
             </div>
           </div>
 
