@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import { PiggyBank, TrendingUp, Sparkles } from "lucide-react";
+import LeadCta from "./LeadCta";
+import { buildSavingsMessage } from "../lib/request";
 import { savingsTerms, computeSavings, savingsSeries, formatCOP } from "../lib/finance";
 
 const W = 340;
@@ -45,7 +47,7 @@ export default function SavingsSimulator() {
         <span className="text-slate">Monto a invertir</span>
         <span className="font-display text-lg font-bold text-forest">{formatCOP(amount)}</span>
       </label>
-      <input type="range" min={500_000} max={100_000_000} step={500_000} value={amount} onChange={(e) => setAmount(+e.target.value)} className="range" />
+      <input type="range" aria-label="Monto a invertir" aria-valuetext={formatCOP(amount)} min={500_000} max={100_000_000} step={500_000} value={amount} onChange={(e) => setAmount(+e.target.value)} className="range" />
       <div className="mt-1 flex justify-between text-xs text-slate/60"><span>$500 mil</span><span>$100 millones</span></div>
 
       {/* Plazo */}
@@ -53,7 +55,7 @@ export default function SavingsSimulator() {
         <p className="mb-2 text-sm font-medium text-slate">Plazo (días) · tasa E.A.</p>
         <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
           {savingsTerms.map((t, i) => (
-            <button key={t.days} onClick={() => setTermIdx(i)} className={`rounded-lg border px-2 py-2 text-center transition ${termIdx === i ? "border-forest bg-forest text-white" : "border-mist text-slate hover:border-forest/50"}`}>
+            <button key={t.days} onClick={() => setTermIdx(i)} aria-pressed={termIdx === i} aria-label={`${t.days} días, ${(t.ea * 100).toFixed(2)}% E.A.`} className={`rounded-lg border px-2 py-2 text-center transition ${termIdx === i ? "border-forest bg-forest text-white" : "border-mist text-slate hover:border-forest/50"}`}>
               <span className="block text-sm font-bold">{t.days}</span>
               <span className={`block text-[10px] ${termIdx === i ? "text-white/80" : "text-slate/60"}`}>{(t.ea * 100).toFixed(2)}%</span>
             </button>
@@ -91,9 +93,12 @@ export default function SavingsSimulator() {
         </div>
       </div>
 
-      <button onClick={() => alert("Prototipo de demostración: la apertura de cuenta no es real.")} className="btn-primary mt-5 w-full justify-center">
-        <Sparkles size={16} /> Abrir mi Cuenta Progreso
-      </button>
+      <LeadCta
+        className="btn-primary"
+        label={<><Sparkles size={16} /> Abrir mi Cuenta Progreso</>}
+        build={(name) => buildSavingsMessage(amount, term.days, term.ea, name)}
+      />
+      <p className="mt-3 text-center text-xs text-slate/70">Tasas y rendimientos ilustrativos; no constituyen una oferta.</p>
     </div>
   );
 }

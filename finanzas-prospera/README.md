@@ -20,6 +20,7 @@ Abre http://localhost:5173
 - **Medidor de score crediticio** animado (gauge) con categorías.
 - **Contadores animados**, cómo funciona en 4 pasos, testimonios con foto y CTA.
 - **Aviso legal** visible; `Reveal on scroll` y `prefers-reduced-motion`.
+- **Cierre por WhatsApp en los simuladores**: "Solicitar este crédito" y "Abrir mi Cuenta Progreso" ya no terminan en un `alert`; piden solo el nombre y arman la solicitud con los valores simulados (monto, plazo, cuota, tasa, valor final) y una vista previa del mensaje. Lógica en `src/lib/request.ts` (con pruebas). En la demo no hay número (`STORE_WHATSAPP` vacío): WhatsApp deja elegir el chat; en una entidad real va su número y su proceso de solicitud. Controles con etiquetas accesibles.
 
 ## Sobre los datos
 
