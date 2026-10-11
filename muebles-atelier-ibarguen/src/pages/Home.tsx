@@ -23,6 +23,7 @@ import Reveal from "../components/Reveal";
 import { Link } from "../lib/router";
 import { images } from "../data/images";
 import { projects } from "../data/projects";
+import { useBrand } from "../lib/brandStore";
 import { useQuoteSlugs, resolvePieces, toggleInQuote, buildQuoteMessage, whatsappUrl } from "../lib/quote";
 
 const materials = ["MADERA CERTIFICADA", "HECHO A MANO", "DISEÑO A LA MEDIDA", "ACABADOS NATURALES", "INSTALACIÓN INCLUIDA"];
@@ -59,13 +60,14 @@ const featured = projects.slice(0, 6);
 const field = "rounded-xl border border-espresso/15 bg-white px-4 py-3 text-sm outline-none transition focus:border-walnut";
 
 export default function Home() {
+  const brand = useBrand();
   const pieces = resolvePieces(useQuoteSlugs());
   const [form, setForm] = useState({ name: "", phone: "", email: "", type: "", notes: "" });
   const [sent, setSent] = useState(false);
   const set = (k: keyof typeof form) => (e: { target: { value: string } }) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    window.open(whatsappUrl(buildQuoteMessage({ ...form, pieces })), "_blank", "noopener,noreferrer");
+    window.open(whatsappUrl(buildQuoteMessage({ ...form, pieces, storeName: brand.name })), "_blank", "noopener,noreferrer");
     setSent(true);
   };
 
@@ -265,7 +267,7 @@ export default function Home() {
             </h2>
             <div className="mt-6 space-y-4 text-ivory/75 leading-relaxed">
               <p>
-                Atelier Ibargüen nació de una convicción sencilla: lo hecho a mano dura, y
+                {brand.name} nació de una convicción sencilla: lo hecho a mano dura, y
                 lo que dura se vuelve historia. En un mundo de muebles desechables,
                 elegimos el camino difícil —el del cincel, la lija y la paciencia.
               </p>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, homeHref } from "../lib/router";
+import Wordmark from "./Wordmark";
 
 // Enlaces a secciones del home (anchors) + una ruta interna (Portafolio).
 const links = [
@@ -37,8 +38,7 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6">
         <Link to="/" className="flex items-baseline gap-2 leading-none">
-          <span className="font-display text-2xl font-semibold tracking-tight text-espresso">Atelier</span>
-          <span className="font-display text-2xl italic text-terracotta">Ibargüen</span>
+          <Wordmark />
         </Link>
 
         <ul className="hidden items-center gap-9 lg:flex">
