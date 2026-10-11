@@ -6,6 +6,7 @@ import CartBar from "@/app/CartBar";
 import DemoBanner from "@/app/DemoBanner";
 import "./globals.css";
 import ServiceWorker from "@/app/ServiceWorker";
+import AnalyticsLoader from "@/app/AnalyticsLoader";
 
 export const viewport: Viewport = { themeColor: "#06040f" };
 
@@ -73,6 +74,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-void">
         <ServiceWorker />
+        <AnalyticsLoader demo="pixelvault" />
         <CartProvider>
           {children}
           <CartBar />

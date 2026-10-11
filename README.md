@@ -99,15 +99,29 @@ extras son valores de ejemplo: ajústalos a tu criterio comercial. `npm run vali
 
 ## Analítica (opcional, sin cookies)
 
-Apagada por defecto: **no se carga nada de terceros**. Para activarla, edita `analytics` en
-`catalogo/config.js` con Plausible (`{ provider: "plausible", id: "tu-dominio" }`) o Umami
-(`{ provider: "umami", id, src }`). No se activa en localhost ni si el visitante envía "No rastrear";
-nunca se envían datos personales (ni las respuestas del diagnóstico: solo la ruta recomendada).
-Al activarse, el pie de página avisa que se miden visitas de forma anónima. Embudo registrado:
-`ver_seccion` (modelos → calculadora → planes → contacto), `scroll_50/90`, `whatsapp`, `ver_demo`,
-`calculadora_inicio/cotizar`, `compass_inicio/resultado`, `formulario_inicio`, `envio_formulario`.
-Añade parámetros UTM al flyer/QR (`?utm_source=flyer`) para saber de dónde llegan. El enlace "Volver al catálogo" de cada demo ya lleva `utm_source=demo-<ruta>&utm_medium=banner` (el smoke de CI lo comprueba), así que verás qué demo trae visitas al catálogo. GA4 no se incluye a
-propósito (usa cookies y exigiría aviso de consentimiento).
+Apagada por defecto: **no se carga nada de terceros**. Se activa en UN solo lugar, `analytics` en `catalogo/config.js`, y cubre
+la landing **y las 8 demos** (las demos cargan `config.js` y `analytics.js` del sitio: mismo código, misma configuración).
+
+**Activar (2 minutos):**
+1. Crea la cuenta y registra el sitio con el dominio `abimaru.github.io` (o el propio cuando lo tengas).
+   Opciones sin cookies: **Plausible** (`{ provider: "plausible", id: "tu-dominio" }`) o **Umami**
+   (`{ provider: "umami", id: "<website-id>", src: "https://cloud.umami.is/script.js" }`; cloud o autoalojado).
+2. Pega ese bloque en `analytics` de `catalogo/config.js`, haz commit y el despliegue lo activa en todo el sitio.
+   (El service worker sirve `config.js` y `analytics.js` red-primero, así el cambio surte efecto en la siguiente visita.)
+
+**Garantías:** no se activa en localhost ni si el visitante envía "No rastrear"; nunca se envían datos personales (ni las respuestas del
+diagnóstico: solo la ruta recomendada); al activarse, el pie de la landing avisa que se miden visitas de forma anónima.
+GA4 no se incluye a propósito (usa cookies y exigiría aviso de consentimiento).
+
+**Qué verás (un solo sitio, se separa por ruta):**
+- *Landing:* `ver_seccion` (modelos → calculadora → planes → contacto), `scroll_50/90`, `whatsapp`, `ver_demo`, `vista_interactiva`,
+  `calculadora_inicio/cotizar`, `sticky_calculadora`, `compass_inicio/resultado`, `formulario_inicio`, `envio_formulario`.
+- *Demos* (con la propiedad `demo`): `cta_estudio` (WhatsApp "Quiero una solución así"), `pedido_demo` (un pedido o cotización por WhatsApp
+  dentro de la demo) y `volver_catalogo`; las visitas por demo salen de la ruta (`/maru/`, `/vitalis/`…).
+- *Origen:* usa UTM en el flyer/QR (`?utm_source=flyer`); los banners de las demos ya llevan `utm_source=demo-<ruta>`.
+
+**Cómo leerlo:** demos con más visitas → cuáles convierten (`cta_estudio / visitas`) → cuántos llegan del catálogo a una demo y
+vuelven. La calculadora y el formulario son el embudo de venta de la landing.
 
 ## Rendimiento y recursos
 
