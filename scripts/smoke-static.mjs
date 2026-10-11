@@ -54,6 +54,31 @@ if (existsSync(sitemap)) {
   }
 } else bad("falta catalogo/sitemap.xml");
 
+// PWA: cada demo debe poder instalarse (manifest + íconos + service worker) bajo su subruta.
+console.log("\nPWA (manifest, íconos y service worker)");
+for (const d of DEMOS) {
+  if (d.path === "nexo-lab") continue; // línea de servicios, sin PWA
+  const base = join(ROOT, d.dir, d.out);
+  const need = ["manifest.webmanifest", "sw.js", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png"];
+  const missing = need.filter((f) => !existsSync(join(base, f)));
+  if (missing.length) { bad(`${d.path}: faltan ${missing.join(", ")}`); continue; }
+  let m;
+  try { m = JSON.parse(readFileSync(join(base, "manifest.webmanifest"), "utf8")); } catch { bad(`${d.path}: manifest.webmanifest no es JSON válido`); continue; }
+  const problems = [];
+  if (!m.name || !m.short_name) problems.push("name/short_name");
+  if (m.start_url !== "./" || m.scope !== "./") problems.push('start_url/scope deben ser "./" (relativos a la subruta)');
+  if (m.display !== "standalone") problems.push("display");
+  if (!m.theme_color || !m.background_color) problems.push("colores");
+  const sizes = (m.icons || []).map((i) => `${i.sizes}:${i.purpose}`);
+  for (const want of ["192x192:any", "512x512:any", "512x512:maskable"]) if (!sizes.includes(want)) problems.push(`ícono ${want}`);
+  for (const i of m.icons || []) if (!existsSync(join(base, i.src))) problems.push(`falta ${i.src}`);
+  const html = readFileSync(join(base, "index.html"), "utf8");
+  if (!/rel="manifest"/.test(html)) problems.push("index.html no enlaza el manifest");
+  const sw = readFileSync(join(base, "sw.js"), "utf8");
+  if (!sw.includes('addEventListener("fetch"')) problems.push("sw.js sin manejador fetch");
+  problems.length ? bad(`${d.path}: ${problems.join("; ")}`) : ok(`${d.path}: manifest, íconos y service worker`);
+}
+
 // Atribución: el enlace "Volver al catálogo" de cada demo lleva UTM para que la analítica
 // del catálogo sepa qué demo generó la visita (utm_source=demo-<ruta>).
 console.log("\nUTM de los banners de demo");

@@ -68,6 +68,20 @@ npm run validate:analytics  # analítica: sin terceros por defecto, DNT/localhos
 - **CI (GitHub Actions):** `npm ci` con caché de npm → `check:all` → `build:all` → `smoke`
   → ensamblado → despliegue. El deploy **solo ocurre si todo pasa**.
 
+## PWA: las 8 demos se pueden instalar
+
+Cada demo tiene `manifest.webmanifest`, íconos (192, 512, *maskable* y el de iOS) y un service worker, todo bajo su
+propia subruta de GitHub Pages (alcance `/web-pages-templates/<demo>/`). Se puede **instalar como app** (Chrome/Edge/Android: ícono de
+instalar; iOS: Compartir → Añadir a inicio) y **abre sin conexión** con lo último que se visitó.
+
+- **Estrategia segura:** las páginas van *network-first* (siempre contenido fresco; sin red, la copia guardada o la portada) y los
+  estáticos con hash *stale-while-revalidate*. Solo se cachea el mismo origen (WhatsApp, fuentes y analítica van siempre a la red).
+- **Una sola fuente:** `npm run generate:pwa` regenera íconos (desde el SVG de cada demo), manifest y `sw.js`
+  (requiere Playwright: `PLAYWRIGHT_MODULE` y `CHROMIUM_PATH` si no está instalado). El resultado se commitea; el CI no lo necesita.
+- **Verificado en CI:** el smoke exige manifest válido (`start_url`/`scope` relativos), los tres íconos, el enlace en `index.html` y el
+  manejador `fetch` del service worker en cada demo.
+- Para una **nueva demo**: añádela a `APPS` en `scripts/generate-pwa-assets.mjs`, enlaza el manifest y registra el service worker como las demás.
+
 ## Barra fija en móvil
 
 En móvil la landing muestra una barra inferior ("Calcular inversión" + "Cotizar por WhatsApp") que aparece al

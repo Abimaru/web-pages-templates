@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import DemoBanner from "./DemoBanner";
 import "./globals.css";
+import ServiceWorker from "@/app/ServiceWorker";
 
 export const viewport: Viewport = { themeColor: "#050914" };
 
@@ -28,7 +29,11 @@ const jetbrains = JetBrains_Mono({
 const SITE = "https://abimaru.github.io/web-pages-templates/nexora/";
 const OG = "https://abimaru.github.io/web-pages-templates/nexora/og.jpg";
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export const metadata: Metadata = {
+  manifest: `${BASE_PATH}/manifest.webmanifest`,
+  icons: { apple: `${BASE_PATH}/apple-touch-icon.png` },
   metadataBase: new URL(SITE),
   title: "NEXORA — Computadores, componentes y soporte técnico",
   description:
@@ -63,6 +68,7 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-space">
+        <ServiceWorker />
         {children}
         <DemoBanner
           disclaimer="Productos, precios, soporte y cifras mostrados son ejemplos ilustrativos."
