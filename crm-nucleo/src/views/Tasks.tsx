@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Check, Clock, Building2 } from "lucide-react";
 import { PriorityChip } from "../components/ui";
-import { tasks as seed } from "../data/crm";
+import { useCrm } from "../store/crmStore";
 
 export default function Tasks() {
-  const [tasks, setTasks] = useState(seed);
+  const { tasks, toggleTask: toggle } = useCrm();
   const [tab, setTab] = useState<"pendientes" | "completadas">("pendientes");
 
-  const toggle = (id: number) => setTasks((ts) => ts.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
   const list = tasks.filter((t) => (tab === "pendientes" ? !t.done : t.done));
   const pending = tasks.filter((t) => !t.done).length;
 
@@ -25,7 +24,7 @@ export default function Tasks() {
       <div className="space-y-3">
         {list.map((t) => (
           <div key={t.id} className="card flex items-center gap-4 p-4">
-            <button onClick={() => toggle(t.id)} aria-label="Completar"
+            <button onClick={() => toggle(t.id)} aria-label={t.done ? `Reabrir: ${t.title}` : `Completar: ${t.title}`} aria-pressed={t.done}
               className={`grid h-6 w-6 shrink-0 place-items-center rounded-md border-2 transition ${t.done ? "border-emerald bg-emerald text-white" : "border-line hover:border-brand"}`}>
               {t.done && <Check size={15} strokeWidth={3} />}
             </button>

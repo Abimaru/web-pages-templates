@@ -1,22 +1,28 @@
 import { useMemo, useState } from "react";
-import { Search, Mail, Phone, MoreHorizontal, Download } from "lucide-react";
+import { useCrm } from "../store/crmStore";
+import { filterContacts } from "../lib/crmState";
+import { contactsToCsv } from "../lib/csv";
+import { Search, Mail, Phone, Download } from "lucide-react";
 import { Avatar, StatusChip } from "../components/ui";
-import { contacts, money, type ContactStatus } from "../data/crm";
+import { money, type ContactStatus } from "../data/crm";
 
 const filters: (ContactStatus | "Todos")[] = ["Todos", "Cliente", "Prospecto", "Inactivo"];
 
-export default function Contacts() {
-  const [q, setQ] = useState("");
+export default function Contacts({ query, onQuery }: { query: string; onQuery: (q: string) => void }) {
+  const { contacts } = useCrm();
   const [f, setF] = useState<ContactStatus | "Todos">("Todos");
 
-  const rows = useMemo(
-    () => contacts.filter((c) => {
-      const mq = (c.name + c.company + c.email).toLowerCase().includes(q.toLowerCase());
-      const mf = f === "Todos" || c.status === f;
-      return mq && mf;
-    }),
-    [q, f]
-  );
+  const rows = useMemo(() => filterContacts(contacts, query, f), [contacts, query, f]);
+
+  // Exporta exactamente lo que se ve (filtros incluidos) como CSV compatible con Excel.
+  const exportCsv = () => {
+    const blob = new Blob(["\uFEFF" + contactsToCsv(rows)], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "contactos-nucleo.csv";
+    document.body.appendChild(a); a.click(); a.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
 
   return (
     <div className="view-in space-y-5">
@@ -24,14 +30,14 @@ export default function Contacts() {
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[220px]">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar por nombre, empresa o correo…" className="field !pl-9" />
+          <input value={query} onChange={(e) => onQuery(e.target.value)} aria-label="Buscar contactos" placeholder="Buscar por nombre, empresa o correo…" className="field !pl-9" />
         </div>
         <div className="flex gap-1.5">
           {filters.map((x) => (
             <button key={x} onClick={() => setF(x)} className={`rounded-lg px-3 py-2 text-sm font-medium transition ${f === x ? "bg-brand text-white" : "bg-surface text-muted border border-line hover:text-ink"}`}>{x}</button>
           ))}
         </div>
-        <button className="btn btn-ghost"><Download size={16} /> Exportar</button>
+        <button onClick={exportCsv} disabled={rows.length === 0} className="btn btn-ghost disabled:opacity-50"><Download size={16} /> Exportar CSV</button>
       </div>
 
       {/* Tabla */}
@@ -46,8 +52,7 @@ export default function Contacts() {
                 <th className="px-5 py-3 font-semibold">Estado</th>
                 <th className="px-5 py-3 text-right font-semibold">Valor</th>
                 <th className="hidden px-5 py-3 font-semibold lg:table-cell">Último</th>
-                <th className="px-5 py-3"></th>
-              </tr>
+                              </tr>
             </thead>
             <tbody>
               {rows.map((c) => (
@@ -62,17 +67,16 @@ export default function Contacts() {
                   <td className="hidden px-5 py-3 lg:py-3 md:table-cell">
                     <div className="flex gap-2 text-muted">
                       <a href={`mailto:${c.email}`} className="grid h-8 w-8 place-items-center rounded-lg border border-line transition hover:text-brand" title={c.email}><Mail size={15} /></a>
-                      <span className="grid h-8 w-8 place-items-center rounded-lg border border-line" title={c.phone}><Phone size={15} /></span>
+                      {c.phone ? <a href={`tel:${c.phone.replace(/[^+\d]/g, "")}`} className="grid h-8 w-8 place-items-center rounded-lg border border-line transition hover:text-brand" title={c.phone} aria-label={`Llamar a ${c.name}`}><Phone size={15} /></a> : null}
                     </div>
                   </td>
                   <td className="px-5 py-3"><StatusChip status={c.status} /></td>
                   <td className="px-5 py-3 text-right font-display font-bold text-ink">{c.value ? money(c.value) : "—"}</td>
                   <td className="hidden px-5 py-3 text-muted lg:table-cell">{c.lastContact}</td>
-                  <td className="px-5 py-3 text-right"><button className="text-muted transition hover:text-ink"><MoreHorizontal size={18} /></button></td>
                 </tr>
               ))}
               {rows.length === 0 && (
-                <tr><td colSpan={7} className="px-5 py-12 text-center text-muted">Sin resultados para tu búsqueda.</td></tr>
+                <tr><td colSpan={6} className="px-5 py-12 text-center text-muted">Sin resultados para tu búsqueda.</td></tr>
               )}
             </tbody>
           </table>
