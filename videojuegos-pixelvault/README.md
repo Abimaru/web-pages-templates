@@ -27,3 +27,7 @@ Abre http://localhost:3000
 - Tipografías: `Orbitron` (display), `Rajdhani` (texto), `Press Start 2P` (etiquetas pixel).
 - Voz de marca inspirada en la guía de estilo de Abimaru (imaginario de *tesoro/cofre*, nostalgia, no rendirse).
 - Las "portadas" de juegos son ficticias y se dibujan con CSS para evitar material con derechos de autor. Sustituibles por imágenes reales cuando las tengas (colócalas en `public/`).
+
+## Pruébalo con tu marca
+
+El prospecto cambia nombre, color y logo en vivo (todo en su navegador; el logo no se sube ni viaja en el enlace) y copia un enlace `?marca=&color=` para compartir. Lógica pura y probada en `app/lib/brand.ts` (el color se aclara si no se lee sobre el fondo oscuro); estado en `app/lib/brandStore.ts`; panel en `app/BrandStudio.tsx`. El acento vive en un `@theme` **no** `inline` de `globals.css` y los brillos usan `rgba(var(--…-rgb), …)` para seguir al color.

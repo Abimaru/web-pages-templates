@@ -32,3 +32,12 @@ describe("pedido por WhatsApp (PIXELVAULT)", () => {
     expect(whatsappUrl("a b&c")).toBe("https://wa.me/?text=a%20b%26c");
   });
 });
+
+describe("marca personalizada en el pedido", () => {
+  it("usa el nombre de la marca (PIXELVAULT por defecto)", () => {
+    const lines = [{ game: g, qty: 1 }];
+    const c = { name: "Ana", delivery: "digital" as const };
+    expect(buildOrderMessage(lines, c)).toContain("Hola PIXELVAULT");
+    expect(buildOrderMessage(lines, c, "Luna Games")).toContain("Hola Luna Games");
+  });
+});

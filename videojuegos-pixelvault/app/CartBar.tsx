@@ -13,7 +13,7 @@ export default function CartBar() {
       <button
         onClick={() => setOpen(true)}
         aria-label={`Ver carrito: ${count} ${count === 1 ? "artículo" : "artículos"}, ${formatCOP(total)}`}
-        className="flex w-full items-center justify-between rounded-xl border border-neon-cyan/50 bg-abyss/95 px-5 py-3.5 text-white shadow-[0_0_24px_rgba(34,227,255,0.3)] backdrop-blur transition active:scale-[.99]"
+        className="flex w-full items-center justify-between rounded-xl border border-neon-cyan/50 bg-abyss/95 px-5 py-3.5 text-white shadow-[0_0_24px_rgba(var(--neon-rgb),0.3)] backdrop-blur transition active:scale-[.99]"
       >
         <span className="flex items-center gap-2.5 text-sm">
           <span className="relative">

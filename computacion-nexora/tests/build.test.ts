@@ -49,3 +49,10 @@ describe("configurador NEXORA", () => {
     expect(whatsappUrl("a b")).toBe("https://wa.me/?text=a%20b");
   });
 });
+
+describe("marca personalizada en la cotización", () => {
+  it("usa el nombre de la marca (NEXORA por defecto)", () => {
+    expect(buildQuoteMessage(presets[0].sel)).toContain("Hola NEXORA");
+    expect(buildQuoteMessage(presets[0].sel, "Ana", "Byte Sur")).toContain("Hola Byte Sur");
+  });
+});

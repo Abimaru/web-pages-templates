@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* El acento (neon-cyan) va en un @theme NO inline para que "Pruébalo con tu marca" lo cambie en vivo. */
+@theme {
+  --color-neon-cyan: #22e3ff;
+}
+
+:root { --neon-rgb: 34, 227, 255; }
+
 @theme inline {
   /* Tipografía */
   --font-display: var(--font-orbitron);
@@ -7,7 +14,6 @@
   --font-pixel: var(--font-press-start);
 
   /* Neones */
-  --color-neon-cyan: #22e3ff;
   --color-neon-magenta: #ff2e97;
   --color-neon-purple: #8b5cf6;
   --color-neon-lime: #b6ff3c;
@@ -69,7 +75,7 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 18px rgba(34, 227, 255, 0.35), 0 0 40px rgba(139, 92, 246, 0.25); }
+  0%, 100% { box-shadow: 0 0 18px rgba(var(--neon-rgb), 0.35), 0 0 40px rgba(139, 92, 246, 0.25); }
   50% { box-shadow: 0 0 30px rgba(255, 46, 151, 0.5), 0 0 60px rgba(139, 92, 246, 0.4); }
 }
 
@@ -96,7 +102,7 @@ body {
   background:
     radial-gradient(60% 60% at 20% 10%, rgba(139, 92, 246, 0.25), transparent 60%),
     radial-gradient(50% 50% at 90% 20%, rgba(255, 46, 151, 0.18), transparent 60%),
-    radial-gradient(60% 60% at 50% 100%, rgba(34, 227, 255, 0.18), transparent 60%);
+    radial-gradient(60% 60% at 50% 100%, rgba(var(--neon-rgb), 0.18), transparent 60%);
 }
 
 /* Línea de escaneo tipo CRT */
@@ -118,7 +124,7 @@ body {
 /* ===== Texto neón ===== */
 .neon-cyan {
   color: #d6faff;
-  text-shadow: 0 0 6px rgba(34, 227, 255, 0.9), 0 0 18px rgba(34, 227, 255, 0.6), 0 0 40px rgba(34, 227, 255, 0.35);
+  text-shadow: 0 0 6px rgba(var(--neon-rgb), 0.9), 0 0 18px rgba(var(--neon-rgb), 0.6), 0 0 40px rgba(var(--neon-rgb), 0.35);
 }
 .neon-magenta {
   color: #ffe0f0;
@@ -126,7 +132,7 @@ body {
 }
 
 .text-gradient {
-  background: linear-gradient(100deg, #22e3ff, #8b5cf6, #ff2e97, #22e3ff);
+  background: linear-gradient(100deg, var(--color-neon-cyan), #8b5cf6, #ff2e97, var(--color-neon-cyan));
   background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -145,7 +151,7 @@ body {
   inset: 0;
 }
 .glitch:hover::before {
-  color: #22e3ff;
+  color: var(--color-neon-cyan);
   animation: glitch 0.6s infinite linear alternate;
   left: 2px;
 }
@@ -168,14 +174,14 @@ body {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #06040f;
-  background: linear-gradient(100deg, #22e3ff, #8b5cf6);
-  box-shadow: 0 0 18px rgba(34, 227, 255, 0.5), 0 8px 24px rgba(139, 92, 246, 0.35);
+  background: linear-gradient(100deg, var(--color-neon-cyan), #8b5cf6);
+  box-shadow: 0 0 18px rgba(var(--neon-rgb), 0.5), 0 8px 24px rgba(139, 92, 246, 0.35);
   transition: transform 0.2s ease, box-shadow 0.3s ease, filter 0.3s ease;
 }
 .btn-neon:hover {
   transform: translateY(-2px);
   filter: brightness(1.1);
-  box-shadow: 0 0 28px rgba(34, 227, 255, 0.75), 0 12px 34px rgba(255, 46, 151, 0.4);
+  box-shadow: 0 0 28px rgba(var(--neon-rgb), 0.75), 0 12px 34px rgba(255, 46, 151, 0.4);
 }
 .btn-ghost {
   display: inline-flex;
@@ -193,9 +199,9 @@ body {
   transition: all 0.25s ease;
 }
 .btn-ghost:hover {
-  border-color: #22e3ff;
+  border-color: var(--color-neon-cyan);
   color: #d6faff;
-  box-shadow: 0 0 20px rgba(34, 227, 255, 0.35);
+  box-shadow: 0 0 20px rgba(var(--neon-rgb), 0.35);
 }
 
 /* Tarjeta con borde neón */
@@ -207,8 +213,8 @@ body {
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .card-neon:hover {
-  border-color: rgba(34, 227, 255, 0.6);
-  box-shadow: 0 0 0 1px rgba(34, 227, 255, 0.3), 0 18px 40px rgba(139, 92, 246, 0.3);
+  border-color: rgba(var(--neon-rgb), 0.6);
+  box-shadow: 0 0 0 1px rgba(var(--neon-rgb), 0.3), 0 18px 40px rgba(139, 92, 246, 0.3);
 }
 
 /* Chip / etiqueta pixel */
@@ -233,7 +239,7 @@ body {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #0b0820; }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(#22e3ff, #8b5cf6);
+  background: linear-gradient(var(--color-neon-cyan), #8b5cf6);
   border-radius: 10px;
 }
 ::selection {

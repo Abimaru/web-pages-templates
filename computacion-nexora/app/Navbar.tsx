@@ -1,5 +1,6 @@
 "use client";
 
+import BrandMark, { BrandName } from "@/app/BrandMark";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Cpu, Menu, X, Headset } from "lucide-react";
@@ -33,12 +34,7 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5">
         <Link href="/" className="flex items-center gap-2.5">
-          <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-electric to-indigo text-space shadow-[0_0_18px_rgba(56,189,248,0.5)]">
-            <Cpu size={22} strokeWidth={2.4} />
-          </span>
-          <span className="font-display text-xl font-bold tracking-tight text-white">
-            NEX<span className="text-electric glow-text">ORA</span>
-          </span>
+          <BrandMark />
         </Link>
 
         <ul className="hidden items-center gap-8 lg:flex">

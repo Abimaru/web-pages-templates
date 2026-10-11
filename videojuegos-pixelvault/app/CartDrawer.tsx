@@ -1,5 +1,6 @@
 "use client";
 
+import { useBrand } from "@/app/lib/brandStore";
 import { useEffect, useState } from "react";
 import { X, Minus, Plus, Trash2, ShoppingCart, MessageCircle } from "lucide-react";
 import { useCart } from "@/app/CartContext";
@@ -21,7 +22,8 @@ export default function CartDrawer() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, setOpen]);
 
-  const message = buildOrderMessage(items, { name, delivery, city, notes });
+  const brand = useBrand();
+  const message = buildOrderMessage(items, { name, delivery, city, notes }, brand.name);
   const canOrder = items.length > 0 && name.trim().length > 0 && (delivery === "digital" || city.trim().length > 0);
   const hint = !name.trim() ? "Escribe tu nombre para pedir" : "Escribe tu ciudad para el domicilio";
 

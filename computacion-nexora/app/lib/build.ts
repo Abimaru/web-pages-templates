@@ -89,9 +89,9 @@ export const sameSelection = (a: Selection, b: Selection) => categories.every((c
 /** Número de la tienda real. Vacío en la demo: WhatsApp deja elegir el chat. */
 export const STORE_WHATSAPP = "";
 
-export function buildQuoteMessage(sel: Selection, name = ""): string {
+export function buildQuoteMessage(sel: Selection, name = "", brandName = "NEXORA"): string {
   return [
-    "Hola NEXORA, quiero cotizar este equipo:",
+    `Hola ${brandName}, quiero cotizar este equipo:`,
     "",
     ...categories.map((c) => `• ${c.title}: ${optionOf(c, sel).label}`),
     "",
