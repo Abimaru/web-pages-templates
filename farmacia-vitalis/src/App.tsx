@@ -31,10 +31,10 @@ import { addLine, setQty, countItems, subtotal, needsPrescription, formatCOP, se
 const perks = ["CATÁLOGO POR CATEGORÍAS", "BUSCADOR DE PRODUCTOS", "FLUJO DE RECETA (DEMO)", "PEDIDO POR WHATSAPP", "PROTOTIPO INTERACTIVO"];
 
 const servicios = [
-  { icon: FileText, title: "Receta digital", cta: "Enviar mi fórmula", desc: "Sube tu fórmula médica y te preparamos el pedido validado por un farmacéutico." },
-  { icon: Stethoscope, title: "Consulta farmacéutica", cta: "Hablar con un farmacéutico", desc: "Resuelve dudas sobre dosis, interacciones y cuidados con un profesional, gratis." },
-  { icon: HeartPulse, title: "Programa de crónicos", cta: "Inscribirme", desc: "Recordatorios y entrega recurrente de tu tratamiento para no fallar ni un día." },
-  { icon: Truck, title: "Domicilio express", cta: "Programar entrega", desc: "Recibe en 60 minutos o programa la entrega a la hora que más te convenga." },
+  { icon: FileText, title: "Receta digital", cta: "Enviar mi fórmula", desc: "Sube tu fórmula médica y un farmacéutico la revisa antes de preparar tu pedido." },
+  { icon: Stethoscope, title: "Consulta farmacéutica", cta: "Hablar con un farmacéutico", desc: "Resuelve dudas generales sobre uso y cuidados con un farmacéutico. No reemplaza la consulta con tu médico." },
+  { icon: HeartPulse, title: "Programa de crónicos", cta: "Inscribirme", desc: "Recordatorios y entregas programadas para ayudarte a mantener tu tratamiento." },
+  { icon: Truck, title: "Domicilio express", cta: "Programar entrega", desc: "Programa la entrega a la hora que más te convenga. Tiempos según zona y disponibilidad." },
 ];
 
 const pasos = [
@@ -44,8 +44,8 @@ const pasos = [
 ];
 
 const testimonios = [
-  { name: "Rosa E.", role: "Cuida a su madre", text: "El programa de crónicos me cambió la vida: nunca más se nos acaba el medicamento de mamá.", stars: 5 },
-  { name: "Julián T.", role: "Papá primerizo", text: "Pedí a medianoche con el bebé con fiebre y llegó en 40 minutos. Un alivio enorme.", stars: 5 },
+  { name: "Rosa E.", role: "Cuida a su madre", text: "Los recordatorios del programa de crónicos nos ayudan a no olvidar la renovación del medicamento de mamá.", stars: 5 },
+  { name: "Julián T.", role: "Papá primerizo", text: "Poder pedir desde el celular cuando el bebé está enfermo es un alivio enorme.", stars: 5 },
   { name: "Marta L.", role: "Cliente frecuente", text: "Me encanta poder preguntarle al farmacéutico antes de comprar. Se nota que saben.", stars: 5 },
 ];
 
@@ -116,7 +116,7 @@ export default function App() {
             </h1>
             <p className="mt-5 max-w-lg text-lg leading-relaxed text-slate">
               Medicamentos, vitaminas y cuidado personal con entrega a domicilio y el
-              respaldo de farmacéuticos de verdad. Rápido, seguro y humano.
+              respaldo de un equipo farmacéutico. Con acompañamiento cercano.
             </p>
 
             {/* Buscador hero */}
@@ -128,7 +128,7 @@ export default function App() {
 
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate">
               <span className="flex items-center gap-2"><Truck size={17} className="text-teal" /> Domicilio 60 min</span>
-              <span className="flex items-center gap-2"><ShieldCheck size={17} className="text-teal" /> 100% originales</span>
+              <span className="flex items-center gap-2"><ShieldCheck size={17} className="text-teal" /> Proveedores autorizados (ejemplo)</span>
               <span className="flex items-center gap-2"><Clock size={17} className="text-teal" /> Atención 24/7</span>
             </div>
           </Reveal>
@@ -336,8 +336,8 @@ export default function App() {
           <div className="grid items-center gap-8 lg:grid-cols-[1.3fr_1fr]">
             <div>
               <span className="kicker text-white/80">Salud a la mano</span>
-              <h2 className="mt-3 font-display text-4xl font-bold leading-tight sm:text-5xl">Descarga la app VITALIS y ahorra en cada pedido</h2>
-              <p className="mt-4 max-w-lg text-white/80">Recordatorios de medicamentos, historial de compras y 15% de descuento en tu primer domicilio.</p>
+              <h2 className="mt-3 font-display text-4xl font-bold leading-tight sm:text-5xl">Descarga la app VITALIS y pide más fácil</h2>
+              <p className="mt-4 max-w-lg text-white/80">Recordatorios de medicamentos, historial de compras y beneficios de bienvenida (ejemplo).</p>
               <form onSubmit={(e) => e.preventDefault()} className="mt-7 flex max-w-md flex-col gap-3 sm:flex-row">
                 <input type="email" required placeholder="Tu correo" className="w-full rounded-xl bg-white/15 px-4 py-3 text-sm text-white placeholder-white/60 outline-none ring-1 ring-white/20 focus:ring-white/50" />
                 <button className="rounded-xl bg-white px-6 py-3 font-display text-sm font-semibold text-medic-dark transition hover:bg-cloud">Quiero mi descuento</button>
