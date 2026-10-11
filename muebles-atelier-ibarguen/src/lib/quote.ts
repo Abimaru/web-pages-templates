@@ -24,12 +24,14 @@ export type QuoteRequest = {
   type?: string;
   notes?: string;
   pieces: Project[];
+  /** Nombre del negocio (por defecto Atelier Ibargüen; cambia con "Pruébalo con tu marca"). */
+  storeName?: string;
 };
 
 export function buildQuoteMessage(q: QuoteRequest): string {
   const type = q.type && !q.type.endsWith("…") ? q.type : "";
   return [
-    "Hola Atelier Ibargüen, quiero cotizar un proyecto a la medida.",
+    `Hola ${q.storeName?.trim() || "Atelier Ibargüen"}, quiero cotizar un proyecto a la medida.`,
     "",
     ...(q.pieces.length
       ? ["Piezas que me inspiran:", ...q.pieces.map((p) => `• ${p.name} (${p.category}, ${p.wood})`), ""]

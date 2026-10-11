@@ -1,15 +1,17 @@
 import { Share2, AtSign, Mail } from "lucide-react";
 import { Link, homeHref } from "../lib/router";
+import Wordmark from "./Wordmark";
+import { useBrand } from "../lib/brandStore";
 
 export default function Footer() {
+  const brand = useBrand();
   return (
     <footer className="border-t border-espresso/10 bg-ivory">
       <div className="mx-auto max-w-7xl px-6 py-14">
         <div className="grid gap-10 md:grid-cols-[1.6fr_1fr_1fr]">
           <div>
             <Link to="/" className="flex items-baseline gap-2">
-              <span className="font-display text-2xl font-semibold text-espresso">Atelier</span>
-              <span className="font-display text-2xl italic text-terracotta">Ibargüen</span>
+              <Wordmark headClass="font-display text-2xl font-semibold text-espresso" />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink/55">
               Diseño y fabricación de muebles de autor en madera noble. Hecho con oficio
@@ -43,7 +45,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-espresso/10 pt-6 text-xs text-ink/45 sm:flex-row">
-          <p>© {new Date().getFullYear()} Atelier Ibargüen — Prototipo por Abimaru. Solo demostración.</p>
+          <p>© {new Date().getFullYear()} {brand.name} — Prototipo por Abimaru. Solo demostración.</p>
           <p>Hecho a mano, como los muebles.</p>
         </div>
       </div>

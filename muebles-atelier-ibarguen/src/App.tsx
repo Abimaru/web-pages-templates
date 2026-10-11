@@ -5,6 +5,8 @@ import Portfolio from "./pages/Portfolio";
 import Project from "./pages/Project";
 import DemoBanner from "./components/DemoBanner";
 import QuotePill from "./components/QuotePill";
+import BrandStudio from "./components/BrandStudio";
+import "./lib/brandStore"; // aplica la marca inicial (enlace compartido o última guardada) antes del primer render
 
 export default function App() {
   const path = useRoute();
@@ -35,6 +37,7 @@ export default function App() {
     <>
       {page}
       <QuotePill />
+      <BrandStudio />
       <DemoBanner
         disclaimer="Portafolio, proyectos, testimonios y precios son conceptuales e ilustrativos."
         waMessage="Hola, vi la demo de Atelier Ibargüen (muebles) de Estudio Abimaru. Quisiera una página así para mi negocio."
